@@ -1,0 +1,37 @@
+extend type Query {
+    pancakes: [Pancake!]!
+    pancakeById(
+        id: ID! @rules(apply: ["exists:pancakes,id"])
+    ): Pancake!
+}
+
+extend type Mutation {
+    createPancake(
+        input: CreatePancakeInput! @spread
+    ): Pancake!
+
+    updatePancake(
+        input: UpdatePancakeInput! @spread
+    ): Pancake!
+
+    deletePancake(
+        id: ID! @rules(apply: ["exists:pancakes,id"])
+    ): Boolean!
+}
+
+type Pancake {
+    id:        ID!
+    diameter:  Int!
+    stack:     PancakeStack @belongsTo
+    createdAt: DateTime! @rename(attribute: "created_at")
+    updatedAt: DateTime! @rename(attribute: "updated_at")
+}
+
+input CreatePancakeInput {
+    diameter: Int! @rules(apply: ["integer", "min:5", "max:40"])
+}
+
+input UpdatePancakeInput {
+    id:       ID! @rules(apply: ["exists:pancakes,id"])
+    diameter: Int! @rules(apply: ["integer", "min:5", "max:40"])
+}

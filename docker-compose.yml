@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  nginx:
+    image: nginx:1.18
+    ports:
+      - ${APP_PORT}:80
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+
+  api:
+    build:
+      args:
+        user: laravel
+        uid: 1000
+      context: .
+      dockerfile: docker/app/development/Dockerfile
+    volumes:
+    - ./:/var/www/html
+    depends_on:
+    - database
+  database:
+    image: postgres:15.1-alpine
+    ports:
+    - ${DB_PORT}:5432
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+    volumes:
+      - ./docker/postgres/data:/var/lib/postgresql/data
+  redis:
+    image: redis:7.0.8
+    ports:
+    - ${REDIS_PORT}:6379
+networks:
+  default:
+    name: linkextractor
