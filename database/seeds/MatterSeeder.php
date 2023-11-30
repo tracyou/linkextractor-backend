@@ -13,6 +13,7 @@ class MatterSeeder extends Seeder
     public function run(): void
     {
         Matter::factory()
-            ->count(10);
+            ->count(5)
+            ->create();
     }
 }

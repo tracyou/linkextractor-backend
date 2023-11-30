@@ -13,10 +13,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('matter_relations', function (Blueprint $table) {
+            $table->uuid('id')->unique();
             $table->uuid('matter_a_id');
             $table->uuid('matter_b_id');
             $table->enum('relation', ['requires 1', 'requires 0 or 1', 'requires 1 or more', 'requires 0 or more']);
-            $table->string("description");
+            $table->string('description');
             $table->timestamps();
             $table->softDeletes();
 

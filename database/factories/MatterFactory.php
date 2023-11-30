@@ -19,7 +19,7 @@ class MatterFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->randomElement(['Rechtssubject', 'Rechtsobject', 'Rechtsbetrekking', 'Voorwaarde', 'Rechtsfeit', 'operator', 'afleidingsregel', 'variabele', 'variabele-waarde', 'parameter', 'parameter-waarde', 'tijdsaanduiding', 'plaatsaanduiding']),
+            'name' => fake()->unique()->word(), //randomElement(['Rechtssubject', 'Rechtsobject', 'Rechtsbetrekking', 'Voorwaarde', 'Rechtsfeit', 'operator', 'afleidingsregel', 'variabele', 'variabele-waarde', 'parameter', 'parameter-waarde', 'tijdsaanduiding', 'plaatsaanduiding']),
             'color' => fake()->unique()->safeHexColor,
         ];
     }

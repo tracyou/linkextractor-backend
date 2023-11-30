@@ -13,6 +13,7 @@ class MatterRelationSeeder extends Seeder
     public function run(): void
     {
         MatterRelation::factory()
-            ->count(5);
+            ->count(5)
+            ->create();
     }
 }
