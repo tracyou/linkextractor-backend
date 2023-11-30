@@ -20,7 +20,7 @@ class AnnotationFactory extends Factory
     public function definition(): array
     {
         return [
-            'matter' => Matter::factory(),
+            'matter_id' => Matter::factory(),
             'text' => fake()->realText()
         ];
     }

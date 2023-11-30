@@ -13,6 +13,7 @@ class AnnotationSeeder extends Seeder
     public function run(): void
     {
         Annotation::factory()
-            ->count(20);
+            ->count(20)
+            ->create();
     }
 }

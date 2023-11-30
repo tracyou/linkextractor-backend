@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MatterRelationFactory extends Factory
 {
+    protected $model = MatterRelation::class;
     /**
      * Define the model's default state.
      *
