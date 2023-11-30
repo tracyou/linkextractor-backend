@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -38,5 +39,11 @@ final class Annotation extends Model
     public function matter(): BelongsTo
     {
         return $this->belongsTo(Matter::class, 'matter_id', 'id');
+    }
+
+    //relationship with Law
+    public function law(): BelongsToMany
+    {
+       return $this->belongsToMany(Law::class);
     }
 }

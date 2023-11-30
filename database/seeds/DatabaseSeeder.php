@@ -1,6 +1,7 @@
 <?php
 
 use Database\Seeders\AnnotationSeeder;
+use Database\Seeders\LawSeeder;
 use Database\Seeders\MatterRelationSeeder;
 use Database\Seeders\MatterSeeder;
 use Illuminate\Database\Seeder;
@@ -13,7 +14,8 @@ class DatabaseSeeder extends Seeder
             PancakeStackSeeder::class,
             MatterSeeder::class,
             MatterRelationSeeder::class,
-            AnnotationSeeder::class
+            AnnotationSeeder::class,
+            LawSeeder::class,
         ]);
     }
 }
