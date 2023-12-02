@@ -12,7 +12,8 @@ class UpdatePancake
     public function __construct(
         protected Guard $guard,
         protected PancakeRepositoryInterface $pancakeRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws Exception
