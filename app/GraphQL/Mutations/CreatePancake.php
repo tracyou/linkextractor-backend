@@ -12,7 +12,8 @@ class CreatePancake
     public function __construct(
         protected Guard $guard,
         protected PancakeFactoryInterface $pancakeFactory,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws Exception

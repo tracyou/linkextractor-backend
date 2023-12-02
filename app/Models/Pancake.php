@@ -14,11 +14,25 @@ use Illuminate\Support\Collection;
  *
  * @property int $id
  * @property int $diameter
- *
- * @property string $created_at
- * @property string $updated_at
- * @property string $deleted_at
- * @property-read PancakeStack $stack
+ * @property int|null $pancake_stack_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\PancakeStack|null $stack
+ * @method static \Database\Factories\PancakeFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake whereDiameter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake wherePancakeStackId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pancake withoutTrashed()
+ * @mixin \Eloquent
  */
 class Pancake extends Model
 {

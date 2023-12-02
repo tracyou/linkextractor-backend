@@ -21,11 +21,13 @@
         "wimski/laravel-model-repositories": "^3.0"
     },
     "require-dev": {
-        "spatie/laravel-ignition": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.40",
         "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.0"
+        "nunomaduro/larastan": "^2.6",
+        "phpunit/phpunit": "^9.0",
+        "spatie/laravel-ignition": "^2.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -63,6 +65,25 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "done": [
+            "@docbloc",
+            "@analyse"
+        ],
+        "docbloc": [
+            "@ide-models",
+            "@fix"
+        ],
+        "ide-models": [
+            "DB_DATABASE=laravel php artisan ide-helper:models -W -r -vvv"
+        ],
+        "fix": [
+            "./vendor/bin/php-cs-fixer fix --cache-file=./vendor/.php-cs-fixer.cache ./app",
+            "./vendor/bin/php-cs-fixer fix --cache-file=./vendor/.php-cs-fixer.cache ./database",
+            "./vendor/bin/php-cs-fixer fix --cache-file=./vendor/.php-cs-fixer.cache ./tests"
+        ],
+        "analyse": [
+            "./vendor/bin/phpstan analyse -c ./phpstan.neon --memory-limit=2G"
         ]
     }
 }

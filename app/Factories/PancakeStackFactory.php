@@ -7,7 +7,6 @@ use App\Models\PancakeStack;
 
 class PancakeStackFactory implements PancakeStackFactoryInterface
 {
-
     public function create(string $name): PancakeStack
     {
         $pancakeStack = new PancakeStack();
