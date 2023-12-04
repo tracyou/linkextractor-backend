@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $law_id
  * @property string $annotation_id
  * @property int $cursor_index
+ * @property-read Annotation $annotation
+ * @property-read Law $law
  *
  * @property string $created_at
  * @property string $updated_at
