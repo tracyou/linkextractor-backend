@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,7 +20,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Law> $law
+ * @property-read Collection<int, \App\Models\Law> $law
  * @property-read int|null $law_count
  * @property-read \App\Models\Matter $matter
  * @method static \Database\Factories\AnnotationFactory factory($count = null, $state = [])
@@ -47,7 +48,7 @@ final class Annotation extends Model
     }
 
     //relationship with Law
-    public function law(): BelongsToMany
+    public function laws(): BelongsToMany
     {
         return $this
             ->belongsToMany(Law::class)

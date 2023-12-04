@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Models\PancakeStack
  *
- * @property-read Collection<int, \App\Models\Annotation> $annotation
+ * @property-read Collection<int, Annotation> $annotation
  * @property-read int|null $annotation_count
- * @property-read Collection<int, \App\Models\Law> $law
+ * @property-read Collection<int, Law> $law
  * @property-read int|null $law_count
  * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotation newQuery()
@@ -27,12 +27,12 @@ final class LawAnnotation extends Pivot
         'cursor_index'
     ];
 
-    public function annotation(): BelongsToMany
+    public function annotations(): BelongsToMany
     {
         return $this->belongsToMany(Annotation::class);
     }
 
-    public function law(): BelongsToMany
+    public function laws(): BelongsToMany
     {
         return $this
             ->belongsToMany(Law::class);
