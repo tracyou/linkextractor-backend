@@ -53,6 +53,6 @@ final class Annotation extends Model
         return $this
             ->belongsToMany(Law::class)
             ->withPivot('cursor_index')
-            ->using(LawAnnotation::class);
+            ->using(LawAnnotationPivot::class);
     }
 }

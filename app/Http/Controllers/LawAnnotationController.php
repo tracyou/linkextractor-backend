@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLaws_annotationRequest;
 use App\Http\Requests\UpdateLaws_annotationRequest;
-use App\Models\LawAnnotation;
+use App\Models\LawAnnotationPivot;
 
-class LawsAnnotationController extends Controller
+class LawAnnotationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class LawsAnnotationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(LawAnnotation $laws_annotation)
+    public function show(LawAnnotationPivot $laws_annotation)
     {
         //
     }
@@ -43,7 +43,7 @@ class LawsAnnotationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(LawAnnotation $laws_annotation)
+    public function edit(LawAnnotationPivot $laws_annotation)
     {
         //
     }
@@ -51,7 +51,7 @@ class LawsAnnotationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLaws_annotationRequest $request, LawAnnotation $laws_annotation)
+    public function update(UpdateLaws_annotationRequest $request, LawAnnotationPivot $laws_annotation)
     {
         //
     }
@@ -59,7 +59,7 @@ class LawsAnnotationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LawAnnotation $laws_annotation)
+    public function destroy(LawAnnotationPivot $laws_annotation)
     {
         //
     }

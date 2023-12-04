@@ -9,20 +9,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 /**
  * App\Models\PancakeStack
  *
- * @property string $id
- * @property string $law_id
- * @property string $annotation_id
- * @property int $cursor_index
- * @property-read Annotation $annotation
- * @property-read Law $law
- *
- * @property string $created_at
- * @property string $updated_at
- * @property string $deleted_at
+ * @property-read Collection<int, Annotation> $annotation
+ * @property-read int|null $annotation_count
+ * @property-read Collection<int, Law> $law
+ * @property-read int|null $law_count
+ * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot query()
+ * @mixin \Eloquent
  */
 final class LawAnnotationPivot extends Pivot
 {

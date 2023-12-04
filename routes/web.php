@@ -20,8 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    $law = Law::find('9ac46543-6b12-4175-b728-02436eab7f34');
-    $annotation = Annotation::find('9ac46543-43af-43ae-85f0-5a9abfcad920');
+    $law = Law::find('9ac47424-d896-406c-925b-ea61c5cfab5e');
+    $annotation = Annotation::find('9ac47424-aa98-431d-b91b-326a2dfe0fff');
 
 
     dd($annotation->laws()->withPivot(['cursor_index'])->get());
