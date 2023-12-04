@@ -41,18 +41,21 @@ use Illuminate\Support\Carbon;
 class Matter extends Model
 {
     protected $table = 'matters';
-
+    protected $fillable = [
+        'name',
+        'color'
+    ];
     public function annotations(): HasMany
     {
         return $this->hasMany(Annotation::class, 'matter_id', 'id');
     }
 
-    public function matterRelationsA(): HasMany
+    public function matterRelationsParents(): HasMany
     {
         return $this->hasMany(MatterRelation::class, 'class_a_id', 'id');
     }
 
-    public function matterRelationsB(): HasMany
+    public function matterRelationsChilds(): HasMany
     {
         return $this->hasMany(MatterRelation::class, 'class_b_id', 'id');
     }
