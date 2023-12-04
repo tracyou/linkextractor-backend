@@ -6,6 +6,8 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Hashing\HashServiceProvider;
 use Illuminate\Support\Carbon;
 
 /**
@@ -44,6 +46,9 @@ final class Annotation extends Model
     //relationship with Law
     public function law(): BelongsToMany
     {
-       return $this->belongsToMany(Law::class);
+        return $this
+            ->belongsToMany(Law::class)
+            ->withPivot('cursor_index')
+            ->using(LawAnnotation::class);
     }
 }
