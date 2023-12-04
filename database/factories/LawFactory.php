@@ -21,7 +21,7 @@ class LawFactory extends Factory
         return [
             'title' => $this->faker->title,
             'text' => $this->faker->text,
-            'is_published' => $this->faker->boolean
+            'isPublished' => $this->faker->boolean
         ];
     }
 }

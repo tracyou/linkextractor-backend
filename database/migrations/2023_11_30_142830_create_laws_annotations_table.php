@@ -16,7 +16,7 @@ return new class () extends Migration {
             $table->uuid('id')->primary();
             $table->foreignUuid('law_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('annotation_id')->constrained()->cascadeOnDelete();
-            $table->integer('cursor_index');
+            $table->integer('cursorIndex');
             $table->timestamps();
             $table->softDeletes();
 

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $annotation_count
  * @property-read Collection<int, Law> $law
  * @property-read int|null $law_count
+ * @property string $cursorIndex
  * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot query()
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 final class LawAnnotationPivot extends Pivot
 {
     protected $fillable = [
-        'cursor_index'
+        'cursorIndex'
     ];
 
     public function annotations(): BelongsToMany

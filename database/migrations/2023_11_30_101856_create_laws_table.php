@@ -16,7 +16,7 @@ return new class () extends Migration {
             $table->uuid('id')->primary()->unique();
             $table->string('title');
             $table->text('text');
-            $table->boolean('is_published');
+            $table->boolean('isPublished');
             $table->timestamps();
             $table->softDeletes();
 

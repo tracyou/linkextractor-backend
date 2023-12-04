@@ -7,12 +7,12 @@ use App\Models\Law;
 
 class LawFactory implements LawFactoryInterface
 {
-    public function create(string $title, string $text, bool $is_published): Law
+    public function create(string $title, string $text, bool $isPublished): Law
     {
         $law = new Law();
         $law->title = $title;
         $law->text = $text;
-        $law->is_published = $is_published;
+        $law->isPublished = $isPublished;
 
         $law->save();
         return $law;

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\LawAnnotationPivot>
  */
-class LawAnnotationFactory extends Factory
+class LawAnnotationPivotFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class LawAnnotationFactory extends Factory
     public function definition(): array
     {
         return [
-            'cursor_index' => $this->faker->numberBetween()
+            'cursorIndex' => $this->faker->numberBetween()
         ];
     }
 }

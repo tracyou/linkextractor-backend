@@ -4,7 +4,7 @@ namespace App\Contracts\Factories;
 
 use App\Models\LawAnnotationPivot;
 
-interface LawAnnotationsFactoryInterface
+interface LawAnnotationsPivotFactoryInterface
 {
 public function create(
     string $cursor_index
