@@ -6,7 +6,7 @@ use App\Models\LawAnnotationPivot;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class LawsAnnotationPolicy
+class LawAnnotationPolicy
 {
     /**
      * Determine whether the user can view any models.

@@ -12,27 +12,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Models\PancakeStack
  *
- * @property-read Collection<int, \App\Models\Annotation> $annotation
+ * @property-read Collection<int, Annotation> $annotation
  * @property-read int|null $annotation_count
- * @property-read Collection<int, \App\Models\Law> $law
+ * @property-read Collection<int, Law> $law
  * @property-read int|null $law_count
- * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotation newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotation newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotation query()
+ * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot query()
  * @mixin \Eloquent
  */
-final class LawAnnotation extends Pivot
+final class LawAnnotationPivot extends Pivot
 {
     protected $fillable = [
         'cursor_index'
     ];
 
-    public function annotation(): BelongsToMany
+    public function annotations(): BelongsToMany
     {
         return $this->belongsToMany(Annotation::class);
     }
 
-    public function law(): BelongsToMany
+    public function laws(): BelongsToMany
     {
         return $this
             ->belongsToMany(Law::class);

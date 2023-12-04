@@ -6,7 +6,7 @@ use App\Http\Requests\StoreLawsRequest;
 use App\Http\Requests\UpdateLawsRequest;
 use App\Models\Law;
 
-class LawsController extends Controller
+class LawController extends Controller
 {
     /**
      * Display a listing of the resource.

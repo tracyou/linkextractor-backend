@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\LawAnnotationPivot;
+use App\Models\Law;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class LawsAnnotationPolicy
+class LawPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class LawsAnnotationPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, LawAnnotationPivot $lawsAnnotation): bool
+    public function view(User $user, Law $laws): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class LawsAnnotationPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, LawAnnotationPivot $lawsAnnotation): bool
+    public function update(User $user, Law $laws): bool
     {
         //
     }
@@ -43,7 +43,7 @@ class LawsAnnotationPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, LawAnnotationPivot $lawsAnnotation): bool
+    public function delete(User $user, Law $laws): bool
     {
         //
     }
@@ -51,7 +51,7 @@ class LawsAnnotationPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, LawAnnotationPivot $lawsAnnotation): bool
+    public function restore(User $user, Law $laws): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class LawsAnnotationPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, LawAnnotationPivot $lawsAnnotation): bool
+    public function forceDelete(User $user, Law $laws): bool
     {
         //
     }
