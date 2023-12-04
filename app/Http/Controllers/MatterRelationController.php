@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMatterRelationRequest;
 use App\Http\Requests\UpdateMatterRelationRequest;
-use App\Models\MatterRelationPivot;
+use App\Models\MatterRelation;
 
 class MatterRelationController extends Controller
 {
@@ -35,7 +35,7 @@ class MatterRelationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MatterRelationPivot $matterRelation)
+    public function show(MatterRelation $matterRelation)
     {
         //
     }
@@ -43,7 +43,7 @@ class MatterRelationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(MatterRelationPivot $matterRelation)
+    public function edit(MatterRelation $matterRelation)
     {
         //
     }
@@ -51,7 +51,7 @@ class MatterRelationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMatterRelationRequest $request, MatterRelationPivot $matterRelation)
+    public function update(UpdateMatterRelationRequest $request, MatterRelation $matterRelation)
     {
         //
     }
@@ -59,7 +59,7 @@ class MatterRelationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MatterRelationPivot $matterRelation)
+    public function destroy(MatterRelation $matterRelation)
     {
         //
     }

@@ -41,6 +41,10 @@ final class MatterRelation extends Model
 {
     protected $table = 'matter_relations';
     public $incrementing = false;
+    public $fillable = [
+        'relation',
+        'description'
+    ];
 
     public function matterA(): BelongsTo
     {
