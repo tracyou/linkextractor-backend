@@ -39,8 +39,8 @@ Route::get('/annotation-test', function () {
 });
 
 Route::get('/matter-relations-test', function () {
-    $matterA = Matter::create(['name' => 'Matter A', 'color' => '#000000']);
-    $matterB = Matter::create(['name' => 'Matter B', 'color' => '#ffffff']);
+    $matterA = Matter::find('9ac49f50-61d9-4fdb-b1b9-28f2ef5ff970');
+    $matterB = Matter::find('9ac49f50-6753-43f7-b5a7-492a93511bc0');
     $relation = (new MatterRelationFactory)->create($matterA, $matterB, 'requires 1', 'Description');
     $retrievedRelation = MatterRelation::find($relation->id);
     dd($retrievedRelation->matterA, $retrievedRelation->matterB);

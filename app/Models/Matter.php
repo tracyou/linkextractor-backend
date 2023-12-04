@@ -19,9 +19,9 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $deleted_at
  * @property-read Collection<int, \App\Models\Annotation> $annotations
  * @property-read int|null $annotations_count
- * @property-read Collection<int, \App\Models\MatterRelation> $matterRelationsA
+ * @property-read Collection<int, \App\Models\MatterRelation> $matterRelationsParents
  * @property-read int|null $matter_relations_a_count
- * @property-read Collection<int, \App\Models\MatterRelation> $matterRelationsB
+ * @property-read Collection<int, \App\Models\MatterRelation> $matterRelationsChilds
  * @property-read int|null $matter_relations_b_count
  * @method static \Database\Factories\MatterFactory factory($count = null, $state = [])
  * @method static Builder|Matter newModelQuery()
@@ -47,16 +47,16 @@ class Matter extends Model
     ];
     public function annotations(): HasMany
     {
-        return $this->hasMany(Annotation::class, 'matter_id', 'id');
+        return $this->hasMany(Annotation::class);
     }
 
     public function matterRelationsParents(): HasMany
     {
-        return $this->hasMany(MatterRelation::class, 'class_a_id', 'id');
+        return $this->hasMany(MatterRelation::class, 'matter_a_id');
     }
 
     public function matterRelationsChilds(): HasMany
     {
-        return $this->hasMany(MatterRelation::class, 'class_b_id', 'id');
+        return $this->hasMany(MatterRelation::class, 'matter_b_id');
     }
 }
