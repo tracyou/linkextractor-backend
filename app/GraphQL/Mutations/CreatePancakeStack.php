@@ -15,7 +15,8 @@ class CreatePancakeStack
         protected Guard $guard,
         protected PancakeStackFactoryInterface $pancakeStackFactory,
         protected PancakeRepositoryInterface $pancakeRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws Exception

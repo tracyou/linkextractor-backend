@@ -44,7 +44,7 @@ class PlacesChange extends Command
         $status =  0;
         $status_message = "to go";
 
-        if ($visited == "visited" OR $visited == "yes") {
+        if ($visited == "visited" or $visited == "yes") {
             $status = 1;
             $status_message = "visited";
         }

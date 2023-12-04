@@ -14,11 +14,24 @@ use Illuminate\Support\Collection;
  *
  * @property int $id
  * @property string $name
- *
- * @property string $created_at
- * @property string $updated_at
- * @property string $deleted_at
- * @property-read Collection<int, Pancake> $pancakes
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Pancake> $pancakes
+ * @property-read int|null $pancakes_count
+ * @method static \Database\Factories\PancakeStackFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack query()
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|PancakeStack withoutTrashed()
+ * @mixin \Eloquent
  */
 class PancakeStack extends Model
 {

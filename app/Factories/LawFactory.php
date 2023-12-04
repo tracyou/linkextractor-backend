@@ -7,7 +7,6 @@ use App\Models\Law;
 
 class LawFactory implements LawFactoryInterface
 {
-
     public function create(string $title, string $text, bool $is_published): Law
     {
         $law = new Law();

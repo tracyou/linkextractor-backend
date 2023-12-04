@@ -19,7 +19,7 @@ trait UsesDatabase
         try {
             $this->parentRefreshTestDatabase();
         } catch (Exception $exception) {
-            if (! $this->connectionError($exception)) {
+            if (!$this->connectionError($exception)) {
                 throw $exception;
             }
 

@@ -12,7 +12,8 @@ class DeletePancakeStack
     public function __construct(
         protected Guard $guard,
         protected PancakeStackRepositoryInterface $pancakeStackRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws Exception
