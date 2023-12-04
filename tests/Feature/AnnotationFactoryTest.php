@@ -15,6 +15,7 @@ class AnnotationFactoryTest extends TestCase
     {
         $matter = (new MatterFactory)->create("matter", "#000000");
         $annotation = (new AnnotationFactory)->create($matter, "this is an annotation");
+        $this->assertEquals($matter->id, $annotation->matter->id);
         $this->assertEquals(1, $annotation->matter->count());
     }
 }
