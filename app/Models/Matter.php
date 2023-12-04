@@ -17,8 +17,13 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection<int, Annotation> $annotations
+ * @property-read Collection<int, \App\Models\Annotation> $annotations
  * @property-read int|null $annotations_count
+ * @property-read Collection<int, \App\Models\MatterRelation> $matterRelationsA
+ * @property-read int|null $matter_relations_a_count
+ * @property-read Collection<int, \App\Models\MatterRelation> $matterRelationsB
+ * @property-read int|null $matter_relations_b_count
+ * @method static \Database\Factories\MatterFactory factory($count = null, $state = [])
  * @method static Builder|Matter newModelQuery()
  * @method static Builder|Matter newQuery()
  * @method static Builder|Matter onlyTrashed()

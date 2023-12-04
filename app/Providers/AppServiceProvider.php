@@ -17,9 +17,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Relation::enforceMorphMap([
-           'matter'=>Matter::class,
-            'annotation'=>Annotation::class,
-            'matterRelation'=>MatterRelation::class,
+           'matter' => Matter::class,
+            'annotation' => Annotation::class,
+            'matterRelation' => MatterRelation::class,
         ]);
     }
 }

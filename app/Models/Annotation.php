@@ -5,6 +5,9 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Hashing\HashServiceProvider;
 use Illuminate\Support\Carbon;
 
 /**
@@ -16,7 +19,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Matter $matter
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Law> $law
+ * @property-read int|null $law_count
+ * @property-read \App\Models\Matter $matter
+ * @method static \Database\Factories\AnnotationFactory factory($count = null, $state = [])
  * @method static Builder|Annotation newModelQuery()
  * @method static Builder|Annotation newQuery()
  * @method static Builder|Annotation onlyTrashed()
@@ -38,5 +44,14 @@ final class Annotation extends Model
     public function matter(): BelongsTo
     {
         return $this->belongsTo(Matter::class, 'matter_id', 'id');
+    }
+
+    //relationship with Law
+    public function law(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Law::class)
+            ->withPivot('cursor_index')
+            ->using(LawAnnotation::class);
     }
 }

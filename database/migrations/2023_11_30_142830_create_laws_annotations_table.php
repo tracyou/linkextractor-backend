@@ -12,14 +12,14 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('annotations', function (Blueprint $table) {
+        Schema::create('annotation_law', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('matter_id');
-            $table->text("text");
+            $table->foreignUuid('law_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('annotation_id')->constrained()->cascadeOnDelete();
+            $table->integer('cursor_index');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('matter_id')->on('matters')->references('id');
         });
     }
 
@@ -28,6 +28,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('annotations');
+        Schema::dropIfExists('laws_annotations');
     }
 };

@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\MatterRelation
  *
+ * @property string $id
  * @property string $matter_a_id
  * @property string $matter_b_id
  * @property string $relation
@@ -17,8 +18,9 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Matter $matterA
- * @property-read Matter $matterB
+ * @property-read \App\Models\Matter $matterA
+ * @property-read \App\Models\Matter $matterB
+ * @method static \Database\Factories\MatterRelationFactory factory($count = null, $state = [])
  * @method static Builder|MatterRelation newModelQuery()
  * @method static Builder|MatterRelation newQuery()
  * @method static Builder|MatterRelation onlyTrashed()
@@ -26,6 +28,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|MatterRelation whereCreatedAt($value)
  * @method static Builder|MatterRelation whereDeletedAt($value)
  * @method static Builder|MatterRelation whereDescription($value)
+ * @method static Builder|MatterRelation whereId($value)
  * @method static Builder|MatterRelation whereMatterAId($value)
  * @method static Builder|MatterRelation whereMatterBId($value)
  * @method static Builder|MatterRelation whereRelation($value)

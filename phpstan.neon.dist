@@ -1,0 +1,12 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+    level: 8
+    checkMissingIterableValueType: true
+    checkGenericClassInNonGenericObjectType: false
+    excludePaths:
+        - ./app/Support/Tinker/ShortClassNames.php
+        - ./app/Http/Filters/AuditFilter.php
