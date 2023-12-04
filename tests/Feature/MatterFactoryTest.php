@@ -15,6 +15,8 @@ class MatterFactoryTest extends TestCase
     public function testMatterHasManyAnnotations(): void
     {
         $matter = (new MatterFactory)->create("matter", "#000000");
+        $annotation = (new AnnotationFactory)->create($matter, "this is an annotation");
+        $this->assertEquals(1, $matter->annotations->count());
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $matter->annotations);
     }
 
