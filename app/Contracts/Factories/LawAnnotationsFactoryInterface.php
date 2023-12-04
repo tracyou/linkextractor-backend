@@ -2,11 +2,11 @@
 
 namespace App\Contracts\Factories;
 
-use App\Models\LawAnnotation;
+use App\Models\LawAnnotationPivot;
 
 interface LawAnnotationsFactoryInterface
 {
 public function create(
     string $cursor_index
-): LawAnnotation;
+): LawAnnotationPivot;
 }

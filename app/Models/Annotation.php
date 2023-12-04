@@ -44,11 +44,11 @@ final class Annotation extends Model
     }
 
     //relationship with Law
-    public function law(): BelongsToMany
+    public function laws(): BelongsToMany
     {
         return $this
             ->belongsToMany(Law::class)
             ->withPivot('cursor_index')
-            ->using(LawAnnotation::class);
+            ->using(LawAnnotationPivot::class);
     }
 }

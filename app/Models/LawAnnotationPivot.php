@@ -22,18 +22,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $updated_at
  * @property string $deleted_at
  */
-final class LawAnnotation extends Pivot
+final class LawAnnotationPivot extends Pivot
 {
     protected $fillable = [
         'cursor_index'
     ];
 
-    public function annotation(): BelongsToMany
+    public function annotations(): BelongsToMany
     {
         return $this->belongsToMany(Annotation::class);
     }
 
-    public function law(): BelongsToMany
+    public function laws(): BelongsToMany
     {
         return $this
             ->belongsToMany(Law::class);

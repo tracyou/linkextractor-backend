@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
- * @property-read PancakeStack $stack
  */
 final class Law extends Model
 {
@@ -31,11 +30,11 @@ final class Law extends Model
         'isPublished'
     ];
 
-    public function annotation(): BelongsToMany
+    public function annotations(): BelongsToMany
     {
         return $this
             ->belongsToMany(Annotation::class)
             ->withPivot('cursor_index')
-            ->using(LawAnnotation::class);
+            ->using(LawAnnotationPivot::class);
     }
 }
