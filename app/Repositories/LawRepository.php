@@ -10,9 +10,10 @@ use Wimski\ModelRepositories\Repositories\AbstractModelRepository;
 
 class LawRepository extends AbstractModelRepository implements LawsRepositoryInterface
 {
+    public function __construct(Law $model)
+    {
+        $this->model = $model;
+    }
 
-public function __construct(Law $model)
-{
-    $this->model = $model;
-}
+
 }

@@ -19,7 +19,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Matter $matter
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Law> $law
+ * @property-read int|null $law_count
+ * @property-read \App\Models\Matter $matter
+ * @method static \Database\Factories\AnnotationFactory factory($count = null, $state = [])
  * @method static Builder|Annotation newModelQuery()
  * @method static Builder|Annotation newQuery()
  * @method static Builder|Annotation onlyTrashed()

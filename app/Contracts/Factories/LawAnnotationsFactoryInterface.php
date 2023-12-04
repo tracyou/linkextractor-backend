@@ -6,7 +6,7 @@ use App\Models\LawAnnotation;
 
 interface LawAnnotationsFactoryInterface
 {
-public function create(
-    string $cursor_index
-): LawAnnotation;
+    public function create(
+        string $cursor_index
+    ): LawAnnotation;
 }

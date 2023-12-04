@@ -8,7 +8,6 @@ use App\Models\LawAnnotation;
 
 class LawAnnotationFactory implements LawAnnotationsFactoryInterface
 {
-
     public function create(string $cursor_index): LawAnnotation
     {
         $lawAnnotation = new LawAnnotation();
