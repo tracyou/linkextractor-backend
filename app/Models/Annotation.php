@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Database\Factories\AnnotationFactory;
@@ -56,7 +58,7 @@ final class Annotation extends AbstractModel
     {
         return $this
             ->belongsToMany(Law::class)
-            ->withPivot('cursorIndex')
+            ->withPivot('cursor_index')
             ->using(LawAnnotationPivot::class);
     }
 }

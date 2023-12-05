@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Pancake
+ * App\Models\Law
  *
  * @property string                                       $id
  * @property string                                       $title
@@ -50,7 +47,7 @@ final class Law extends AbstractModel
     {
         return $this
             ->belongsToMany(Annotation::class)
-            ->withPivot('cursorIndex')
+            ->withPivot('cursor_index')
             ->using(LawAnnotationPivot::class);
     }
 }

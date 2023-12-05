@@ -16,11 +16,12 @@ return new class () extends Migration
         Schema::create('annotation_law', function (Blueprint $table) {
             $table->foreignUuid('law_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('annotation_id')->constrained()->cascadeOnDelete();
-            $table->integer('cursorIndex');
+            $table->integer('cursor_index');
+            $table->string('comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->primary(['law_id','annotation_id']);
+            $table->unique(['law_id', 'annotation_id', 'cursor_index']);
         });
     }
 
