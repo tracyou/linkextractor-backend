@@ -1,3 +1,9 @@
+extend type Query {
+    annotationsByLaw(
+        lawId: UUID! @rules(apply: ["exists:laws,id"]) @rename(attribute: "law_id")
+    ): [Annotation!]!
+}
+
 type Annotation {
     id: UUID!
     text: String!

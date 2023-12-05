@@ -49,7 +49,10 @@ final class Law extends AbstractModel
     {
         return $this
             ->belongsToMany(Annotation::class)
-            ->withPivot('cursor_index')
+            ->withPivot([
+                'cursor_index',
+                'comment',
+            ])
             ->using(LawAnnotationPivot::class);
     }
 }
