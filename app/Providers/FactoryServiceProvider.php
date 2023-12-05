@@ -19,6 +19,5 @@ class FactoryServiceProvider extends ServiceProvider
         $this->app->singleton(PancakeFactoryInterface::class, PancakeFactory::class);
         $this->app->singleton(PancakeStackFactoryInterface::class, PancakeStackFactory::class);
         $this->app->singleton(LawFactoryInterface::class, LawFactory::class);
-        $this->app->singleton(LawAnnotationsPivotFactoryInterface::class, LawAnnotationPivotPivotFactory::class);
     }
 }

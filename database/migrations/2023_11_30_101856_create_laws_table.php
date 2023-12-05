@@ -13,7 +13,7 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('laws', function (Blueprint $table) {
-            $table->uuid('id')->primary()->unique();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->text('text');
             $table->boolean('isPublished');
