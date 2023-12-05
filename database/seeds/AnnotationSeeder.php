@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Annotation;
+use App\Models\Matter;
 use Illuminate\Database\Seeder;
 
 class AnnotationSeeder extends Seeder
@@ -12,8 +13,12 @@ class AnnotationSeeder extends Seeder
      */
     public function run(): void
     {
-        Annotation::factory()
-            ->count(20)
-            ->create();
+        $matters = Matter::all();
+
+        foreach ($matters as $matter) {
+            Annotation::factory()->count(2)->create([
+                'matter_id' => $matter->id,
+            ]);
+        }
     }
 }
