@@ -15,6 +15,7 @@ return new class () extends Migration {
             $table->foreignUuid('related_matter_id')->constrained('matters');
             $table->string('relation');
             $table->string('description')->nullable();
+            $table->string('relation');
             $table->timestamps();
             $table->softDeletes();
         });
