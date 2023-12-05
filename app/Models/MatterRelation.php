@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use App\Enums\MatterRelationEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,14 +13,14 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\MatterRelation
  *
- * @property string $id
- * @property string $matter_a_id
- * @property string $matter_b_id
- * @property string $relation
- * @property string $description
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
+ * @property string                  $id
+ * @property string                  $matter_parent_id
+ * @property string                  $matter_child_id
+ * @property MatterRelationEnum      $relation
+ * @property string                  $description
+ * @property Carbon|null             $created_at
+ * @property Carbon|null             $updated_at
+ * @property Carbon|null             $deleted_at
  * @property-read \App\Models\Matter $matterParent
  * @property-read \App\Models\Matter $matterChild
  * @method static \Database\Factories\MatterRelationFactory factory($count = null, $state = [])
@@ -40,10 +43,16 @@ use Illuminate\Support\Carbon;
 final class MatterRelation extends AbstractModel
 {
     protected $table = 'matter_relations';
+
     public $incrementing = false;
+
     public $fillable = [
         'relation',
-        'description'
+        'description',
+    ];
+
+    protected $casts = [
+        'relation' => MatterRelationEnum::class,
     ];
 
     public function matterParent(): BelongsTo

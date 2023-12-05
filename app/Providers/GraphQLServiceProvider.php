@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\MatterRelationEnum;
 use Illuminate\Support\ServiceProvider;
 use MLL\GraphQLScalars\JSON;
 use Nuwave\Lighthouse\Exceptions\DefinitionException;
@@ -31,6 +32,7 @@ class GraphQLServiceProvider extends ServiceProvider
      * @var string[]
      */
     protected array $enums = [
+        MatterRelationEnum::class,
     ];
 
     /**
