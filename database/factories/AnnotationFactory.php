@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Annotation;
@@ -12,16 +14,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class AnnotationFactory extends Factory
 {
     protected $model = Annotation::class;
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+
     public function definition(): array
     {
         return [
             'matter_id' => Matter::factory(),
-            'text' => fake()->realText()
+            'text'      => $this->faker->sentence,
         ];
     }
 }
