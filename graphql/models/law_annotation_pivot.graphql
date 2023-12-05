@@ -1,0 +1,5 @@
+type LawAnnotationPivot {
+    id: UUID!
+    cursorIndex: Int! @rename(attribute: "cursor_index")
+    comment: String
+}

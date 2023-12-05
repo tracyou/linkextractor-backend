@@ -1,0 +1,10 @@
+type Annotation {
+    id: UUID!
+    text: String!
+    pivot: LawAnnotationPivot
+    createdAt: DateTime! @rename(attribute: "created_at")
+    updatedAt: DateTime! @rename(attribute: "updated_at")
+
+    matter: Matter! @belongsTo
+    laws: Law! @belongsTo
+}

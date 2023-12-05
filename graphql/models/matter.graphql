@@ -1,0 +1,14 @@
+extend type Query {
+    matters: [Matter!]! @all
+    matter(id: UUID! @eq @rules(apply: ["exists:matters,id"])): Matter! @find
+}
+
+type Matter {
+    id: UUID!
+    name: String!
+    color: String!
+    createdAt: DateTime! @rename(attribute: "created_at")
+    updatedAt: DateTime! @rename(attribute: "updated_at")
+
+    annotations: [Annotation!]! @hasMany
+}
