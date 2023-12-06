@@ -1,3 +1,7 @@
+extend type Query {
+    laws: [Law!]! @all
+}
+
 type Law {
     id: UUID!
     title: String!
