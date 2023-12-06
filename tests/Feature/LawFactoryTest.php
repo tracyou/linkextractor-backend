@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature;
+namespace Tests\Feature;
 
 use App\Factories\AnnotationFactory;
 use App\Factories\LawFactory;
@@ -9,7 +9,8 @@ use App\Models\Annotation;
 use App\Models\Law;
 use App\Models\Matter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Monolog\Test\TestCase;
+use Tests\TestCase;
+
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNotNull;
 
@@ -30,8 +31,12 @@ class LawFactoryTest extends TestCase
         $matter = Matter::factory()->create(["matter", "#000000"]);
         $annotation = Annotation::factory()->create([$matter, "this is an annotation"]);
 
-        assertNotNull($annotation->laws()->withPivot(['cursorIndex'])->get());
+        $law->annotations()->sync($law);
 
+        $this->assertDatabaseHas('annotation_law', [
+            'law_id' => $law->id,
+            'annotation_id' => $annotation->id
+        ]);
 
     }
 

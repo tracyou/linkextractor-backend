@@ -1,6 +1,7 @@
 <?php
 
 use Database\Seeders\AnnotationSeeder;
+use Database\Seeders\LawAnnotationPivotSeeder;
 use Database\Seeders\LawSeeder;
 use Database\Seeders\MatterRelationSeeder;
 use Database\Seeders\MatterSeeder;
@@ -16,6 +17,8 @@ class DatabaseSeeder extends Seeder
             MatterRelationSeeder::class,
             AnnotationSeeder::class,
             LawSeeder::class,
+            LawAnnotationPivotSeeder::class,
+
         ]);
     }
 }
