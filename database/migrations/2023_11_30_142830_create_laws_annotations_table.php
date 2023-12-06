@@ -14,7 +14,6 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('annotation_law', function (Blueprint $table) {
-//            $table->uuid('id')->primary();
             $table->foreignUuid('law_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('annotation_id')->constrained()->cascadeOnDelete();
             $table->integer('cursorIndex');

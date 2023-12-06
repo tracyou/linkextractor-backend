@@ -17,32 +17,53 @@ use function PHPUnit\Framework\assertNotNull;
 class LawFactoryTest extends TestCase
 {
     use RefreshDatabase;
+
     public function testCreateLaw()
     {
-        $law = Law::factory()->create(["rijbewijs", "je mag een brommer met je B rijbewijs rijen", false]);
-        assertEquals("rijbewijs", $law->title);
-        assertEquals("je mag een brommer met je B rijbewijs rijen", $law->text);
-        assertEquals(false, $law->isPublished);
+        // Arrange create law object
+        $law = Law::factory()->create(["title" => "rijbewijs", "text" => "je mag een brommer met je B rijbewijs rijen", "isPublished" => false]);
+
+        // Act
+        $title = $law->title;
+        $text = $law->text;
+        $isPublished = $law->isPublished;
+
+        // Assert
+        $this->assertInstanceOf(Law::class, $law, 'Created object should be an instance of Law');
+        $this->assertEquals("rijbewijs", $title, 'Title should be set correctly');
+        $this->assertEquals("je mag een brommer met je B rijbewijs rijen", $text, 'Text should be set correctly');
+        $this->assertEquals(false, $isPublished, 'isPublished should be set correctly');
     }
+
 
     public function testRelationWithAnnotation()
     {
-        $law = Law::factory()->create(["rijbewijs", "je mag een brommer met je B rijbewijs rijen", false]);
-        $matter = Matter::factory()->create(["matter", "#000000"]);
-        $annotation = Annotation::factory()->create([$matter, "this is an annotation"]);
+        //Arrange
+        $law = Law::factory()->create([
+            'title' => 'rijbewijs',
+            'text' => 'je mag een brommer met je B rijbewijs rijen',
+            'isPublished' => false
+        ]);
 
-        $law->annotations()->sync($law);
+        $matter = Matter::factory()->create([
+            'name' => 'matter',
+            'color' => '#001000'
+        ]);
 
+        $annotation = Annotation::factory()->create([
+            'matter_id' => $matter->id,
+            'text' => 'this is an annotation'
+        ]);
+
+        //Act
+        $law->annotations()->attach($annotation, ['cursorIndex' => 22]);
+
+        // Assert that the relationship exists in the pivot table
         $this->assertDatabaseHas('annotation_law', [
             'law_id' => $law->id,
             'annotation_id' => $annotation->id
         ]);
-
     }
-
-
-
-
 
 
 }

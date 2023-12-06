@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use App\Factories\AnnotationFactory;
 use App\Factories\MatterFactory;
+use App\Models\Annotation;
 use App\Models\Law;
+use App\Models\Matter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use function PHPUnit\Framework\assertNotNull;
@@ -23,12 +25,27 @@ class AnnotationFactoryTest extends TestCase
 
     public function testRelationshipWithLaw()
     {
-        $law = Law::factory()->create(["rijbewijs", "je mag een brommer met je B rijbewijs rijen", false]);
-        $matter = (new MatterFactory)->create("matter", "#000000");
-        $annotation = (new AnnotationFactory)->create($matter, "this is an annotation");
+        //Arrange
+        $law = Law::factory()->create([
+            'title' => 'rijbewijs',
+            'text' => 'je mag een brommer met je B rijbewijs rijen',
+            'isPublished' => false
+        ]);
 
-        $annotation->laws()->sync($annotation);
+        $matter = Matter::factory()->create([
+            'name' => 'matter',
+            'color' => '#001000'
+        ]);
 
+        $annotation = Annotation::factory()->create([
+            'matter_id' => $matter->id,
+            'text' => 'this is an annotation'
+        ]);
+
+        //Act
+        $annotation->laws()->attach($law, ['cursorIndex' => 222]);
+
+        // Assert that the relationship exists in the pivot table
         $this->assertDatabaseHas('annotation_law', [
             'law_id' => $law->id,
             'annotation_id' => $annotation->id
