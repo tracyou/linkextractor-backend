@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Annotation;
+use App\Models\Law;
+use App\Models\LawAnnotationPivot;
 use App\Models\Matter;
 use App\Models\MatterRelation;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -20,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
            'matter' => Matter::class,
             'annotation' => Annotation::class,
             'matterRelation' => MatterRelation::class,
+            'law' => Law::class,
+            'lawAnnotationPivot' => LawAnnotationPivot::class,
         ]);
     }
 }

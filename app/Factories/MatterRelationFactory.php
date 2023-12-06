@@ -14,8 +14,8 @@ class MatterRelationFactory
             'description' => $description
         ]);
 
-        $matterRelation->matterA()->associate($matterA);
-        $matterRelation->matterB()->associate($matterB);
+        $matterRelation->matterParent()->associate($matterA);
+        $matterRelation->matterChild()->associate($matterB);
 
         $matterRelation->save();
 

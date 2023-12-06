@@ -37,7 +37,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Annotation withoutTrashed()
  * @mixin Eloquent
  */
-final class Annotation extends Model
+final class Annotation extends AbstractModel
 {
     protected $table = 'annotations';
 

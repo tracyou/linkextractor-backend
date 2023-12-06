@@ -38,7 +38,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Matter withoutTrashed()
  * @mixin Eloquent
  */
-class Matter extends Model
+class Matter extends AbstractModel
 {
     protected $table = 'matters';
     protected $fillable = [

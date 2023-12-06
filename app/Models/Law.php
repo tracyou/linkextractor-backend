@@ -38,7 +38,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Law withoutTrashed()
  * @mixin \Eloquent
  */
-final class Law extends Model
+final class Law extends AbstractModel
 {
     protected $fillable = [
         'title',

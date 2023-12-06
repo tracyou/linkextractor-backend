@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class GenerateRepository extends Command
+final class GenerateRepositoryCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -18,7 +18,7 @@ class GenerateRepository extends Command
      *
      * @var string
      */
-    protected $description = 'Generate Wimski Model Repositories repository and contract for a model';
+    protected $description = 'Generate Wimski AbstractModel Repositories repository and contract for a model';
 
     /**
      * Execute the console command.

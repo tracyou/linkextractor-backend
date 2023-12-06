@@ -37,7 +37,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|MatterRelation withoutTrashed()
  * @mixin Eloquent
  */
-final class MatterRelation extends Model
+final class MatterRelation extends AbstractModel
 {
     protected $table = 'matter_relations';
     public $incrementing = false;
@@ -46,12 +46,12 @@ final class MatterRelation extends Model
         'description'
     ];
 
-    public function matterA(): BelongsTo
+    public function matterParent(): BelongsTo
     {
         return $this->belongsTo(Matter::class, 'matter_a_id', 'id');
     }
 
-    public function matterB(): BelongsTo
+    public function matterChild(): BelongsTo
     {
         return $this->belongsTo(Matter::class, 'matter_b_id', 'id');
     }

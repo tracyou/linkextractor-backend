@@ -20,7 +20,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Model
+    | AbstractModel
     |--------------------------------------------------------------------------
     |
     | Configure how attached file information in stored on attachables.
@@ -115,7 +115,7 @@ return [
         // the attachment configuration to `false` (instead of an array with steps).
         'merge-default' => false,
 
-        // If no specific variants are set for a clipped file on a Model, these
+        // If no specific variants are set for a clipped file on a AbstractModel, these
         // variant definitions will be used.
         'default' => [
 
