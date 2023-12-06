@@ -18,8 +18,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read \App\Models\Matter $matterA
- * @property-read \App\Models\Matter $matterB
+ * @property-read \App\Models\Matter $matterParent
+ * @property-read \App\Models\Matter $matterChild
  * @method static \Database\Factories\MatterRelationFactory factory($count = null, $state = [])
  * @method static Builder|MatterRelation newModelQuery()
  * @method static Builder|MatterRelation newQuery()
@@ -48,11 +48,11 @@ final class MatterRelation extends AbstractModel
 
     public function matterParent(): BelongsTo
     {
-        return $this->belongsTo(Matter::class, 'matter_a_id', 'id');
+        return $this->belongsTo(Matter::class, 'matter_parent_id', 'id');
     }
 
     public function matterChild(): BelongsTo
     {
-        return $this->belongsTo(Matter::class, 'matter_b_id', 'id');
+        return $this->belongsTo(Matter::class, 'matter_child_id', 'id');
     }
 }

@@ -20,8 +20,8 @@ class MatterRelationFactory extends Factory
     public function definition(): array
     {
         return [
-            'matter_a_id' => Matter::factory(),
-            'matter_b_id' => Matter::factory(),
+            'matter_parent_id' => Matter::factory(),
+            'matter_child_id' => Matter::factory(),
             'relation' => fake()->randomElement(['requires 1', 'requires 0 or 1', 'requires 1 or more', 'requires 0 or more']),
             'description' => fake()->sentence(),
         ];

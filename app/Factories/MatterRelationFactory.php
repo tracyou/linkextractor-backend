@@ -2,10 +2,11 @@
 
 namespace App\Factories;
 
+use App\Contracts\Factories\MatterRelationFactoryInterface;
 use App\Models\Matter;
 use App\Models\MatterRelation;
 
-class MatterRelationFactory
+class MatterRelationFactory implements MatterRelationFactoryInterface
 {
     public function create(Matter $matterA, Matter $matterB, string $relation, string $description): MatterRelation
     {

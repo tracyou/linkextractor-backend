@@ -2,9 +2,10 @@
 
 namespace App\Factories;
 
+use App\Contracts\Factories\MatterFactoryInterface;
 use App\Models\Matter;
 
-class MatterFactory
+class MatterFactory implements MatterFactoryInterface
 {
     public function create(string $name, string $color): Matter
     {
