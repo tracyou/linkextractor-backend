@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class LawFactory extends Factory
 {
     protected $model = Law::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,9 +20,9 @@ class LawFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->title,
-            'text' => $this->faker->text,
-            'isPublished' => $this->faker->boolean
+            'title'       => $this->faker->title,
+            'text'        => $this->faker->text,
+            'isPublished' => $this->faker->boolean,
         ];
     }
 }

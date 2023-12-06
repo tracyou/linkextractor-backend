@@ -17,7 +17,7 @@ class LawAnnotationPivotFactory extends Factory
     public function definition(): array
     {
         return [
-            'cursorIndex' => $this->faker->numberBetween()
+            'cursorIndex' => $this->faker->numberBetween(),
         ];
     }
 }

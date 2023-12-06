@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Collection<int, Law> $law
  * @property-read int|null $law_count
  * @property string $cursorIndex
+ * @method static \Database\Factories\LawAnnotationPivotFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LawAnnotationPivot query()

@@ -13,15 +13,15 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\Annotation
  *
- * @property string $id
- * @property string $matter_id
- * @property string $text
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
+ * @property string                    $id
+ * @property string                    $matter_id
+ * @property string                    $text
+ * @property Carbon|null               $created_at
+ * @property Carbon|null               $updated_at
+ * @property Carbon|null               $deleted_at
  * @property-read Collection<int, Law> $law
- * @property-read int|null $law_count
- * @property-read Matter $matter
+ * @property-read int|null             $law_count
+ * @property-read Matter               $matter
  * @method static AnnotationFactory factory($count = null, $state = [])
  * @method static Builder|Annotation newModelQuery()
  * @method static Builder|Annotation newQuery()
@@ -40,10 +40,12 @@ use Illuminate\Support\Carbon;
 final class Annotation extends Model
 {
     protected $table = 'annotations';
+
     protected $fillable = [
         'matter_id',
-        'text'
+        'text',
     ];
+
     public function matter(): BelongsTo
     {
         return $this->belongsTo(Matter::class);
