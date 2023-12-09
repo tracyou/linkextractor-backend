@@ -15,6 +15,7 @@
         "laravel/framework": "^10.0",
         "laravel/passport": "^11.8",
         "laravel/tinker": "^2.0",
+        "maatwebsite/excel": "^3.1",
         "mll-lab/graphql-php-scalars": "^6.1",
         "mll-lab/laravel-graphiql": "^2.0",
         "nuwave/lighthouse": "^6.6",
