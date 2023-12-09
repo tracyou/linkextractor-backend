@@ -9,9 +9,7 @@ class PancakeStackFactory extends Factory
 {
     protected $model = PancakeStack::class;
 
-    /**
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     public function definition(): array
     {
         return [

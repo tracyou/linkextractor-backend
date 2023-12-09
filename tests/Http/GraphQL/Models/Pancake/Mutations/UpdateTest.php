@@ -12,14 +12,12 @@ class UpdateTest extends AbstractHttpGraphQLTestCase
         parent::setUp();
 
         Pancake::factory()->create([
-            'id' => 111,
+            'id'       => 111,
             'diameter' => 20,
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_updates_a_pancake(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -35,16 +33,14 @@ class UpdateTest extends AbstractHttpGraphQLTestCase
         ')->assertJson([
             'data' => [
                 'updatePancake' => [
-                    'id' => 111,
+                    'id'       => 111,
                     'diameter' => 10,
                 ],
             ],
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_for_non_existing_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

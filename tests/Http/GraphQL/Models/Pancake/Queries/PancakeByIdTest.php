@@ -13,20 +13,18 @@ class PancakeByIdTest extends AbstractHttpGraphQLTestCase
 
         Pancake::factory()->createMany([
             [
-                'id'   => 111,
+                'id' => 111,
             ],
             [
-                'id'   => 222,
+                'id' => 222,
             ],
             [
-                'id'   => 333,
+                'id' => 333,
             ],
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_pancake_by_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -44,9 +42,7 @@ class PancakeByIdTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_when_the_pancake_does_not_exist(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

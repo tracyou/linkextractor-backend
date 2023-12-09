@@ -21,9 +21,9 @@ class MatterRelationFactory extends Factory
     {
         return [
             'matter_parent_id' => Matter::factory(),
-            'matter_child_id' => Matter::factory(),
-            'relation' => fake()->randomElement(['requires 1', 'requires 0 or 1', 'requires 1 or more', 'requires 0 or more']),
-            'description' => fake()->sentence(),
+            'matter_child_id'  => Matter::factory(),
+            'relation'         => fake()->randomElement(['requires 1', 'requires 0 or 1', 'requires 1 or more', 'requires 0 or more']),
+            'description'      => fake()->sentence(),
         ];
     }
 }

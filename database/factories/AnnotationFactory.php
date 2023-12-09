@@ -21,7 +21,7 @@ class AnnotationFactory extends Factory
     {
         return [
             'matter_id' => Matter::factory(),
-            'text' => fake()->realText()
+            'text'      => fake()->realText(),
         ];
     }
 }

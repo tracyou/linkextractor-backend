@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Exception;
@@ -7,19 +9,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 /**
- * App\Models\Pancake
+ * App\Models\Pancake.
  *
- * @property int $id
- * @property int $diameter
- * @property int|null $pancake_stack_id
+ * @property int                             $id
+ * @property int                             $diameter
+ * @property int|null                        $pancake_stack_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\PancakeStack|null $stack
- * @method static \Database\Factories\PancakeFactory factory($count = null, $state = [])
+ *
+ * @method static \Database\Factories\PancakeFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Pancake newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Pancake newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Pancake onlyTrashed()
@@ -32,23 +34,20 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder|Pancake whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Pancake withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Pancake withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Pancake extends Model
+final class Pancake extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $fillable = [
         'diameter',
     ];
 
-    /**
-     * @param array<string, mixed> $attributes
-     */
+    /** @param array<string, mixed> $attributes */
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -67,9 +66,7 @@ class Pancake extends Model
     //      Methods
     // ------------------------------------------------------------------------------
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function removeFromStack(): void
     {
         if ($this->stack === null) {

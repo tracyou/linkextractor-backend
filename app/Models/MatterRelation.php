@@ -1,40 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Carbon;
 
 /**
- * App\Models\MatterRelation
+ * App\Models\MatterRelation.
  *
- * @property string $id
- * @property string $matter_a_id
- * @property string $matter_b_id
- * @property string $relation
- * @property string $description
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read \App\Models\Matter $matterParent
+ * @property string                          $id
+ * @property string                          $matter_parent_id
+ * @property string                          $matter_child_id
+ * @property string                          $relation
+ * @property string                          $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\Matter $matterChild
+ * @property-read \App\Models\Matter $matterParent
+ *
  * @method static \Database\Factories\MatterRelationFactory factory($count = null, $state = [])
- * @method static Builder|MatterRelation newModelQuery()
- * @method static Builder|MatterRelation newQuery()
- * @method static Builder|MatterRelation onlyTrashed()
- * @method static Builder|MatterRelation query()
- * @method static Builder|MatterRelation whereCreatedAt($value)
- * @method static Builder|MatterRelation whereDeletedAt($value)
- * @method static Builder|MatterRelation whereDescription($value)
- * @method static Builder|MatterRelation whereId($value)
- * @method static Builder|MatterRelation whereMatterAId($value)
- * @method static Builder|MatterRelation whereMatterBId($value)
- * @method static Builder|MatterRelation whereRelation($value)
- * @method static Builder|MatterRelation whereUpdatedAt($value)
- * @method static Builder|MatterRelation withTrashed()
- * @method static Builder|MatterRelation withoutTrashed()
+ * @method static Builder|MatterRelation                    newModelQuery()
+ * @method static Builder|MatterRelation                    newQuery()
+ * @method static Builder|MatterRelation                    onlyTrashed()
+ * @method static Builder|MatterRelation                    query()
+ * @method static Builder|MatterRelation                    whereCreatedAt($value)
+ * @method static Builder|MatterRelation                    whereDeletedAt($value)
+ * @method static Builder|MatterRelation                    whereDescription($value)
+ * @method static Builder|MatterRelation                    whereId($value)
+ * @method static Builder|MatterRelation                    whereMatterChildId($value)
+ * @method static Builder|MatterRelation                    whereMatterParentId($value)
+ * @method static Builder|MatterRelation                    whereRelation($value)
+ * @method static Builder|MatterRelation                    whereUpdatedAt($value)
+ * @method static Builder|MatterRelation                    withTrashed()
+ * @method static Builder|MatterRelation                    withoutTrashed()
+ *
  * @mixin Eloquent
  */
 final class MatterRelation extends AbstractModel
@@ -43,7 +46,7 @@ final class MatterRelation extends AbstractModel
     public $incrementing = false;
     public $fillable = [
         'relation',
-        'description'
+        'description',
     ];
 
     public function matterParent(): BelongsTo

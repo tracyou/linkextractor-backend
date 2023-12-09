@@ -16,9 +16,7 @@ class DeleteTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_deletes_a_pancake_stack(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -32,9 +30,7 @@ class DeleteTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_for_non_existing_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

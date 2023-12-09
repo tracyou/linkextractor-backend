@@ -1,11 +1,7 @@
 <?php
 
-use App\Enums\RoleNameEnum;
-use App\Enums\UserStatusEnum;
-use App\Models\Company;
 use App\Models\Pancake;
 use App\Models\PancakeStack;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class PancakeStackSeeder extends Seeder

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -12,30 +14,22 @@ use Nuwave\Lighthouse\Schema\Types\Scalars\DateTime;
 
 class GraphQLServiceProvider extends ServiceProvider
 {
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected array $scalars = [
         JSON::class,
     ];
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected array $types = [
         Date::class,
         DateTime::class,
     ];
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected array $enums = [
     ];
 
-    /**
-     * @throws DefinitionException
-     */
+    /** @throws DefinitionException */
     public function boot(TypeRegistry $typeRegistry): void
     {
         foreach ($this->scalars as $scalar) {

@@ -37,9 +37,7 @@ class CreateTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_creates_a_pancake_stack(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -57,7 +55,7 @@ class CreateTest extends AbstractHttpGraphQLTestCase
         ')->assertJson([
             'data' => [
                 'createPancakeStack' => [
-                    'name' => 'New Pancake Stack',
+                    'name'     => 'New Pancake Stack',
                     'pancakes' => [
                         [ 'id' => 111 ],
                         [ 'id' => 222 ],
@@ -69,9 +67,7 @@ class CreateTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_for_non_existing_pancake_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -89,9 +85,7 @@ class CreateTest extends AbstractHttpGraphQLTestCase
         ')->assertGraphQLValidationError('input.pancakes.3', 'The selected input.pancakes.3 is invalid.');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_for_duplicate_stack_name(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

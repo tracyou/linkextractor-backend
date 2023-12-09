@@ -6,9 +6,7 @@ use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
 class CreateTest extends AbstractHttpGraphQLTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function it_creates_a_pancake(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
