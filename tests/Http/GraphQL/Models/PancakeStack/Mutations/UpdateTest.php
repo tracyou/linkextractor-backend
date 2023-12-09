@@ -25,7 +25,7 @@ class UpdateTest extends AbstractHttpGraphQLTestCase
 
         /** @var PancakeStack $stack */
         $stack = PancakeStack::factory()->create([
-            'id' => 111,
+            'id'   => 111,
             'name' => 'Test1',
         ]);
 
@@ -38,9 +38,7 @@ class UpdateTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_updates_a_pancake_stack(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -60,8 +58,8 @@ class UpdateTest extends AbstractHttpGraphQLTestCase
         ')->assertJson([
             'data' => [
                 'updatePancakeStack' => [
-                    'id' => 111,
-                    'name' => 'New name',
+                    'id'       => 111,
+                    'name'     => 'New name',
                     'pancakes' => [
                         [ 'id' => 111 ],
                         [ 'id' => 222 ],
@@ -73,14 +71,12 @@ class UpdateTest extends AbstractHttpGraphQLTestCase
         ]);
 
         $this->assertDatabaseHas('pancakes', [
-            'id' => 333,
+            'id'               => 333,
             'pancake_stack_id' => null,
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_for_non_existing_stack_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -97,9 +93,7 @@ class UpdateTest extends AbstractHttpGraphQLTestCase
         ')->assertGraphQLValidationError('input.id', 'The selected input.id is invalid.');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_for_non_existing_pancake_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

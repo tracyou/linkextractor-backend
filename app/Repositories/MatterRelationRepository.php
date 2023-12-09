@@ -11,7 +11,7 @@ use Wimski\ModelRepositories\Repositories\AbstractModelRepository;
 /**
  * @extends AbstractModelRepository<MatterRelation>
  */
-class MatterRelationRepository extends AbstractModelRepository implements MatterRelationRepositoryInterface
+final class MatterRelationRepository extends AbstractModelRepository implements MatterRelationRepositoryInterface
 {
     public function __construct(MatterRelation $model)
     {

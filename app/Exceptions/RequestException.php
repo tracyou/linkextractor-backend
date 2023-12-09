@@ -12,10 +12,7 @@ class RequestException extends Exception
 {
     protected RequestInterface $request;
 
-    /**
-     * @param RequestInterface $request
-     * @param Throwable        $exception
-     */
+
     public function __construct(RequestInterface $request, Throwable $exception)
     {
         parent::__construct($exception->getMessage(), $exception->getCode(), $exception);
@@ -23,9 +20,7 @@ class RequestException extends Exception
         $this->request = $request;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     public function getRequestData(): array
     {
         return [

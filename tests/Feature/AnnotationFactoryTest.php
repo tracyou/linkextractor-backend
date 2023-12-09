@@ -9,7 +9,6 @@ use App\Models\Law;
 use App\Models\Matter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use function PHPUnit\Framework\assertNotNull;
 
 class AnnotationFactoryTest extends TestCase
 {
@@ -17,8 +16,8 @@ class AnnotationFactoryTest extends TestCase
 
     public function testAnnotationBelongsToMatter(): void
     {
-        $matter = (new MatterFactory)->create("matter", "#000000");
-        $annotation = (new AnnotationFactory)->create($matter, "this is an annotation");
+        $matter = (new MatterFactory())->create("matter", "#000000");
+        $annotation = (new AnnotationFactory())->create($matter, "this is an annotation");
         $this->assertEquals($matter->id, $annotation->matter->id);
         $this->assertEquals(1, $annotation->matter->count());
     }
@@ -27,19 +26,19 @@ class AnnotationFactoryTest extends TestCase
     {
         //Arrange
         $law = Law::factory()->create([
-            'title' => 'rijbewijs',
-            'text' => 'je mag een brommer met je B rijbewijs rijen',
-            'isPublished' => false
+            'title'       => 'rijbewijs',
+            'text'        => 'je mag een brommer met je B rijbewijs rijen',
+            'is_published' => false,
         ]);
 
         $matter = Matter::factory()->create([
-            'name' => 'matter',
-            'color' => '#001000'
+            'name'  => 'matter',
+            'color' => '#001000',
         ]);
 
         $annotation = Annotation::factory()->create([
             'matter_id' => $matter->id,
-            'text' => 'this is an annotation'
+            'text'      => 'this is an annotation',
         ]);
 
         //Act
@@ -47,8 +46,8 @@ class AnnotationFactoryTest extends TestCase
 
         // Assert that the relationship exists in the pivot table
         $this->assertDatabaseHas('annotation_law', [
-            'law_id' => $law->id,
-            'annotation_id' => $annotation->id
+            'law_id'        => $law->id,
+            'annotation_id' => $annotation->id,
         ]);
     }
 }

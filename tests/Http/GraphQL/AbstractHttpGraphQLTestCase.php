@@ -4,7 +4,6 @@ namespace Tests\Http\GraphQL;
 
 use Illuminate\Foundation\Testing\TestCase;
 use Nuwave\Lighthouse\Testing\MakesGraphQLRequests;
-use Tests\Traits\ActsAsUser;
 use Tests\Traits\CreatesApplication;
 use Tests\Traits\UsesDatabase;
 
@@ -15,8 +14,8 @@ abstract class AbstractHttpGraphQLTestCase extends TestCase
     use UsesDatabase;
 
     /**
-     * @param string $operation
-     * @param mixed[]  $data
+     * @param mixed[] $data
+     *
      * @return mixed[]
      */
     protected function graphQlJsonData(string $operation, array $data): array

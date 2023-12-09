@@ -7,9 +7,7 @@ use Illuminate\Database\Seeder;
 
 class AnnotationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    /** Run the database seeds. */
     public function run(): void
     {
         Annotation::factory()

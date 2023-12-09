@@ -1,22 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\GraphQL\Queries;
 
 use App\Contracts\Repositories\PancakeRepositoryInterface;
 use App\Models\Pancake;
 
-class PancakeById
+final class PancakeById
 {
     public function __construct(
         protected PancakeRepositoryInterface $pancakeRepository,
     ) {
     }
 
-    /**
-     * @param null $_
-     * @param array<string, mixed> $args
-     * @return Pancake
-     */
+    /** @param array<string, mixed> $args */
     public function __invoke(null $_, array $args): Pancake
     {
         $id = $args['id'];

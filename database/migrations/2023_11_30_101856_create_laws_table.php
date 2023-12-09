@@ -7,16 +7,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
-    /**
-     * Run the migrations.
-     */
+    /** Run the migrations. */
     public function up(): void
     {
         Schema::create('laws', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
             $table->text('text');
-            $table->boolean('isPublished');
+            $table->boolean('is_published');
             $table->timestamps();
             $table->softDeletes();
 
@@ -24,9 +22,7 @@ return new class () extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+    /** Reverse the migrations. */
     public function down(): void
     {
         Schema::dropIfExists('laws');

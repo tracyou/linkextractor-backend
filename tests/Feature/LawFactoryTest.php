@@ -2,17 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Factories\AnnotationFactory;
-use App\Factories\LawFactory;
-use App\Factories\MatterFactory;
 use App\Models\Annotation;
 use App\Models\Law;
 use App\Models\Matter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-
-use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertNotNull;
 
 class LawFactoryTest extends TestCase
 {
@@ -21,12 +15,12 @@ class LawFactoryTest extends TestCase
     public function testCreateLaw()
     {
         // Arrange create law object
-        $law = Law::factory()->create(["title" => "rijbewijs", "text" => "je mag een brommer met je B rijbewijs rijen", "isPublished" => false]);
+        $law = Law::factory()->create(["title" => "rijbewijs", "text" => "je mag een brommer met je B rijbewijs rijen", "is_published" => false]);
 
         // Act
         $title = $law->title;
         $text = $law->text;
-        $isPublished = $law->isPublished;
+        $isPublished = $law->is_published;
 
         // Assert
         $this->assertInstanceOf(Law::class, $law, 'Created object should be an instance of Law');
@@ -40,19 +34,19 @@ class LawFactoryTest extends TestCase
     {
         //Arrange
         $law = Law::factory()->create([
-            'title' => 'rijbewijs',
-            'text' => 'je mag een brommer met je B rijbewijs rijen',
-            'isPublished' => false
+            'title'       => 'rijbewijs',
+            'text'        => 'je mag een brommer met je B rijbewijs rijen',
+            'isPublished' => false,
         ]);
 
         $matter = Matter::factory()->create([
-            'name' => 'matter',
-            'color' => '#001000'
+            'name'  => 'matter',
+            'color' => '#001000',
         ]);
 
         $annotation = Annotation::factory()->create([
             'matter_id' => $matter->id,
-            'text' => 'this is an annotation'
+            'text'      => 'this is an annotation',
         ]);
 
         //Act
@@ -60,8 +54,8 @@ class LawFactoryTest extends TestCase
 
         // Assert that the relationship exists in the pivot table
         $this->assertDatabaseHas('annotation_law', [
-            'law_id' => $law->id,
-            'annotation_id' => $annotation->id
+            'law_id'        => $law->id,
+            'annotation_id' => $annotation->id,
         ]);
     }
 

@@ -57,9 +57,7 @@ class PancakeStacksTest extends AbstractHttpGraphQLTestCase
         $stack3->pancakes()->saveMany([$pancake5]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_all_pancake_stacks(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -75,7 +73,7 @@ class PancakeStacksTest extends AbstractHttpGraphQLTestCase
             'data' => [
                 'pancakeStacks' => [
                     [
-                        'id' => 111,
+                        'id'       => 111,
                         'pancakes' => [
                             [
                                 'id' => 111,
@@ -86,7 +84,7 @@ class PancakeStacksTest extends AbstractHttpGraphQLTestCase
                         ],
                     ],
                     [
-                        'id' => 222,
+                        'id'       => 222,
                         'pancakes' => [
                             [
                                 'id' => 333,
@@ -97,7 +95,7 @@ class PancakeStacksTest extends AbstractHttpGraphQLTestCase
                         ],
                     ],
                     [
-                        'id' => 333,
+                        'id'       => 333,
                         'pancakes' => [
                             [
                                 'id' => 555,

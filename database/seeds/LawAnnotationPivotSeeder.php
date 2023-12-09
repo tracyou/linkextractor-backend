@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Annotation;
 use App\Models\Law;
-use App\Models\LawAnnotationPivot;
 use Illuminate\Database\Seeder;
 
 class LawAnnotationPivotSeeder extends Seeder

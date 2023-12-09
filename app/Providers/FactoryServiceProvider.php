@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
+use App\Contracts\Factories\AnnotationFactoryInterface;
 use App\Contracts\Factories\LawFactoryInterface;
 use App\Contracts\Factories\MatterFactoryInterface;
 use App\Contracts\Factories\MatterRelationFactoryInterface;

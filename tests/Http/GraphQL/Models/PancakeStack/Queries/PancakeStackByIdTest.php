@@ -57,9 +57,7 @@ class PancakeStackByIdTest extends AbstractHttpGraphQLTestCase
         $stack3->pancakes()->saveMany([$pancake5]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_pancake_stack_by_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -74,7 +72,7 @@ class PancakeStackByIdTest extends AbstractHttpGraphQLTestCase
         ')->assertJson([
             'data' => [
                 'pancakeStackById' => [
-                    'id' => 111,
+                    'id'       => 111,
                     'pancakes' => [
                         ['id' => 111],
                         ['id' => 222],
@@ -84,9 +82,7 @@ class PancakeStackByIdTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_when_the_pancake_stack_does_not_exist(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\GraphQL\Mutations;
 
 use App\Contracts\Factories\PancakeStackFactoryInterface;
@@ -9,7 +11,7 @@ use App\Models\PancakeStack;
 use Exception;
 use Illuminate\Contracts\Auth\Guard;
 
-class CreatePancakeStack
+final class CreatePancakeStack
 {
     public function __construct(
         protected Guard $guard,
@@ -19,13 +21,15 @@ class CreatePancakeStack
     }
 
     /**
+     * @param array<mixed, mixed> $args
+     *
      * @throws Exception
      */
     public function __invoke($_, array $args): PancakeStack
     {
         $name = $args['name'];
 
-        /** @var array<int, int> $pancakes */
+        /** @var array<int, string> $pancakeIds */
         $pancakeIds = $args['pancakes'];
         $pancakeIds = collect($pancakeIds)->map(fn (string $id) => (int) $id);
 

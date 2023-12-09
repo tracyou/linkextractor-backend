@@ -13,20 +13,18 @@ class PancakesTest extends AbstractHttpGraphQLTestCase
 
         Pancake::factory()->createMany([
             [
-                'id'   => 111,
+                'id' => 111,
             ],
             [
-                'id'   => 222,
+                'id' => 222,
             ],
             [
-                'id'   => 333,
+                'id' => 333,
             ],
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_all_pancakes(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

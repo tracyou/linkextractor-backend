@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -20,11 +22,7 @@ final class GenerateRepositoryCommand extends Command
      */
     protected $description = 'Generate Wimski AbstractModel Repositories repository and contract for a model';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
+    /** Execute the console command. */
     public function handle(): int
     {
         $model = $this->argument('model');
@@ -33,8 +31,8 @@ final class GenerateRepositoryCommand extends Command
         $model = ucfirst($model);
 
         $this->call('make:repository', [
-            'model' => 'App\\Models\\' . $model,
-            '--contract' => 'App\\Contracts\\Repositories\\' . $model . 'RepositoryInterface',
+            'model'        => 'App\\Models\\' . $model,
+            '--contract'   => 'App\\Contracts\\Repositories\\' . $model . 'RepositoryInterface',
             '--repository' => 'App\\Repositories\\' . $model . 'Repository',
         ]);
 

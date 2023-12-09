@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\GraphQL\Mutations;
 
 use App\Contracts\Repositories\PancakeRepositoryInterface;
@@ -7,7 +9,7 @@ use App\Models\Pancake;
 use Exception;
 use Illuminate\Contracts\Auth\Guard;
 
-class DeletePancake
+final class DeletePancake
 {
     public function __construct(
         protected Guard $guard,
@@ -16,6 +18,8 @@ class DeletePancake
     }
 
     /**
+     * @param array<mixed, mixed> $args
+     *
      * @throws Exception
      */
     public function __invoke($_, array $args): bool
@@ -25,6 +29,6 @@ class DeletePancake
         /** @var Pancake $pancake */
         $pancake = $this->pancakeRepository->find($id);
 
-        return $pancake->delete();
+        return (bool) $pancake->delete();
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factories;
 
 use App\Contracts\Factories\PancakeFactoryInterface;
 use App\Models\Pancake;
 
-class PancakeFactory implements PancakeFactoryInterface
+final class PancakeFactory implements PancakeFactoryInterface
 {
     public function create(int $diameter): Pancake
     {

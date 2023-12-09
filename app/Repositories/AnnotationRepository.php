@@ -11,7 +11,7 @@ use Wimski\ModelRepositories\Repositories\AbstractModelRepository;
 /**
  * @extends AbstractModelRepository<Annotation>
  */
-class AnnotationRepository extends AbstractModelRepository implements AnnotationRepositoryInterface
+final class AnnotationRepository extends AbstractModelRepository implements AnnotationRepositoryInterface
 {
     public function __construct(Annotation $model)
     {

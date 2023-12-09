@@ -1,0 +1,51 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Property App\\\\Console\\\\Kernel\\:\\:\\$commands type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Console/Kernel.php
+
+		-
+			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\CreatePancake\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			count: 1
+			path: app/GraphQL/Mutations/CreatePancake.php
+
+		-
+			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\CreatePancakeStack\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			count: 1
+			path: app/GraphQL/Mutations/CreatePancakeStack.php
+
+		-
+			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\DeletePancake\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			count: 1
+			path: app/GraphQL/Mutations/DeletePancake.php
+
+		-
+			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\DeletePancakeStack\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			count: 1
+			path: app/GraphQL/Mutations/DeletePancakeStack.php
+
+		-
+			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\UpdatePancake\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			count: 1
+			path: app/GraphQL/Mutations/UpdatePancake.php
+
+		-
+			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\UpdatePancakeStack\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			count: 1
+			path: app/GraphQL/Mutations/UpdatePancakeStack.php
+
+		-
+			message: "#^Parameter \\#1 \\$enumClass of class Nuwave\\\\Lighthouse\\\\Schema\\\\Types\\\\LaravelEnumType constructor expects class\\-string\\<TEnum of BenSampo\\\\Enum\\\\Enum\\<TValue\\>\\>, string given\\.$#"
+			count: 1
+			path: app/Providers/GraphQLServiceProvider.php
+
+		-
+			message: "#^Parameter \\#1 \\$type of method Nuwave\\\\Lighthouse\\\\Schema\\\\TypeRegistry\\:\\:overwrite\\(\\) expects GraphQL\\\\Type\\\\Definition\\\\NamedType&GraphQL\\\\Type\\\\Definition\\\\Type, object given\\.$#"
+			count: 1
+			path: app/Providers/GraphQLServiceProvider.php
+
+		-
+			message: "#^Parameter \\#1 \\$type of method Nuwave\\\\Lighthouse\\\\Schema\\\\TypeRegistry\\:\\:register\\(\\) expects GraphQL\\\\Type\\\\Definition\\\\NamedType&GraphQL\\\\Type\\\\Definition\\\\Type, object given\\.$#"
+			count: 1
+			path: app/Providers/GraphQLServiceProvider.php

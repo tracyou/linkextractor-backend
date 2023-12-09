@@ -78,9 +78,9 @@
             "DB_DATABASE=laravel php artisan ide-helper:models -W -r -vvv"
         ],
         "fix": [
-            "./vendor/bin/php-cs-fixer fix --cache-file=./vendor/.php-cs-fixer.cache ./app",
-            "./vendor/bin/php-cs-fixer fix --cache-file=./vendor/.php-cs-fixer.cache ./database",
-            "./vendor/bin/php-cs-fixer fix --cache-file=./vendor/.php-cs-fixer.cache ./tests"
+            "./vendor/bin/php-cs-fixer fix --config=./php-cs-fixer.config.php --cache-file=./vendor/.php-cs-fixer.cache ./app",
+            "./vendor/bin/php-cs-fixer fix --config=./php-cs-fixer.config.php --cache-file=./vendor/.php-cs-fixer.cache ./database",
+            "./vendor/bin/php-cs-fixer fix --config=./php-cs-fixer.config.php --cache-file=./vendor/.php-cs-fixer.cache ./tests"
         ],
         "analyse": [
             "./vendor/bin/phpstan analyse -c ./phpstan.neon --memory-limit=2G"

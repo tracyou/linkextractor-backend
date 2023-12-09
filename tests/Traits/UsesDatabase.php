@@ -11,9 +11,7 @@ trait UsesDatabase
         refreshTestDatabase as parentRefreshTestDatabase;
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     protected function refreshTestDatabase(): void
     {
         try {
