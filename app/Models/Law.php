@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string                                       $id
  * @property string                                       $title
  * @property string                                       $text
- * @property bool                                         $isPublished
+ * @property bool                                         $is_published
  * @property \Illuminate\Support\Carbon|null              $created_at
  * @property \Illuminate\Support\Carbon|null              $updated_at
  * @property \Illuminate\Support\Carbon|null              $deleted_at
@@ -40,7 +40,7 @@ final class Law extends AbstractModel
     protected $fillable = [
         'title',
         'text',
-        'isPublished',
+        'is_published',
     ];
 
     public function annotations(): BelongsToMany
