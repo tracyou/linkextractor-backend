@@ -27,3 +27,21 @@ type Law {
 input DeleteLawInput {
     id: UUID!
 }
+
+extend type Mutation{
+
+    saveAnnotatedLaw(input:AnnotatedLawInput! @spread):Law!
+}
+
+input AnnotatedLawInput{
+
+    lawId:UUID! @rules(apply: ["exists:laws,id"])
+    isPublished: Boolean
+    annotations: [AnnotationInput!]!
+}
+input AnnotationInput{
+    text:String!
+    matterId: UUID!
+    comment:String
+    cursorIndex:Int!
+}
