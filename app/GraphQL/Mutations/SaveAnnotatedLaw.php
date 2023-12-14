@@ -3,7 +3,6 @@
 namespace App\GraphQL\Mutations;
 
 use App\Contracts\Factories\AnnotationFactoryInterface;
-use App\Contracts\Repositories\AnnotationRepositoryInterface;
 use App\Contracts\Repositories\LawRepositoryInterface;
 use App\Contracts\Repositories\MatterRepositoryInterface;
 use App\Models\Law;
@@ -13,10 +12,9 @@ class SaveAnnotatedLaw
 {
 
     public function __construct(
-        protected LawRepositoryInterface        $lawRepository,
-        protected AnnotationFactoryInterface    $annotationFactory,
-        protected MatterRepositoryInterface     $matterRepository,
-        protected AnnotationRepositoryInterface $annotationRepository
+        protected LawRepositoryInterface     $lawRepository,
+        protected AnnotationFactoryInterface $annotationFactory,
+        protected MatterRepositoryInterface  $matterRepository,
 
     )
     {
@@ -37,16 +35,13 @@ class SaveAnnotatedLaw
 
         $annotations->each(function (array $annotationInput) use ($law) {
             $matter = $this->matterRepository->findOrFail($annotationInput['matterId']);
-            $law = // Call law repository
-            $annotation = $this->annotationFactory->create(
-                law: $law,
-                matter: $matter,
-                text: $annotationInput['text'],
-                comment: $annotationInput['comment'],
-                cursorIndex: $annotationInput['cursorIndex'],
-            );
-        });
+            $annotation = $this->annotationFactory->create($matter, $annotationInput['text']);
 
+            $law->annotations()->attach($annotation->id, [
+                'cursor_index' => $annotationInput['cursorIndex'],
+                'comment' => $annotationInput['comment'],
+            ]);
+        });
 
         $law->save();
         return $law;
