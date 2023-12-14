@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Annotation;
@@ -10,15 +12,14 @@ class LawAnnotationPivotSeeder extends Seeder
 {
     public function run(): void
     {
-        Law::factory()->count(5)->create();
         Annotation::factory()->count(5)->create();
-        // Attach the tables (create the realtionship)
-        law::all()->each(function ($law) {
+
+        Law::all()->each(function ($law) {
             $annotation = Annotation::inRandomOrder()->first();
-            $law->annotations()->attach(
-                $annotation,
-                ['cursorIndex' => rand(1, 100)]
-            );
+            $law->annotations()->attach($annotation, [
+                'cursor_index' => rand(1, 100),
+                'comment'      => 'This is a comment',
+            ]);
         });
     }
 }

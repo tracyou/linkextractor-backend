@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Enums\MatterRelationEnum;
@@ -25,10 +27,10 @@ class MatterRelationSeeder extends Seeder
             $matters->each(function (Matter $otherMatter) use ($matter): void {
                 if ($matter->id !== $otherMatter->id) {
                     MatterRelation::factory()->create([
-                        'matter_a_id' => $matter->id,
-                        'matter_b_id' => $otherMatter->id,
-                        'relation'    => MatterRelationEnum::getRandomValue(),
-                        'description' => self::DESCRIPTIONS[array_rand(self::DESCRIPTIONS)],
+                        'matter_parent_id' => $matter->id,
+                        'matter_child_id'  => $otherMatter->id,
+                        'relation'         => MatterRelationEnum::getRandomValue(),
+                        'description'      => self::DESCRIPTIONS[array_rand(self::DESCRIPTIONS)],
                     ]);
                 }
             });
