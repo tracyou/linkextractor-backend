@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 
 final class LawBookImport
 {
-    public function import(string $xmlString): bool
+    public function import(string $xmlString): void
     {
         $data = $this->toArray($xmlString);
         $lawBook = $this->parseDataToStruct($data);
@@ -20,8 +20,6 @@ final class LawBookImport
             $model = $law->toModel();
             $model?->save();
         }
-
-        return true;
     }
 
     /** @return array<mixed> */
