@@ -24,6 +24,6 @@ final class RunXmlImportCommand extends Command
 
         $xmlString = file_get_contents($file);
 
-        (new LawBookImport())->import($xmlString);
+        (new LawBookImport())->import($xmlString ?: '');
     }
 }

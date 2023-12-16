@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Helpers\Import;
 
 
+use App\Structs\LawStruct;
 use Illuminate\Support\Arr;
-use App\Structs\LawBookStruct;
 use Illuminate\Support\Collection;
 
 final class LawBookImport
@@ -15,55 +15,101 @@ final class LawBookImport
     {
         $data = $this->toArray($xmlString);
         $lawBook = $this->parseDataToStruct($data);
-//        dd($lawBook);
-        return false;
+
+        foreach ($lawBook as $law) {
+            $model = $law->toModel();
+            $model?->save();
+        }
+
+        return true;
     }
 
-    /** @return array<mixed, mixed> */
+    /** @return array<mixed> */
     private function toArray(string $xmlString): array
     {
         $xmlObject = simplexml_load_string($xmlString);
         $json = json_encode($xmlObject);
-
-        /** @var array<mixed, mixed> */
-        return json_decode($json, true);
+        if ($json) {
+            /** @var array<mixed, mixed> */
+            return json_decode($json, true);
+        }
+        return [];
     }
 
     /**
-     * @param array<mixed, mixed>  $data
+     * @param array<mixed> $data
      *
-     * @return Collection<LawBookStruct>
+     * @return Collection<LawStruct>
      */
     private function parseDataToStruct(array $data): Collection
     {
         $lawBookStructCollection = new Collection();
-        foreach ($data['wetgeving']['wet-besluit']['wettekst'] as $chapter => $chapterData) {
-            dd($chapter, $chapterData);
-            foreach ($chapterData as $key => $item) {
-//                dd($key);
-                $law = match ($key) {
-//                    'artikel' => dd($key),
-                    'artikel' => $this->hydrateLawBookStructKop($item),
-                    default   => null,
-                };
-                if (! $law) {
-                    continue;
-                }
+        foreach (Arr::get($data, 'wetgeving.wet-besluit.wettekst.hoofdstuk', []) as $chapter) {
+            foreach (Arr::get($chapter, 'paragraaf', []) as $paragraph) {
+                $law = $this->hydrateLaw($paragraph['artikel']);
                 $lawBookStructCollection->add($law);
             }
         }
         return $lawBookStructCollection;
-//        dd($data);
     }
 
-    private function hydrateLawBookStructKop(array $kopData): ?LawBookStruct
+    /** @param array<mixed> $article */
+    private function hydrateLaw(array $article): LawStruct
     {
-        $lawBookStruct = new LawBookStruct();
-        foreach ($kopData as $key => $value) {
-            dd($key, $value);
-            dump(Arr::get($value, 'kop'));
-            $lawBookStruct->$key = $value;
+        $lawStruct = new LawStruct();
+        foreach ($article as $value) {
+            if (is_array($value)) {
+                $text = Arr::get($value, 'al');
+                $list = Arr::get($value, 'lijst', []);
+
+                if (is_array($text)) {
+                    $text = trim(implode('', $text));
+                }
+
+                if (is_array($list)) {
+                    $text .= trim($this->getListedText($list));
+                } else {
+                    $text .= trim($list);
+                }
+
+                $lawStruct->label = Arr::get($value, 'kop.label');
+                $lawStruct->nr = Arr::get($value, 'kop.nr');
+                $lawStruct->titel = Arr::get($value, 'kop.titel');
+            } else {
+                $text = $value;
+            }
+            $lawStruct->text = $text;
         }
-        return $lawBookStruct;
+        return $lawStruct;
+    }
+
+    /** @param array<string, mixed> $list */
+    private function getListedText(array $list): string
+    {
+        $text = '';
+        foreach ($list as $listItem) {
+            foreach ($listItem as $item) {
+                if (! is_array($item)) {
+                    continue;
+                }
+
+                $litnr = null;
+                if (array_key_exists('li.nr', $item)) {
+                    $litnr = trim($item['li.nr']);
+                }
+
+                $al = Arr::get($item, 'al');
+
+                if (! $litnr) {
+                    dd($litnr);
+                }
+
+                if (is_array($al)) {
+                    $al = implode('', Arr::flatten($al));
+                }
+                $text .= "$litnr $al\n";
+            }
+        }
+        return $text;
     }
 }
