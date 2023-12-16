@@ -2,9 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Contracts\Factories\FileXmlFactoryInterface;
+use App\Contracts\Repositories\FileXmlRepositoryInterface;
 use App\Factories\AnnotationFactory;
+use App\Factories\FileXmlFactory;
 use App\Factories\LawFactory;
 use App\Factories\MatterFactory;
+use App\GraphQL\Mutations\saveFileXml;
 use App\Models\Annotation;
 use App\Models\Law;
 use App\Models\Matter;
@@ -64,6 +68,7 @@ class LawFactoryTest extends TestCase
             'annotation_id' => $annotation->id
         ]);
     }
+
 
 
 }

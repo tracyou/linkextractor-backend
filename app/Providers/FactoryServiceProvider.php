@@ -2,12 +2,15 @@
 
 namespace App\Providers;
 
+use App\Contracts\Factories\AnnotationFactoryInterface;
+use App\Contracts\Factories\FileXmlFactoryInterface;
 use App\Contracts\Factories\LawFactoryInterface;
 use App\Contracts\Factories\MatterFactoryInterface;
 use App\Contracts\Factories\MatterRelationFactoryInterface;
 use App\Contracts\Factories\PancakeFactoryInterface;
 use App\Contracts\Factories\PancakeStackFactoryInterface;
 use App\Factories\AnnotationFactory;
+use App\Factories\FileXmlFactory;
 use App\Factories\LawFactory;
 use App\Factories\MatterFactory;
 use App\Factories\MatterRelationFactory;
@@ -25,5 +28,6 @@ class FactoryServiceProvider extends ServiceProvider
         $this->app->singleton(MatterFactoryInterface::class, MatterFactory::class);
         $this->app->singleton(MatterRelationFactoryInterface::class, MatterRelationFactory::class);
         $this->app->singleton(AnnotationFactoryInterface::class, AnnotationFactory::class);
+        $this->app->singleton(FileXmlFactoryInterface::class, FileXmlFactory::class);
     }
 }

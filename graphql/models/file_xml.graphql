@@ -1,0 +1,22 @@
+extend type Query {
+
+    fileXmls:[XmlFile!]!
+}
+
+extend type Mutation {
+
+    saveFileXml(
+        input: XmlFileInput! @spread
+    ): XmlFile!
+}
+
+input XmlFileInput{
+    title:String!
+    content:String!
+}
+
+type XmlFile {
+    id:ID!
+    title:String!
+    content:String!
+}
