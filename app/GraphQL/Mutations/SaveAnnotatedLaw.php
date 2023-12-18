@@ -3,6 +3,7 @@
 namespace App\GraphQL\Mutations;
 
 use App\Contracts\Factories\AnnotationFactoryInterface;
+use App\Contracts\Repositories\AnnotationRepositoryInterface;
 use App\Contracts\Repositories\LawRepositoryInterface;
 use App\Contracts\Repositories\MatterRepositoryInterface;
 use App\Models\Law;
@@ -15,6 +16,7 @@ class SaveAnnotatedLaw
         protected LawRepositoryInterface     $lawRepository,
         protected AnnotationFactoryInterface $annotationFactory,
         protected MatterRepositoryInterface  $matterRepository,
+        protected AnnotationRepositoryInterface $annotationRepository
 
     )
     {
@@ -25,6 +27,8 @@ class SaveAnnotatedLaw
         $lawId = $args['lawId'];
         $isPublished = $args['isPublished'];
         $annotations = collect($args['annotations']);
+
+        $
 
 
         /** @var Law $law */
