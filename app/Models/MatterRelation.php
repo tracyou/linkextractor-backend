@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\MatterRelationEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,13 +15,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string                          $id
  * @property string                          $matter_parent_id
  * @property string                          $matter_child_id
- * @property string                          $relation
+ * @property MatterRelationEnum              $relation
  * @property string                          $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\Matter $matterChild
- * @property-read \App\Models\Matter $matterParent
+ * @property-read \App\Models\Matter         $matterChild
+ * @property-read \App\Models\Matter         $matterParent
  *
  * @method static \Database\Factories\MatterRelationFactory factory($count = null, $state = [])
  * @method static Builder|MatterRelation                    newModelQuery()
@@ -43,10 +44,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 final class MatterRelation extends AbstractModel
 {
     protected $table = 'matter_relations';
+
     public $incrementing = false;
+
     public $fillable = [
         'relation',
         'description',
+    ];
+
+    protected $casts = [
+        'relation' => MatterRelationEnum::class,
     ];
 
     public function matterParent(): BelongsTo

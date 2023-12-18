@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Enums\MatterRelationEnum;
 use App\Models\Matter;
 use App\Models\MatterRelation;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -12,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class MatterRelationFactory extends Factory
 {
     protected $model = MatterRelation::class;
+
     /**
      * Define the model's default state.
      *
@@ -22,7 +26,7 @@ class MatterRelationFactory extends Factory
         return [
             'matter_parent_id' => Matter::factory(),
             'matter_child_id'  => Matter::factory(),
-            'relation'         => fake()->randomElement(['requires 1', 'requires 0 or 1', 'requires 1 or more', 'requires 0 or more']),
+            'relation'         => MatterRelationEnum::getRandomValue(),
             'description'      => fake()->sentence(),
         ];
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Http\GraphQL;
 
 use Illuminate\Foundation\Testing\TestCase;
@@ -14,9 +16,9 @@ abstract class AbstractHttpGraphQLTestCase extends TestCase
     use UsesDatabase;
 
     /**
-     * @param mixed[] $data
-     *
-     * @return mixed[]
+     * @param string $operation
+     * @param array  $data
+     * @return array
      */
     protected function graphQlJsonData(string $operation, array $data): array
     {
@@ -25,5 +27,18 @@ abstract class AbstractHttpGraphQLTestCase extends TestCase
                 $operation => $data,
             ],
         ];
+    }
+
+    protected function createUUIDFromID(int $id): string
+    {
+        $hash = md5((string) $id);
+        return sprintf(
+            '%8s-%4s-%4s-%4s-%12s',
+            substr($hash, 0, 8),
+            substr($hash, 8, 4),
+            substr($hash, 12, 4),
+            substr($hash, 16, 4),
+            substr($hash, 20, 12)
+        );
     }
 }

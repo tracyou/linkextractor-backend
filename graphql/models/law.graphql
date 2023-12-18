@@ -1,0 +1,14 @@
+extend type Query {
+    laws: [Law!]! @all
+}
+
+type Law {
+    id: UUID!
+    title: String!
+    text: String!
+    isPublished: Boolean! @rename(attribute: "is_published")
+    createdAt: DateTime! @rename(attribute: "created_at")
+    updatedAt: DateTime! @rename(attribute: "updated_at")
+
+    annotations: [Annotation!]! @hasMany
+}
