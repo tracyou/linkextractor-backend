@@ -26,7 +26,6 @@ return new class extends Migration {
             $table->foreignUuid('matter_relation_schema_id')->constrained('matter_relation_schemas')->cascadeOnDelete();
         });
 
-
     }
 
     /**
