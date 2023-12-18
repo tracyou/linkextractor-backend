@@ -6,15 +6,14 @@ namespace App\Models;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Annotation.
  *
  * @property string                                $id
  * @property string                                $matter_id
+ * @property string                                $article_id
  * @property string                                $text
  * @property \Illuminate\Support\Carbon|null       $created_at
  * @property \Illuminate\Support\Carbon|null       $updated_at
@@ -22,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read Collection<int, \App\Models\Law> $laws
  * @property-read int|null                         $laws_count
  * @property-read \App\Models\Matter               $matter
+ * @property-read \App\Models\Article              $article
  * @property-read \App\Models\RelationSchema       $relationSchema
  *
  * @method static \Database\Factories\AnnotationFactory factory($count = null, $state = [])
@@ -55,15 +55,10 @@ final class Annotation extends AbstractModel
     }
 
     //relationship with Law
-    public function laws(): BelongsToMany
+    public function articles(): BelongsTo
     {
-        return $this
-            ->belongsToMany(Law::class)
-            ->withPivot([
-                'cursor_index',
-                'comment',
-            ])
-            ->using(LawAnnotationPivot::class);
+        return $this->belongsTo(Article::class);
+
     }
 
     public function relationSchema(): BelongsTo

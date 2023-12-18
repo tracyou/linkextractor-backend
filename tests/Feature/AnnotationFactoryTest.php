@@ -7,7 +7,7 @@ use App\Factories\MatterFactory;
 use App\Factories\MatterRelationSchemaFactory;
 use App\Factories\RelationSchemaFactory;
 use App\Models\Annotation;
-use App\Models\Law;
+use App\Models\Article;
 use App\Models\Matter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -34,9 +34,9 @@ class AnnotationFactoryTest extends TestCase
     public function testRelationshipWithLaw()
     {
         //Arrange
-        $law = Law::factory()->create([
-            'title'       => 'rijbewijs',
-            'text'        => 'je mag een brommer met je B rijbewijs rijen',
+        $law = Article::factory()->create([
+            'title'        => 'rijbewijs',
+            'text'         => 'je mag een brommer met je B rijbewijs rijen',
             'is_published' => false,
         ]);
 

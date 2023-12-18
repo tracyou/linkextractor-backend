@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Contracts\Factories;
 
-use App\Models\Law;
+use App\Models\Article;
 
-interface LawFactoryInterface
+interface ArticleFactoryInterface
 {
     public function create(
         string $title,
+        string $text,
         bool $isPublished,
-    ): Law;
+    ): Article;
 }

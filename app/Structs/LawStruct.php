@@ -3,28 +3,35 @@
 namespace App\Structs;
 
 use App\Models\Law;
+use Illuminate\Support\Arr;
 
 final class LawStruct
 {
+    /** @param ArticleStruct[]  $articles */
     public function __construct(
-        public ?string $label = null,
-        public ?string $nr = null,
-        public ?string $titel = null,
-        public ?string $text = null,
-    )
-    {
+        private string $title,
+        private array $articles = [],
+    ) {
     }
 
-    public function toModel(): ?Law
+    public function add(ArticleStruct $article): void
     {
-        $law = new Law();
-        $law->title = $this->label . ' ' . $this->nr . ' ' . $this->titel;
-        if (! $this->text) {
-            return null;
-        }
-        $law->text = $this->text;
-        $law->is_published = false;
+        $this->articles[] = $article;
+    }
 
-        return $law;
+    public function remove(int $key): void
+    {
+        Arr::pull($this->articles, $key);
+    }
+
+    public function save(): void
+    {
+        $law = new Law(['title' => $this->title]);
+        $law->save();
+        foreach ($this->articles as $article) {
+            $model = $article->toModel();
+            $model?->law()->associate($law);
+            $model?->save();
+        }
     }
 }

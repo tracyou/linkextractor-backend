@@ -19,7 +19,8 @@
         "mll-lab/graphql-php-scalars": "^6.1",
         "mll-lab/laravel-graphiql": "^2.0",
         "nuwave/lighthouse": "^6.6",
-        "wimski/laravel-model-repositories": "^3.0"
+        "wimski/laravel-model-repositories": "^3.0",
+        "ext-simplexml": "*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.40",

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Law;
+use App\Models\Article;
 use Illuminate\Database\Seeder;
 
 class LawSeeder extends Seeder
@@ -10,6 +10,6 @@ class LawSeeder extends Seeder
     /** Run the database seeds. */
     public function run(): void
     {
-        Law::factory()->count(5)->create();
+        Article::factory()->count(5)->create();
     }
 }

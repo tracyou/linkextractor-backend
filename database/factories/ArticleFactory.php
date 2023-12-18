@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\Law;
+use App\Models\Article;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Law>
+ * @extends Factory<Article>
  */
-final class LawFactory extends Factory
+final class ArticleFactory extends Factory
 {
-    protected $model = Law::class;
+    protected $model = Article::class;
 
     /**
      * Define the model's default state.

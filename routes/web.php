@@ -4,7 +4,7 @@ use App\Factories\AnnotationFactory;
 use App\Factories\MatterRelationFactory;
 use App\Http\Controllers\MatterRelationController;
 use App\Models\Annotation;
-use App\Models\Law;
+use App\Models\Article;
 use App\Models\Matter;
 use App\Models\MatterRelation;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    $law = Law::find('9ac4a955-316b-42b8-ae56-b18325ca0563');
+    $law = Article::find('9ac4a955-316b-42b8-ae56-b18325ca0563');
     $annotation = Annotation::find('9ac4a955-0df2-438d-b21e-91420aeb64b7');
 
 
