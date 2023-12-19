@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('articles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->json('text');
+            $table->text('text');
             $table->foreignUuid('law_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();

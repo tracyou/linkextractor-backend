@@ -17,7 +17,7 @@ class ArticleFactory implements AtrticleFactoryInterface
 
         $article->title = $title;
         $article->text = $text;
-        $article->law = $law;
+        $article->law->save([$law]);
 
         return $article;
     }
