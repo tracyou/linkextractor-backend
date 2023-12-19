@@ -11,7 +11,7 @@ use function Laravel\Prompts\text;
 class ArticleFactory implements AtrticleFactoryInterface
 {
 
-    public function create(Law $law, string $title, Json $text): Article
+    public function create(Law $law, string $title, string $text): Article
     {
         $article = new Article();
 
