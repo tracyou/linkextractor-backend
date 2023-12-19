@@ -10,7 +10,6 @@ interface LawFactoryInterface
 {
     public function create(
         string $title,
-        string $text,
         bool $isPublished,
     ): Law;
 }

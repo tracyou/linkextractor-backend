@@ -13,9 +13,9 @@ class SaveAnnotatedLaw
 {
 
     public function __construct(
-        protected LawRepositoryInterface     $lawRepository,
-        protected AnnotationFactoryInterface $annotationFactory,
-        protected MatterRepositoryInterface  $matterRepository,
+        protected LawRepositoryInterface        $lawRepository,
+        protected AnnotationFactoryInterface    $annotationFactory,
+        protected MatterRepositoryInterface     $matterRepository,
         protected AnnotationRepositoryInterface $annotationRepository
 
     )
@@ -28,8 +28,6 @@ class SaveAnnotatedLaw
         $isPublished = $args['isPublished'];
         $annotations = collect($args['annotations']);
 
-        $
-
 
         /** @var Law $law */
         $law = $this->lawRepository->findOrFail($lawId);
@@ -39,13 +37,16 @@ class SaveAnnotatedLaw
 
         $annotations->each(function (array $annotationInput) use ($law) {
             $matter = $this->matterRepository->findOrFail($annotationInput['matterId']);
-            $annotation = $this->annotationFactory->create($matter, $annotationInput['text']);
-
-            $law->annotations()->attach($annotation->id, [
-                'cursor_index' => $annotationInput['cursorIndex'],
-                'comment' => $annotationInput['comment'],
-            ]);
+            $law = // Call law repository
+            $annotation = $this->annotationFactory->create(
+                law: $law,
+                matter: $matter,
+                text: $annotationInput['text'],
+                comment: $annotationInput['comment'],
+                cursorIndex: $annotationInput['cursorIndex'],
+            );
         });
+
 
         $law->save();
         return $law;
