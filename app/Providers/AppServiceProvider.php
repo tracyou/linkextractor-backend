@@ -8,6 +8,8 @@ use App\Models\Annotation;
 use App\Models\Law;
 use App\Models\Matter;
 use App\Models\MatterRelation;
+use App\Models\MatterRelationSchema;
+use App\Observers\MatterRelationSchemaObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
             'matterRelation' => MatterRelation::class,
             'law'            => Law::class,
         ]);
+
+        MatterRelationSchema::observe(MatterRelationSchemaObserver::class);
     }
 }
