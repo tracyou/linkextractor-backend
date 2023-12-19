@@ -7,7 +7,7 @@ namespace App\Factories;
 use App\Contracts\Factories\LawFactoryInterface;
 use App\Models\Law;
 
-final class LawFactory implements LawFactoryInterface
+class LawFactory implements LawFactoryInterface
 {
     public function create(string $title, bool $isPublished): Law
     {

@@ -33,5 +33,6 @@ class RepositoryServiceProvider extends ModelRepositoryServiceProvider
         AnnotationRepositoryInterface::class           => AnnotationRepository::class,
         MatterRelationSchemaRepositoryInterface::class => MatterRelationSchemaRepository::class,
         RelationSchemaRepositoryInterface::class       => RelationSchemaRepository::class,
+        ArticleRepositoryInterface::class => ArticleRepository::class,
     ];
 }

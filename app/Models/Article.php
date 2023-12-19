@@ -47,7 +47,7 @@ final class Article extends AbstractModel
     protected $fillable = [
         'title',
         'text',
-        'json_text'
+        'json_text',
     ];
 
     public function law(): BelongsTo

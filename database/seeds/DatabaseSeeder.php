@@ -7,6 +7,7 @@ use Database\Seeders\MatterRelationSeeder;
 use Database\Seeders\MatterSeeder;
 use Database\Seeders\ArticleSeeder;
 use Database\Seeders\RelationSchemaSeeder;
+use Database\Seeders\ArticleSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

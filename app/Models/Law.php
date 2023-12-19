@@ -44,11 +44,6 @@ final class Law extends AbstractModel
         'is_published',
     ];
 
-    public function annotations(): HasMany
-    {
-        return $this->hasMany(Annotation::class);
-    }
-
     public function articles(): HasMany
     {
         return $this->hasMany(Article::class);

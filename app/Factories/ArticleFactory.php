@@ -2,25 +2,23 @@
 
 namespace App\Factories;
 
-use App\Contracts\Factories\ArticleFactoryInterface;
+use App\Contracts\Factories\AtrticleFactoryInterface;
 use App\Models\Article;
 use App\Models\Law;
-use PHPUnit\Util\Json;
+use Psy\Util\Json;
 use function Laravel\Prompts\text;
 
-class ArticleFactory implements ArticleFactoryInterface
+class ArticleFactory implements AtrticleFactoryInterface
 {
 
-    public function create(Law $law, string $title, string $text, array $jsonData): Article
+    public function create(Law $law, string $title, Json $text): Article
     {
-        $jsonText = json_encode($jsonData);
-        $article = new Article([
-            'title' => $title,
-            'text' => $text,
-            'json_text' => $jsonText
-        ]);
-        $article->law()->associate($law);
-        $article->save();
+        $article = new Article();
+
+        $article->title = $title;
+        $article->text = $text;
+        $article->law = $law;
+
         return $article;
     }
 }
