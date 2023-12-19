@@ -8,21 +8,12 @@ use Illuminate\Support\Carbon;
 class MatterRelationSchemaObserver
 {
     /**
-     *Handle the MatterRelationSchema "creating" event
-     */
-    public function creating(MatterRelationSchema $schema): void
-    {
-        MatterRelationSchema::whereNull('expired_at')->update(['expired_at' => Carbon::now()]);
-    }
-
-
-    /**
      * Handle the MatterRelationSchema "created" event.
      */
     public function created(MatterRelationSchema $matterRelationSchema): void
     {
-//        $matterRelationSchema->expired_at = Carbon::now()->addYear();
-//        $matterRelationSchema->save();
+        $matterRelationSchema->expired_at = Carbon::now()->addYear();
+        $matterRelationSchema->save();
     }
 
     /**
