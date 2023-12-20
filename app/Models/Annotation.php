@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string                          $matter_id
  * @property string                          $article_id
  * @property string                          $text
+ * @property string|null                     $definition
+ * @property string|null                     $comment
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -46,8 +48,9 @@ final class Annotation extends AbstractModel
     protected $table = 'annotations';
 
     protected $fillable = [
-        'matter_id',
         'text',
+        'comment',
+        'definition',
     ];
 
     public function matter(): BelongsTo
