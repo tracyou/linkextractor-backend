@@ -26,6 +26,11 @@ return new class extends Migration {
             $table->foreignUuid('article_id')->constrained()->cascadeOnDelete();
 
         });
+        Schema::table('laws', function (Blueprint $table) {
+
+            $table->foreignUuid('article_id')->nullable()->constrained()->cascadeOnDelete();
+
+        });
     }
 
     /**
