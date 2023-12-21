@@ -18,10 +18,7 @@ final class ArticleStruct
     {
         $law = new Article();
         $law->title = $this->label . ' ' . $this->nr . ' ' . $this->titel;
-        if (!$this->text) {
-            return null;
-        }
-        $law->text = $this->text;
+        $law->text = $this->text ?: '';
 
         return $law;
     }

@@ -26,8 +26,7 @@ final class LawStruct
 
     public function save(): void
     {
-        $law = new Law(['title' => $this->title]);
-        $law->save();
+        $law = Law::firstOrCreate(['title' => $this->title]);
         foreach ($this->articles as $article) {
             $model = $article->toModel();
             $model?->law()->associate($law);

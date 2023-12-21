@@ -14,7 +14,7 @@ final class LawXmlImport
     {
         ini_set('memory_limit', '-1');
         $data = simplexml_load_string($xmlString);
-        if (!$data) {
+        if (! $data) {
             return;
         }
         $law = $this->parseDataToStruct($data);
@@ -63,9 +63,14 @@ final class LawXmlImport
 
     private function getText(SimpleXMLElement $article): string
     {
-        $al = preg_replace('/<[^>]*>/', '', $article->al->asXML() ?: '');
-        $list = preg_replace('/<[^>]*>/', '', $article->lijst->asXML() ?: '');
+        $al = $this->trim(preg_replace('/<[^>]*>/', '', $article->al->asXML() ?: ''));
+        $list = $this->trim(preg_replace('/<[^>]*>/', '', $article->lijst->asXML() ?: ''));
 
-        return $al . $list;
+        $lid = '';
+        foreach ($article->lid as $lidItem) {
+            $lid .= $this->trim(preg_replace('/<[^>]*>/', '', $lidItem->asXML() ?: ''));
+        }
+
+        return $al . $list . $lid;
     }
 }
