@@ -2,13 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Factories\AnnotationFactory;
-use App\Factories\MatterFactory;
-use App\Factories\RelationSchemaFactory;
-use App\Models\Annotation;
-use App\Models\Article;
-use App\Models\Law;
-use App\Models\Matter;
+use App\Contracts\Factories\AnnotationFactoryInterface;
+use App\Contracts\Factories\ArticleFactoryInterface;
+use App\Contracts\Factories\LawFactoryInterface;
+use App\Contracts\Factories\MatterFactoryInterface;
+use App\Contracts\Factories\MatterRelationSchemaFactoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,55 +14,48 @@ class AnnotationFactoryTest extends TestCase
 {
     use RefreshDatabase;
 
+
     public function testAnnotationBelongsToMatter(): void
     {
-        $matterFactory = $this->app->make(MatterFactory::class);
 
-        $matter = (new MatterFactory())->create("matter", "#000000");
-        $article = Article::factory()->create();
-        $relationSchema = (new RelationSchemaFactory())->create(true);
-        $annotation = (new AnnotationFactory())->create(
-            schema: $relationSchema,
-            article: $article,
-            matter: $matter,
-            text: "this is an annotation",
-        );
-        $this->assertEquals($matter->id, $annotation->matter->id);
-        $this->assertEquals(1, $annotation->matter->count());
-    }
+        // Arrange
 
-    public function testRelationshipWithLaw()
-    {
-        //Arrange
-        $law = Law::factory()->create([
-            'title'        => 'rijbewijs',
-            'is_published' => false,
-        ]);
+        // Inject factories
+        $annotationFactory = $this->app->make(AnnotationFactoryInterface::class);
+        $matterFactory = $this->app->make(MatterFactoryInterface::class);
+        $lawFactory = $this->app->make(LawFactoryInterface::class);
+        $matterRelationSchemaFactory = $this->app->make(MatterRelationSchemaFactoryInterface::class);
+        $articleFactory = $this->app->make(ArticleFactoryInterface::class);
 
-        $matter = Matter::factory()->create([
-            'name'  => 'matter',
-            'color' => '#001000',
-        ]);
-
-        $article = Article::factory()->create([
-            'law_id' => $law->id,
-        ]);
-
-        $annotation = Annotation::factory()->create([
-            'matter_id'  => $matter->id,
-            'article_id' => $article->id,
-            'text'       => 'this is an annotation',
-        ]);
+        $matter = $matterFactory->create('matter', '#001000');
+        $law = $lawFactory->create('title', false);
+        $article = $articleFactory->create($law,'title of the article', 'this is the text of the article');
+        $matterRelationSchema = $matterRelationSchemaFactory->create();
 
         //Act
-        $annotation->article()->associate($article);
+        $annotation = $annotationFactory->create(
+            $matter,
+            'this is an annotation',
+            200,
+            'this is a comment',
+            $article,
+            $matterRelationSchema
+        );
 
-        // Assert that the relationship exists in the tables
-        $this->assertDatabaseHas('articles', [
-            'law_id' => $law->id,
-        ]);
+        // Assert
         $this->assertDatabaseHas('annotations', [
+            'id' => $annotation->id,
             'article_id' => $article->id,
+            'matter_id' => $matter->id,
+            'text'=>'this is an annotation'
         ]);
+        $this->assertEquals($article->id, $annotation->article->id);
+        $this->assertEquals($matter->id, $annotation->matter->id);
+        $this->assertEquals($annotation->matter, $matter);
+        $this->assertEquals($annotation->article, $article);
+
+
     }
+
+
 }

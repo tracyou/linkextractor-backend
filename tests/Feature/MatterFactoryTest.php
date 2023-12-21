@@ -6,9 +6,8 @@ use App\Contracts\Factories\AnnotationFactoryInterface;
 use App\Contracts\Factories\ArticleFactoryInterface;
 use App\Contracts\Factories\LawFactoryInterface;
 use App\Contracts\Factories\MatterFactoryInterface;
+use App\Contracts\Factories\MatterRelationFactoryInterface;
 use App\Contracts\Factories\MatterRelationSchemaFactoryInterface;
-use App\Factories\AnnotationFactory;
-use App\Factories\MatterFactory;
 use App\Factories\MatterRelationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -17,14 +16,12 @@ class MatterFactoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $annotationFactory;
-    protected $matterFactory;
-    protected $lawFactory;
-    protected $matterRelationSchemaFactory;
-    protected $articleFactory;
-    protected $matterRelationFactory;
-//    protected $matterA;
-//    protected $matterB;
+    protected AnnotationFactoryInterface $annotationFactory;
+    protected MatterFactoryInterface $matterFactory;
+    protected LawFactoryInterface $lawFactory;
+    protected MatterRelationSchemaFactoryInterface $matterRelationSchemaFactory;
+    protected ArticleFactoryInterface $articleFactory;
+    protected MatterRelationFactoryInterface $matterRelationFactory;
 
     public function setUp(): void
     {
@@ -73,17 +70,22 @@ class MatterFactoryTest extends TestCase
     public function testMatterHasManyRelations(): void
     {
         // Arrange
-        $matterA = $this->matterFactory->create("matter1", "#000000");
-        $matterB = $this->matterFactory->create("matter2", "#000000");
+        $matterParent = $this->matterFactory->create("matter1", "#000000");
+        $matterChild = $this->matterFactory->create("matter2", "#000000");
         $matterRelationSchema = $this->matterRelationSchemaFactory->create();
 
         // Act
-        $matterRelation = $this->matterRelationFactory->create($matterA, $matterB, "requires_one", "description", $matterRelationSchema);
+        $matterRelation = $this->matterRelationFactory->create($matterParent, $matterChild, "requires_one", "description", $matterRelationSchema);
+
+        $matterParent->refresh();
+        $matterChild->refresh();
+
 
         // Assert
-        $this->assertTrue($matterRelation->matter_parent_id === $matterA->id);
-        $this->assertTrue($matterRelation->matter_child_id === $matterB->id);
+        $this->assertTrue($matterRelation->matter_parent_id === $matterParent->id);
+        $this->assertTrue($matterRelation->matter_child_id === $matterChild->id);
         $this->assertTrue($matterRelation->matter_relation_schema_id === $matterRelationSchema->id);
+        $this->assertTrue($matterParent->matterParentRelations->isNotEmpty());
 
     }
 }
