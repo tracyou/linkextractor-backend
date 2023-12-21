@@ -2,13 +2,13 @@
 
 namespace App\Factories;
 
-use App\Contracts\Factories\AtrticleFactoryInterface;
+use App\Contracts\Factories\ArticleFactoryInterface;
 use App\Models\Article;
 use App\Models\Law;
 use Psy\Util\Json;
 use function Laravel\Prompts\text;
 
-class ArticleFactory implements AtrticleFactoryInterface
+class ArticleFactory implements ArticleFactoryInterface
 {
 
     public function create(Law $law, string $title, string $text): Article

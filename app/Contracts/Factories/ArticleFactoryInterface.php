@@ -6,7 +6,7 @@ use App\Models\Article;
 use App\Models\Law;
 use Psy\Util\Json;
 
-interface AtrticleFactoryInterface
+interface ArticleFactoryInterface
 {
     public function create(Law $law, string $title, string $text): Article;
 

@@ -21,8 +21,8 @@ class MatterRelationSchemaObserver
      */
     public function created(MatterRelationSchema $matterRelationSchema): void
     {
-        $matterRelationSchema->expired_at = Carbon::now()->addYear();
-        $matterRelationSchema->save();
+//        $matterRelationSchema->expired_at = Carbon::now()->addYear();
+//        $matterRelationSchema->save();
     }
 
     /**
