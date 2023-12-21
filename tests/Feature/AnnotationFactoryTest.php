@@ -15,7 +15,7 @@ class AnnotationFactoryTest extends TestCase
     use RefreshDatabase;
 
 
-    public function testAnnotationBelongsToMatter(): void
+    public function test_annotation_belongs_to_matter(): void
     {
 
         // Arrange

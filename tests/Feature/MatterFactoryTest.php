@@ -35,7 +35,7 @@ class MatterFactoryTest extends TestCase
         $this->matterRelationFactory = $this->app->make(MatterRelationFactory::class);
     }
 
-    public function testMatterHasManyAnnotations(): void
+    public function test_matter_has_many_annotations(): void
     {
         // Arrange
         $matter = $this->matterFactory->create('matter', '#001000');
@@ -67,7 +67,7 @@ class MatterFactoryTest extends TestCase
 
     }
 
-    public function testMatterHasManyRelations(): void
+    public function test_matter_has_many_relations(): void
     {
         // Arrange
         $matterParent = $this->matterFactory->create("matter1", "#000000");
