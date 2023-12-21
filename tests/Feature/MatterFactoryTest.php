@@ -22,7 +22,9 @@ class MatterFactoryTest extends TestCase
     protected $lawFactory;
     protected $matterRelationSchemaFactory;
     protected $articleFactory;
-    protected $matterRelation;
+    protected $matterRelationFactory;
+//    protected $matterA;
+//    protected $matterB;
 
     public function setUp(): void
     {
@@ -33,16 +35,18 @@ class MatterFactoryTest extends TestCase
         $this->lawFactory = $this->app->make(LawFactoryInterface::class);
         $this->matterRelationSchemaFactory = $this->app->make(MatterRelationSchemaFactoryInterface::class);
         $this->articleFactory = $this->app->make(ArticleFactoryInterface::class);
-        $this->matterRelation = $this->app->make(MatterRelationFactory::class);
+        $this->matterRelationFactory = $this->app->make(MatterRelationFactory::class);
     }
 
     public function testMatterHasManyAnnotations(): void
     {
-        //Act
+        // Arrange
         $matter = $this->matterFactory->create('matter', '#001000');
         $law = $this->lawFactory->create('title', false);
         $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article');
         $matterRelationSchema = $this->matterRelationSchemaFactory->create();
+
+        // Act
         $annotation1 = $this->annotationFactory->create(
             $matter,
             'this is an annotation',
@@ -68,11 +72,18 @@ class MatterFactoryTest extends TestCase
 
     public function testMatterHasManyRelations(): void
     {
-        $matterA = (new MatterFactory())->create("matter1", "#000000");
-        $matterB = (new MatterFactory())->create("matter2", "#000000");
-        (new MatterRelationFactory())->create($matterA, $matterB, "requires 1", "description");
-        $this->assertEquals(1, $matterA->matterRelationsParents->count());
-        $this->assertEquals(1, $matterB->matterRelationsChilds->count());
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $matterA->matterRelationsParents);
+        // Arrange
+        $matterA = $this->matterFactory->create("matter1", "#000000");
+        $matterB = $this->matterFactory->create("matter2", "#000000");
+        $matterRelationSchema = $this->matterRelationSchemaFactory->create();
+
+        // Act
+        $matterRelation = $this->matterRelationFactory->create($matterA, $matterB, "requires_one", "description", $matterRelationSchema);
+
+        // Assert
+        $this->assertTrue($matterRelation->matter_parent_id === $matterA->id);
+        $this->assertTrue($matterRelation->matter_child_id === $matterB->id);
+        $this->assertTrue($matterRelation->matter_relation_schema_id === $matterRelationSchema->id);
+
     }
 }
