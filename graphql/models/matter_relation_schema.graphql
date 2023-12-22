@@ -1,5 +1,6 @@
 extend type Query {
     matterRelationSchemas: [MatterRelationSchema!]! @all
+    matterRelationSchema(input: MatterRelationSchemaInput! @spread): MatterRelationSchema
 }
 
 type MatterRelationSchema {
@@ -8,6 +9,12 @@ type MatterRelationSchema {
     createdAt     : DateTime!          @rename(attribute: "created_at")
     updatedAt     : DateTime!          @rename(attribute: "updated_at")
 
-    relationSchema: [RelationSchema!]! @belongsTo
+    matter        : Matter!            @belongsTo
+    relationSchema: RelationSchema!    @belongsTo
     relations     : [MatterRelation!]! @hasMany
+}
+
+input MatterRelationSchemaInput {
+    relationSchemaId: UUID! @rules(apply: ["exists:relation_schemas,id"]) @rename(attribute: "relation_schema_id")
+    matterId        : UUID! @rules(apply: ["exists:matters,id"])          @rename(attribute: "matter_id")
 }

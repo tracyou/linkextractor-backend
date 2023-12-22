@@ -1,5 +1,6 @@
 extend type Query {
     relationSchemas: [RelationSchema!]! @all
+    relationSchema(id: UUID! @eq @rules(apply: ["exists:relation_schemas,id"])): RelationSchema! @find
 }
 
 type RelationSchema {
