@@ -1,0 +1,13 @@
+extend type Query {
+    matterRelationSchemas: [MatterRelationSchema!]! @all
+}
+
+type MatterRelationSchema {
+    id: UUID!
+    schemaLayout  : JSON!              @rename(attribute: "schema_layout")
+    createdAt     : DateTime!          @rename(attribute: "created_at")
+    updatedAt     : DateTime!          @rename(attribute: "updated_at")
+
+    relationSchema: [RelationSchema!]! @belongsTo
+    relations     : [MatterRelation!]! @hasMany
+}
