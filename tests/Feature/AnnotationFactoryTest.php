@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Factories\AnnotationFactory;
 use App\Factories\MatterFactory;
+use App\Factories\MatterRelationSchemaFactory;
+use App\Factories\RelationSchemaFactory;
 use App\Models\Annotation;
 use App\Models\Law;
 use App\Models\Matter;
@@ -16,8 +18,15 @@ class AnnotationFactoryTest extends TestCase
 
     public function testAnnotationBelongsToMatter(): void
     {
+        $matterFactory = $this->app->make(MatterFactory::class);
+
         $matter = (new MatterFactory())->create("matter", "#000000");
-        $annotation = (new AnnotationFactory())->create($matter, "this is an annotation");
+        $relationSchema = (new RelationSchemaFactory())->create(true);
+        $annotation = (new AnnotationFactory())->create(
+            schema: $relationSchema,
+            matter: $matter,
+            text  : "this is an annotation"
+        );
         $this->assertEquals($matter->id, $annotation->matter->id);
         $this->assertEquals(1, $annotation->matter->count());
     }
@@ -42,7 +51,7 @@ class AnnotationFactoryTest extends TestCase
         ]);
 
         //Act
-        $annotation->laws()->attach($law, ['cursorIndex' => 222]);
+        $annotation->laws()->attach($law, ['cursor_index' => 222]);
 
         // Assert that the relationship exists in the pivot table
         $this->assertDatabaseHas('annotation_law', [

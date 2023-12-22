@@ -13,4 +13,5 @@ type Annotation {
 
     matter: Matter! @belongsTo
     laws: Law! @belongsTo
+    relationSchema: RelationSchema! @belongsTo
 }

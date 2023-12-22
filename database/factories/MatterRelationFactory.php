@@ -24,10 +24,9 @@ class MatterRelationFactory extends Factory
     public function definition(): array
     {
         return [
-            'matter_parent_id' => Matter::factory(),
-            'matter_child_id'  => Matter::factory(),
-            'relation'         => MatterRelationEnum::getRandomValue(),
-            'description'      => fake()->sentence(),
+            'related_matter_id' => Matter::factory(),
+            'relation'          => MatterRelationEnum::getRandomValue(),
+            'description'       => fake()->sentence(),
         ];
     }
 }

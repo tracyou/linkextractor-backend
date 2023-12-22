@@ -12,14 +12,11 @@ return new class () extends Migration {
     {
         Schema::create('matter_relations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('matter_parent_id')->constrained('matters');
-            $table->foreignUuid('matter_child_id')->constrained('matters');
+            $table->foreignUuid('related_matter_id')->constrained('matters');
             $table->string('relation');
             $table->string('description');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->unique(['matter_parent_id', 'matter_child_id']);
         });
     }
 

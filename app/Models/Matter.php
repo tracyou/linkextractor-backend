@@ -8,6 +8,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
  * App\Models\Matter.
@@ -18,12 +19,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read Collection<int, \App\Models\MatterRelationSchema> $matterRelationSchemas
  * @property-read Collection<int, \App\Models\Annotation> $annotations
- * @property-read int|null $annotations_count
- * @property-read Collection<int, \App\Models\MatterRelation> $matterRelationsChilds
- * @property-read int|null $matter_relations_childs_count
- * @property-read Collection<int, \App\Models\MatterRelation> $matterRelationsParents
- * @property-read int|null $matter_relations_parents_count
+ * @property-read Collection<int, \App\Models\MatterRelation> $matterRelations
  *
  * @method static \Database\Factories\MatterFactory factory($count = null, $state = [])
  * @method static Builder|Matter                    newModelQuery()
@@ -53,13 +51,13 @@ final class Matter extends AbstractModel
         return $this->hasMany(Annotation::class);
     }
 
-    public function matterRelationsParents(): HasMany
+    public function matterRelationSchemas(): HasMany
     {
-        return $this->hasMany(MatterRelation::class, 'matter_parent_id');
+        return $this->hasMany(MatterRelationSchema::class);
     }
 
-    public function matterRelationsChilds(): HasMany
+    public function matterRelations(): HasManyThrough
     {
-        return $this->hasMany(MatterRelation::class, 'matter_child_id');
+        return $this->hasManyThrough(MatterRelation::class, MatterRelationSchema::class);
     }
 }
