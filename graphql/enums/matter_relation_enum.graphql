@@ -1,0 +1,8 @@
+extend type Query {
+    matterRelationTypes: [MatterRelationType!]!
+}
+
+type MatterRelationType {
+    key: MatterRelationEnum!
+    value: String!
+}

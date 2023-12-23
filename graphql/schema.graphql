@@ -4,3 +4,4 @@ type Mutation
 scalar UUID
 
 #import models/*
+#import enums/*
