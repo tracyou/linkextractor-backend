@@ -3,6 +3,10 @@ extend type Query {
     relationSchema(id: UUID! @eq @rules(apply: ["exists:relation_schemas,id"])): RelationSchema! @find
 }
 
+extend type Mutation {
+    publishRelationSchema(id: UUID! @rules(apply: ["exists:relation_schemas,id"])): RelationSchema!
+}
+
 type RelationSchema {
     id                   : UUID!
     isPublished          : Boolean!                 @rename(attribute: "is_published")
