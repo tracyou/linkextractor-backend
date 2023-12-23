@@ -9,3 +9,8 @@ type MatterRelation {
     matterRelationSchema: MatterRelationSchema! @belongsTo
 }
 
+input MatterRelationInput {
+    relatedMatterId: UUID!               @rename(attribute: "related_matter_id")
+    relation       : MatterRelationEnum!
+    description    : String!
+}
