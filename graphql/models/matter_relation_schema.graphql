@@ -7,10 +7,6 @@ extend type Mutation {
     saveMatterRelationSchema(input: SaveMatterRelationSchemaInput! @spread): MatterRelationSchema!
 }
 
-extend type Mutation {
-    saveMatterRelationSchema(input: SaveMatterRelationSchemaInput! @spread): MatterRelationSchema!
-}
-
 type MatterRelationSchema {
     id: UUID!
     schemaLayout  : JSON!              @rename(attribute: "schema_layout")
