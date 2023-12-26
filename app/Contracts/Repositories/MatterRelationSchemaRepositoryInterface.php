@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Contracts\Repositories;
 
 use App\Models\MatterRelationSchema;
+use Illuminate\Support\Collection;
 use Wimski\ModelRepositories\Contracts\Repositories\ModelRepositoryInterface;
 
 /**
@@ -13,4 +14,10 @@ use Wimski\ModelRepositories\Contracts\Repositories\ModelRepositoryInterface;
 interface MatterRelationSchemaRepositoryInterface extends ModelRepositoryInterface
 {
     public function getMatterRelationSchema(string $relationSchemaId, string $matterId): MatterRelationSchema | null;
+
+    /**
+     * @param string $relationSchemaId
+     * @return Collection<MatterRelationSchema>
+     */
+    public function getMatterRelationSchemasForRelationSchema(string $relationSchemaId): Collection;
 }

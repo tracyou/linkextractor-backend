@@ -25,7 +25,7 @@ class MatterRelationSchemaFactory extends Factory
     {
         return [
             'matter_id'          => Matter::factory(),
-            'schema_layout'      => $this->faker->randomElements(['{"type":"object","properties":{"name":{"type":"string"}}}', '{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}}}']),
+            'schema_layout'      => '{"type":"object","properties":{"name":{"type":"string"}}}',
             'relation_schema_id' => RelationSchema::factory(),
         ];
     }

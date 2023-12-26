@@ -193,7 +193,6 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
         ])->assertJson([
             'data' => [
                 'saveMatterRelationSchema' => [
-                    // 'id'             => $this->createUUIDFromID(2), // <-- This is a new id, because the schema is published and a new schema is created
                     'schemaLayout'   => json_encode(['test' => 'test']),
                     'matter'         => [
                         'id' => $this->createUUIDFromID(1),
@@ -202,6 +201,79 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
                         [
                             'relatedMatter' => [
                                 'id' => $this->createUUIDFromID(2),
+                            ],
+                            'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                            'description'   => 'Requires one or more',
+                        ],
+                        [
+                            'relatedMatter' => [
+                                'id' => $this->createUUIDFromID(3),
+                            ],
+                            'relation'      => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                            'description'   => 'Requires zero or more',
+                        ],
+                    ],
+                    'relationSchema' => [
+                        'isPublished' => false,
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertDatabaseCount('relation_schemas', 3);
+
+        $this->assertDatabaseCount('matter_relation_schemas', 3);
+
+        $this->assertDatabaseHas('matter_relations', [
+            'related_matter_id' => $this->createUUIDFromID(2),
+            'relation'          => MatterRelationEnum::REQUIRES_ONE_OR_MORE(),
+            'description'       => 'Requires one or more',
+        ]);
+
+        $this->assertDatabaseHas('matter_relations', [
+            'related_matter_id' => $this->createUUIDFromID(3),
+            'relation'          => MatterRelationEnum::REQUIRES_ZERO_OR_MORE(),
+            'description'       => 'Requires zero or more',
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_copies_matter_relation_schemas_to_new_relation_schema_when_published(): void
+    {
+        $response = $this->makeRequest([
+            'input' => [
+                'matterId'         => $this->createUUIDFromID(2),
+                'relationSchemaId' => $this->createUUIDFromID(1),
+                'relations'        => [
+                    [
+                        'relatedMatterId' => $this->createUUIDFromID(1),
+                        'relation'        => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                        'description'     => 'Requires one or more',
+                    ],
+                    [
+                        'relatedMatterId' => $this->createUUIDFromID(3),
+                        'relation'        => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                        'description'     => 'Requires zero or more',
+                    ],
+                ],
+                'schemaLayout'     => '{"test":"test"}',
+            ],
+        ]);
+
+        $response->assertJson([
+            'data' => [
+                'saveMatterRelationSchema' => [
+                    // 'id'             => $this->createUUIDFromID(2), // <-- This is a new id, because the schema is published and a new schema is created
+                    'schemaLayout'   => json_encode(['test' => 'test']),
+                    'matter'         => [
+                        'id' => $this->createUUIDFromID(2),
+                    ],
+                    'relations'      => [
+                        [
+                            'relatedMatter' => [
+                                'id' => $this->createUUIDFromID(1),
                             ],
                             'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
                             'description'   => 'Requires one or more',
@@ -224,10 +296,10 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
 
         $this->assertDatabaseCount('relation_schemas', 3);
 
-        $this->assertDatabaseCount('matter_relation_schemas', 3);
+        $this->assertDatabaseCount('matter_relation_schemas', 4);
 
         $this->assertDatabaseHas('matter_relations', [
-            'related_matter_id' => $this->createUUIDFromID(2),
+            'related_matter_id' => $this->createUUIDFromID(1),
             'relation'          => MatterRelationEnum::REQUIRES_ONE_OR_MORE(),
             'description'       => 'Requires one or more',
         ]);
@@ -236,6 +308,22 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
             'related_matter_id' => $this->createUUIDFromID(3),
             'relation'          => MatterRelationEnum::REQUIRES_ZERO_OR_MORE(),
             'description'       => 'Requires zero or more',
+        ]);
+
+        $this->assertDatabaseHas('matter_relation_schemas', [
+            'relation_schema_id' => $response->json('data.saveMatterRelationSchema.relationSchema.id'),
+            'matter_id'          => $this->createUUIDFromID(1),
+        ]);
+
+        $copiedMatterRelationSchema = MatterRelationSchema::where('relation_schema_id', $response->json('data.saveMatterRelationSchema.relationSchema.id'))
+            ->where('matter_id', $this->createUUIDFromID(1))
+            ->first();
+
+        $this->assertDatabaseHas('matter_relations', [
+            'matter_relation_schema_id' => $copiedMatterRelationSchema->getKey(),
+            'related_matter_id'         => $this->createUUIDFromID(2),
+            'relation'                  => MatterRelationEnum::REQUIRES_ONE_OR_MORE(),
+            'description'               => 'First relation of schema 1',
         ]);
     }
 
