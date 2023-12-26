@@ -91,7 +91,7 @@ final class SaveMatterRelationSchema
      * @param string|null    $matterRelationSchemaId
      * @param Matter         $matter
      * @param RelationSchema $relationSchema
-     * @param stdClass       $schemaLayout
+     * @param string         $schemaLayout
      *
      * @return MatterRelationSchema
      */
@@ -99,18 +99,17 @@ final class SaveMatterRelationSchema
         ?string $matterRelationSchemaId,
         Matter $matter,
         RelationSchema $relationSchema,
-        StdClass $schemaLayout,
+        string $schemaLayout,
     ): MatterRelationSchema {
         if ($matterRelationSchemaId === null || $this->matterRelationSchemaRepository->findOrFail($matterRelationSchemaId)->relationSchema->is_published) {
-            $matterRelationSchema = $this->matterRelationSchemaFactory->create(
+            return $this->matterRelationSchemaFactory->create(
                 matter        : $matter,
                 relationSchema: $relationSchema,
-                schemaLayout  : json_encode($schemaLayout),
+                schemaLayout  : $schemaLayout,
             );
-        } else {
-            $matterRelationSchema = $this->matterRelationSchemaRepository->findOrFail($matterRelationSchemaId);
         }
 
+        $matterRelationSchema = $this->matterRelationSchemaRepository->findOrFail($matterRelationSchemaId);
         $matterRelationSchema->schema_layout = $schemaLayout;
         $matterRelationSchema->save();
 

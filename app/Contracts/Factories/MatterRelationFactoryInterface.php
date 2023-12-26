@@ -15,6 +15,6 @@ interface MatterRelationFactoryInterface
         Matter $relatedMatter,
         MatterRelationSchema $schema,
         MatterRelationEnum $relation,
-        string $description,
+        ?string $description,
     ): MatterRelation;
 }

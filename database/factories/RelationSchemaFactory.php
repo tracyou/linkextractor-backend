@@ -24,7 +24,7 @@ class RelationSchemaFactory extends Factory
     {
         return [
             'is_published' => true,
-            'expired_at' => $this->faker->dateTimeBetween('-1 year'),
+            'expired_at' => null,
         ];
     }
 }

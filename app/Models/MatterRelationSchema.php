@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
  * App\Models\MatterRelationSchema.
  *
  * @property string                                           $id
- * @property array<string, string>                            $schema_layout
+ * @property string                                           $schema_layout
  * @property \Illuminate\Support\Carbon|null                  $created_at
  * @property \Illuminate\Support\Carbon|null                  $updated_at
  * @property \Illuminate\Support\Carbon|null                  $deleted_at
@@ -49,10 +49,6 @@ final class MatterRelationSchema extends AbstractModel
 
     public $fillable = [
         'schema_layout',
-    ];
-
-    protected $casts = [
-        'schema_layout' => 'json',
     ];
 
     public function matter(): BelongsTo

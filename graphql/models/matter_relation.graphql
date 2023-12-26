@@ -12,5 +12,5 @@ type MatterRelation {
 input MatterRelationInput {
     relatedMatterId: UUID!               @rename(attribute: "related_matter_id")
     relation       : MatterRelationEnum!
-    description    : String!
+    description    : String
 }

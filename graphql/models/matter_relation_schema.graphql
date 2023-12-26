@@ -9,7 +9,7 @@ extend type Mutation {
 
 type MatterRelationSchema {
     id: UUID!
-    schemaLayout  : JSON!              @rename(attribute: "schema_layout")
+    schemaLayout  : String!            @rename(attribute: "schema_layout")
     createdAt     : DateTime!          @rename(attribute: "created_at")
     updatedAt     : DateTime!          @rename(attribute: "updated_at")
 
@@ -28,5 +28,5 @@ input SaveMatterRelationSchemaInput @validator {
     relationSchemaId      : UUID                    @rename(attribute: "relation_schema_id")
     matterRelationSchemaId: UUID                    @rename(attribute: "matter_relation_schema_id")
     relations             : [MatterRelationInput!]!
-    schemaLayout          : JSON!                   @rename(attribute: "schema_layout")
+    schemaLayout          : String!                 @rename(attribute: "schema_layout")
 }
