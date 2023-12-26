@@ -27,7 +27,7 @@ class MatterRelationSeeder extends Seeder
         $matters->each(function (Matter $matter) use ($matters): void {
             $matters->each(function (Matter $relatedMatter) use ($matter): void {
                 $matterRelationSchema = MatterRelationSchema::where('matter_id', $matter->getKey())->first();
-                if ($matter->getKey() !== $relatedMatter->getKey()) {
+                if ($matterRelationSchema && $matter->getKey() !== $relatedMatter->getKey()) {
                     MatterRelation::factory()->create([
                         'related_matter_id'         => $relatedMatter->getKey(),
                         'relation'                  => MatterRelationEnum::getRandomValue(),
