@@ -3,6 +3,12 @@ extend type Query {
     law(id: UUID! @eq @rules(apply: ["exists:laws,id"])): Law! @find
 }
 
+extend type Mutation {
+    deleteLaw(
+        input: DeleteLawInput! @spread
+    ):Boolean!
+}
+
 type Law {
     id: UUID!
     title: String!
@@ -12,4 +18,9 @@ type Law {
     updatedAt: DateTime! @rename(attribute: "updated_at")
 
     annotations: [Annotation!]! @hasMany
+}
+
+input DeleteLawInput {
+    id: UUID!
+    deletedAt: DateTime! @rename(attribute: "deleted_at")
 }
