@@ -42,6 +42,7 @@ class SaveAnnotatedLaw
 
         $law->is_published = $isPublished;
         $law->title = $lawTitle;
+        $annotation = null;
 
         $articles->each(function (array $articleInput) use ($annotations) {
             $article = $this->articleRepository->findOrFail('articleId');
@@ -61,6 +62,7 @@ class SaveAnnotatedLaw
                     $matterRelationSchema
 
                 );
+                $annotation->save();
             });
 
         });

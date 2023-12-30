@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Contracts\Repositories\AnnotationRepositoryInterface;
 use App\Contracts\Repositories\ArticleRepositoryInterface;
+use App\Contracts\Repositories\FileXmlRepositoryInterface;
 use App\Contracts\Repositories\LawRepositoryInterface;
 use App\Contracts\Repositories\MatterRelationSchemaRepositoryInterface;
 use App\Contracts\Repositories\MatterRepositoryInterface;
@@ -14,6 +15,7 @@ use App\Contracts\Repositories\PancakeStackRepositoryInterface;
 use App\Contracts\Repositories\RelationSchemaRepositoryInterface;
 use App\Repositories\AnnotationRepository;
 use App\Repositories\ArticleRepository;
+use App\Repositories\FileXmlRepository;
 use App\Repositories\LawRepository;
 use App\Repositories\MatterRelationSchemaRepository;
 use App\Repositories\MatterRepository;
@@ -34,5 +36,7 @@ class RepositoryServiceProvider extends ModelRepositoryServiceProvider
         MatterRelationSchemaRepositoryInterface::class => MatterRelationSchemaRepository::class,
         RelationSchemaRepositoryInterface::class       => RelationSchemaRepository::class,
         ArticleRepositoryInterface::class => ArticleRepository::class,
+        FileXmlRepositoryInterface::class => FileXmlRepository::class,
+
     ];
 }

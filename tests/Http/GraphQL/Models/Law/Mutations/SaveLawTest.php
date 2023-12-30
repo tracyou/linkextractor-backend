@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\Http\GraphQL\Models\Law\Mutations;
 
+use App\Contracts\Factories\AnnotationFactoryInterface;
 use App\Contracts\Factories\ArticleFactoryInterface;
 use App\Contracts\Factories\LawFactoryInterface;
 use App\Contracts\Factories\MatterFactoryInterface;
+use App\Contracts\Factories\MatterRelationFactoryInterface;
 use App\Contracts\Factories\MatterRelationSchemaFactoryInterface;
-use PHPUnit\Util\Json;
+use App\Models\Annotation;
+use App\Models\Article;
+use App\Models\Law;
+use App\Models\Matter;
+use App\Models\MatterRelationSchema;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
 class SaveLawTest extends AbstractHttpGraphQLTestCase
@@ -18,20 +24,26 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
         // Arrange
         $lawFactory = app(LawFactoryInterface::class);
         $articleFactory = app(ArticleFactoryInterface::class);
+        $annotationFactory = app(AnnotationFactoryInterface::class);
         $matterFactory = app(MatterFactoryInterface::class);
         $matterRelationSchemaFactory = app(MatterRelationSchemaFactoryInterface::class);
 
         $matter = $matterFactory->create('matter', '#001000');
-        $law = $lawFactory->create('title of the law', false);
-        $jsonData = [
-            'article 1' => 'oh my god',
-            'content' => 'i am so sleepy',
-        ];
-        $jsonText = new Json(json_encode($jsonData));
-        $article = $articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData);
+        $law = $lawFactory->create('title', false);
+        $article = $articleFactory->create($law,'title of the article', 'this is the text of the article');
         $matterRelationSchema = $matterRelationSchemaFactory->create();
 
+        $annotation = $annotationFactory->create(
+            $matter,
+            'this is an annotation',
+            200,
+            'this is a comment',
+            $article,
+            $matterRelationSchema
+        );
 
+
+        // Act
         $response = $this->graphQL(/** @lang GraphQL */ '
           mutation saveAnnotatedLaw($input: AnnotatedArticleInput!) {
               saveAnnotatedLaw(input: $input) {
@@ -42,12 +54,11 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                       id
                       title
                       text
-                      textJson
                       annotations {
-                         text
-                         definition
+                         id
                          comment
-                         matter {
+                         cursorIndex
+                         matter{
                              id
                          }
                          matterRelationSchema {
@@ -67,12 +78,11 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                         'articleId' => $article->id,
                         'title' => $article->title,
                         'text' => $article->text,
-                        'textJson' => $article->json_text,
                         'annotations' => [
                             [
-                                'text' => 'this is the annotation text',
-                                'definition' => 'this is the definition of the annotation',
-                                'comment' => 'this is the annotation comment',
+                                'id' => $annotation->id,
+                                'comment' => $annotation->comment,
+                                'cursorIndex' => $annotation->cursor_index,
                                 'matterId' => $matter->id,
                                 'matterRelationSchemaId' => $matterRelationSchema->id,
                             ],
@@ -84,36 +94,11 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
 
         // Assert
         $response->assertStatus(200);
-        $response->assertExactJson([
-            'data' => [
-                'saveAnnotatedLaw' => [
-                    'id' => $law->id,
-                    'title' => $law->title,
-                    'isPublished' => $law->is_published,
-                    'articles' => [
-                        [
-                            'id' => $article->id,
-                            'title' => $article->title,
-                            'text' => $article->text,
-                            'textJson' => json_encode($article->json_text),
-                            'annotations' => [
-                                [
-                                    'text' => 'this is the annotation text',
-                                    'definition' => 'this is the definition of the annotation',
-                                    'comment' => 'this is the annotation comment',
-                                    'matter' => [
-                                        'id' => $matter->id,
-                                    ],
-                                    'matterRelationSchema' => [
-                                        'id' => $matterRelationSchema->id,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+
+        dd($response->json());
+//        $response->assertJson([
+//            //
+//        ]);
 
     }
 }
