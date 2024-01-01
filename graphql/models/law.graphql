@@ -22,5 +22,4 @@ type Law {
 
 input DeleteLawInput {
     id: UUID!
-    deletedAt: DateTime! @rename(attribute: "deleted_at")
 }
