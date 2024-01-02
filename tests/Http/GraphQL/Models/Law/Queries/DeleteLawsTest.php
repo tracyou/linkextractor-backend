@@ -13,7 +13,7 @@ class DeleteLawsTest extends AbstractHttpGraphQLTestCase
     /**
      * @throws ValidationException
      */
-    public function testDeleteLawMutation(): void
+    public function delete_law(): void
     {
         $law = Law::factory()->create();
         $args = ['id' => $law->id];
@@ -25,7 +25,7 @@ class DeleteLawsTest extends AbstractHttpGraphQLTestCase
         $this->assertSoftDeleted('laws', ['id' => $law->id]);
     }
 
-    public function testDeleteLawMutationWithNonExistingLawId(): void
+    public function delete_law_with_non_existing_law(): void
     {
         $law = null;
         $args = ['id' => 'non_existing_id'];
