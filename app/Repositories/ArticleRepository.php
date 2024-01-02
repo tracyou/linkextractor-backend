@@ -14,6 +14,4 @@ final class ArticleRepository extends AbstractModelRepository implements Article
     {
         $this->model = $model;
     }
-
-
 }

@@ -4,19 +4,16 @@ extend type Query {
 }
 
 extend type Mutation {
-    importXml(file: Upload!): Law!
-}
-
-extend type Mutation {
+    saveAnnotatedLaw(input: AnnotatedLawInput! @spread): Law!
     deleteLaw(
         input: DeleteLawInput! @spread
     ):Boolean!
+    importXml(file: Upload!): Law!
 }
 
 type Law {
     id: UUID!
     title: String!
-    text: String!
     isPublished: Boolean! @rename(attribute: "is_published")
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
@@ -28,38 +25,20 @@ input DeleteLawInput {
     id: UUID!
 }
 
-extend type Mutation{
-
-    saveAnnotatedLaw(input:AnnotatedLawInput! @spread):Law!
-}
-
 input AnnotatedLawInput{
-
-    lawId:UUID! @rules(apply: ["exists:laws,id"])
+    lawId: UUID! @rules(apply: ["exists:laws,id"])
     isPublished: Boolean
-    annotations: [AnnotationInput!]!
-}
-input AnnotationInput{
-    text:String!
-    matterId: UUID!
-    comment:String
-    cursorIndex:Int!
+    articles: [ArticleInput!]!@spread
 }
 
-extend type Mutation{
-
-    saveAnnotatedLaw(input:AnnotatedLawInput! @spread):Law!
+input ArticleInput{
+    articleId: UUID! @rules(apply: ["exists:articles,id"])
+    annotations: [AnnotationInput!]!@spread
 }
 
-input AnnotatedLawInput{
-
-    lawId:UUID! @rules(apply: ["exists:laws,id"])
-    isPublished: Boolean
-    annotations: [AnnotationInput!]!
-}
-input AnnotationInput{
-    text:String!
-    matterId: UUID!
-    comment:String
-    cursorIndex:Int!
+input AnnotationInput {
+    text: String!
+    comment: String
+    definition: String
+    matterId: UUID! @rules(apply: ["exists:matters,id"])
 }
