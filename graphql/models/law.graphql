@@ -33,6 +33,7 @@ input AnnotatedLawInput{
 
 input ArticleInput{
     articleId: UUID! @rules(apply: ["exists:articles,id"])
+    jsonText: String!
     annotations: [AnnotationInput!]!@spread
 }
 

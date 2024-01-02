@@ -7,8 +7,10 @@ use App\Contracts\Repositories\AnnotationRepositoryInterface;
 use App\Contracts\Repositories\ArticleRepositoryInterface;
 use App\Contracts\Repositories\LawRepositoryInterface;
 use App\Contracts\Repositories\MatterRelationRepositoryInterface;
+use App\Contracts\Repositories\MatterRelationSchemaRepositoryInterface;
 use App\Contracts\Repositories\MatterRepositoryInterface;
 use App\Models\Law;
+use App\Repositories\MatterRelationSchemaRepository;
 use Database\Factories\AnnotationFactory;
 use function Laravel\Prompts\text;
 
@@ -22,6 +24,7 @@ class SaveAnnotatedLaw
         protected AnnotationFactoryInterface $annotationFactory,
         protected ArticleRepositoryInterface $articleRepository,
         protected MatterRelationRepositoryInterface $matterRelationRepository,
+        protected MatterRelationSchemaRepositoryInterface $matterRelationSchemaRepository,
 
     )
     {
@@ -33,8 +36,7 @@ class SaveAnnotatedLaw
         $lawTitle = $args['title'];
         $isPublished = $args['isPublished'];
         $articles = collect($args['articles']);
-        $annotations = collect($args['annotations']);
-
+        $annotations = collect($articles->map(fn ($article) => $article['annotations']));
 
 
         /** @var Law $law */
@@ -42,7 +44,6 @@ class SaveAnnotatedLaw
 
         $law->is_published = $isPublished;
         $law->title = $lawTitle;
-        $annotation = null;
 
         $articles->each(function (array $articleInput) use ($annotations) {
             $article = $this->articleRepository->findOrFail('articleId');
@@ -51,7 +52,7 @@ class SaveAnnotatedLaw
                 $comment = $this->annotationRepository->findOrFail($annotationInput['comment']);
                 $cursorIndex = $this->annotationRepository->findOrFail($annotationInput['cursorIndex']);
                 $text = $this->articleRepository->findOrFail('text');
-                $matterRelationSchema = $this->matterRelationRepository->findOrFail('matterRelationSchemaId');
+                $matterRelationSchema = $this->matterRelationSchemaRepository->findOrFail('matterRelationSchemaId');
 
                 $annotation = $this->annotationFactory->create(
                     $matter,
