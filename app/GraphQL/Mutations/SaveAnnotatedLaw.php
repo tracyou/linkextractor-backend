@@ -44,7 +44,7 @@ class SaveAnnotatedLaw
 
         $articles->each(function (array $articleInput) {
             $article = $this->articleRepository->findOrFail($articleInput['articleId']);
-            $annotations = collect($articleInput['annotations'])->map(function ($annotationInput) use ($article) {
+            $annotations = collect($articleInput['annotations'])->each(function ($annotationInput) use ($article) {
                 $matter = $this->matterRepository->findOrFail($annotationInput['matterId']);
                 $comment = $annotationInput['comment'];
                 $cursorIndex = $annotationInput['cursorIndex'];

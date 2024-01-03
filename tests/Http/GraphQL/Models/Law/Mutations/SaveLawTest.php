@@ -21,34 +21,14 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
         // Arrange
         $lawFactory = app(LawFactoryInterface::class);
         $articleFactory = app(ArticleFactoryInterface::class);
-        $annotationFactory = app(AnnotationFactoryInterface::class);
         $matterFactory = app(MatterFactoryInterface::class);
         $matterRelationSchemaFactory = app(MatterRelationSchemaFactoryInterface::class);
 
         $matter = $matterFactory->create('matter', '#001000');
-        $law = $lawFactory->create('title', false);
+        $law = $lawFactory->create('title of the law', false);
         $article = $articleFactory->create($law, 'title of the article', 'this is the text of the article');
         $matterRelationSchema = $matterRelationSchemaFactory->create();
 
-//        $annotation = $annotationFactory->create(
-//            $matter,
-//            'this is an annotation',
-//            10,
-//            'this is a comment',
-//            $article,
-//            $matterRelationSchema
-//        );
-
-//        $annotation = Annotation::factory()->create([
-//            'id' => $this->createUUIDFromID(1),
-//            'text' => 'this is the annotation text',
-//            'cursor_index' => 200,
-//            'comment' => 'this is the annotation comment',
-//            'matter_id' => $matter->id,
-//            'matter_relation_schema_id' => $matterRelationSchema->id,
-//            'article_id' => $article->id,]);
-//        dd($annotation->id);
-        $annotationId = $this->createUUIDFromID(1);
 
         $response = $this->graphQL(/** @lang GraphQL */ '
           mutation saveAnnotatedLaw($input: AnnotatedArticleInput!) {
@@ -61,7 +41,6 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                       title
                       text
                       annotations {
-                         id
                          text
                          cursorIndex
                          comment
@@ -87,9 +66,8 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                         'text' => $article->text,
                         'annotations' => [
                             [
-                                'id' => '9b00e35e-bae3-4956-1235-efb3a1e1ddf6',
                                 'text' => 'this is the annotation text',
-                                'cursorIndex' => 200,
+                                'cursorIndex' => 120,
                                 'comment' => 'this is the annotation comment',
                                 'matterId' => $matter->id,
                                 'matterRelationSchemaId' => $matterRelationSchema->id,
@@ -102,8 +80,35 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
 
         // Assert
         $response->assertStatus(200);
+        $response->assertExactJson([
+            'data' => [
+                'saveAnnotatedLaw' => [
+                    'id' => $law->id,
+                    'title' => $law->title,
+                    'isPublished' => $law->is_published,
+                    'articles' => [
+                        [
+                            'id' => $article->id,
+                            'title' => $article->title,
+                            'text' => $article->text,
+                            'annotations' => [
+                                [
+                                    'text' => 'this is the annotation text',
+                                    'cursorIndex' => 120,
+                                    'comment' => 'this is the annotation comment',
+                                    'matter' => [
+                                        'id' => $matter->id,
+                                    ],
+                                    'matterRelationSchema' => [
+                                        'id' => $matterRelationSchema->id,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
-//        dd($article);
-        dd($response->json());
     }
 }
