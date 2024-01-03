@@ -19,8 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string                          $relation_schema_id
- * @property-read \App\Models\Article $article
- * @property-read \App\Models\Matter $matter
+ * @property-read \App\Models\Article        $article
+ * @property-read \App\Models\Matter         $matter
  * @property-read \App\Models\RelationSchema $relationSchema
  *
  * @method static \Database\Factories\AnnotationFactory factory($count = null, $state = [])
@@ -64,6 +64,4 @@ final class Annotation extends AbstractModel
     {
         return $this->belongsTo(RelationSchema::class);
     }
-
-
 }

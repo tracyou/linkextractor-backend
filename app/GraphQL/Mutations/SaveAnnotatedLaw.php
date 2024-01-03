@@ -10,20 +10,18 @@ use App\Contracts\Repositories\MatterRelationRepositoryInterface;
 use App\Contracts\Repositories\MatterRelationSchemaRepositoryInterface;
 use App\Contracts\Repositories\MatterRepositoryInterface;
 use App\Models\Law;
-use App\Repositories\MatterRelationSchemaRepository;
-use Database\Factories\AnnotationFactory;
-use function Laravel\Prompts\text;
+
 
 class SaveAnnotatedLaw
 {
 
     public function __construct(
-        protected LawRepositoryInterface        $lawRepository,
-        protected AnnotationRepositoryInterface $annotationRepository,
-        protected MatterRepositoryInterface     $matterRepository,
-        protected AnnotationFactoryInterface $annotationFactory,
-        protected ArticleRepositoryInterface $articleRepository,
-        protected MatterRelationRepositoryInterface $matterRelationRepository,
+        protected LawRepositoryInterface                  $lawRepository,
+        protected AnnotationRepositoryInterface           $annotationRepository,
+        protected MatterRepositoryInterface               $matterRepository,
+        protected AnnotationFactoryInterface              $annotationFactory,
+        protected ArticleRepositoryInterface              $articleRepository,
+        protected MatterRelationRepositoryInterface       $matterRelationRepository,
         protected MatterRelationSchemaRepositoryInterface $matterRelationSchemaRepository,
 
     )
@@ -36,7 +34,6 @@ class SaveAnnotatedLaw
         $lawTitle = $args['title'];
         $isPublished = $args['isPublished'];
         $articles = collect($args['articles']);
-        $annotations = collect($articles->map(fn ($article) => $article['annotations']));
 
 
         /** @var Law $law */
@@ -45,31 +42,26 @@ class SaveAnnotatedLaw
         $law->is_published = $isPublished;
         $law->title = $lawTitle;
 
-        $articles->each(function (array $articleInput) use ($annotations) {
-            $article = $this->articleRepository->findOrFail('articleId');
-            $annotations->each(function (array $annotationInput) use ($article) {
+        $articles->each(function (array $articleInput) {
+            $article = $this->articleRepository->findOrFail($articleInput['articleId']);
+            $annotations = collect($articleInput['annotations'])->map(function ($annotationInput) use ($article) {
                 $matter = $this->matterRepository->findOrFail($annotationInput['matterId']);
-                $comment = $this->annotationRepository->findOrFail($annotationInput['comment']);
-                $cursorIndex = $this->annotationRepository->findOrFail($annotationInput['cursorIndex']);
-                $text = $this->articleRepository->findOrFail('text');
-                $matterRelationSchema = $this->matterRelationSchemaRepository->findOrFail('matterRelationSchemaId');
+                $comment = $annotationInput['comment'];
+                $cursorIndex = $annotationInput['cursorIndex'];
+                $text = $annotationInput['text'];
+                $matterRelationSchema = $this->matterRelationSchemaRepository->findOrFail($annotationInput['matterRelationSchemaId']);
 
-                $annotation = $this->annotationFactory->create(
+                return $this->annotationFactory->create(
                     $matter,
                     $text,
-                    $comment,
                     $cursorIndex,
+                    $comment,
                     $article,
                     $matterRelationSchema
-
                 );
-                $annotation->save();
             });
 
         });
-
-
-        $law->refresh();
 
         $law->save();
         return $law;
