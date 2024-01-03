@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Helpers\Import;
 
-use App\Structs\ArticleStruct;
-use App\Structs\LawStruct;
 use SimpleXMLElement;
+use App\Structs\LawStruct;
+use App\Structs\ArticleStruct;
 
 final class LawXmlImport
 {
@@ -24,15 +24,11 @@ final class LawXmlImport
     private function parseDataToStruct(SimpleXMLElement $data): LawStruct
     {
         $law = $this->getLaw($data);
-        $wetBesluit = 'wet-besluit';
-        $wetText = $data->wetgeving->$wetBesluit->wettekst;
-        foreach ($wetText->hoofdstuk as $chapter) {
-            foreach ($chapter->paragraaf as $paragraph) {
-                foreach ($paragraph->artikel as $article) {
-                    $hydratedArticle = $this->hydrateLaw($article);
-                    $law->add($hydratedArticle);
-                }
-            }
+        $articles = $this->getArticles($data);
+
+        foreach ($articles as $article) {
+            $hydratedArticle = $this->hydrateLaw($article);
+            $law->add($hydratedArticle);
         }
 
         return $law;
@@ -46,6 +42,18 @@ final class LawXmlImport
     private function trim(string $string): string
     {
         return trim($string);
+    }
+
+    private function getArticles(SimpleXMLElement $data, array &$articles = []): array
+    {
+        foreach ($data->children() as $child) {
+            if ($child->getName() === 'artikel') {
+                $articles[] = $child;
+            } else {
+                $articles = $this->getArticles($child, $articles);
+            }
+        }
+        return $articles;
     }
 
     private function hydrateLaw(SimpleXMLElement $article): ArticleStruct
