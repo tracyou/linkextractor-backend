@@ -14,7 +14,7 @@ return new class () extends Migration {
             $table->uuid('id')->primary();
             $table->text("text");
             $table->text('comment')->nullable();
-            $table->integer('cursor_index');
+            $table->text('definition')->nullable();
             $table->foreignUuid('matter_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('article_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
