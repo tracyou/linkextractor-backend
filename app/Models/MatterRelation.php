@@ -7,6 +7,9 @@ namespace App\Models;
 use App\Enums\MatterRelationEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -40,8 +43,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin Eloquent
  */
-final class MatterRelation extends AbstractModel
+final class MatterRelation extends Model
 {
+    use HasFactory;
+    use HasUuids;
+
+    protected $keyType = 'string';
+
     protected $table = 'matter_relations';
 
     public $incrementing = false;

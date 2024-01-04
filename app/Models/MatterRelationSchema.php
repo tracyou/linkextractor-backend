@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\MatterRelationEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,13 +14,14 @@ use Illuminate\Support\Collection;
  * App\Models\MatterRelationSchema.
  *
  * @property string                                           $id
- * @property string                                           $schema_layout
+ * @property array<string, string>                            $schema_layout
  * @property \Illuminate\Support\Carbon|null                  $created_at
  * @property \Illuminate\Support\Carbon|null                  $updated_at
  * @property \Illuminate\Support\Carbon|null                  $deleted_at
  * @property-read Matter                                      $matter
  * @property-read Collection<int, \App\Models\MatterRelation> $relations
  * @property-read Collection<int, \App\Models\Annotation>     $annotations
+ * @property-read RelationSchema                              $relationSchema
  *
  * @method static \Database\Factories\MatterRelationSchemaFactory factory($count = null, $state = [])
  * @method static Builder|MatterRelationSchema                    newModelQuery()
@@ -48,7 +48,7 @@ final class MatterRelationSchema extends AbstractModel
     public $incrementing = false;
 
     public $fillable = [
-        'expired_at',
+        'schema_layout',
     ];
 
     protected $casts = [

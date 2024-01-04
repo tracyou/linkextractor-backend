@@ -3,6 +3,10 @@ extend type Query {
     matterRelationSchema(input: MatterRelationSchemaInput! @spread): MatterRelationSchema
 }
 
+extend type Mutation {
+    saveMatterRelationSchema(input: SaveMatterRelationSchemaInput! @spread): MatterRelationSchema!
+}
+
 type MatterRelationSchema {
     id: UUID!
     schemaLayout  : JSON!              @rename(attribute: "schema_layout")
@@ -17,4 +21,12 @@ type MatterRelationSchema {
 input MatterRelationSchemaInput {
     relationSchemaId: UUID! @rules(apply: ["exists:relation_schemas,id"]) @rename(attribute: "relation_schema_id")
     matterId        : UUID! @rules(apply: ["exists:matters,id"])          @rename(attribute: "matter_id")
+}
+
+input SaveMatterRelationSchemaInput @validator {
+    matterId              : UUID!                   @rename(attribute: "matter_id")
+    relationSchemaId      : UUID                    @rename(attribute: "relation_schema_id")
+    matterRelationSchemaId: UUID                    @rename(attribute: "matter_relation_schema_id")
+    relations             : [MatterRelationInput!]!
+    schemaLayout          : JSON!                   @rename(attribute: "schema_layout")
 }
