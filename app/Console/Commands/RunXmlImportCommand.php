@@ -19,8 +19,6 @@ final class RunXmlImportCommand extends Command
     {
         $file = storage_path('testXml.xml');
 
-        $xmlString = file_get_contents($file);
-
-        (new LawXmlImport())->import($xmlString ?: '');
+        (new LawXmlImport())->import($file ?: '');
     }
 }

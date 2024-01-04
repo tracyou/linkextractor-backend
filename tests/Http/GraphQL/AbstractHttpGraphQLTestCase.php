@@ -15,11 +15,7 @@ abstract class AbstractHttpGraphQLTestCase extends TestCase
     use MakesGraphQLRequests;
     use UsesDatabase;
 
-    /**
-     * @param string $operation
-     * @param array  $data
-     * @return array
-     */
+
     protected function graphQlJsonData(string $operation, array $data): array
     {
         return [
@@ -32,6 +28,7 @@ abstract class AbstractHttpGraphQLTestCase extends TestCase
     protected function createUUIDFromID(int $id): string
     {
         $hash = md5((string) $id);
+
         return sprintf(
             '%8s-%4s-%4s-%4s-%12s',
             substr($hash, 0, 8),

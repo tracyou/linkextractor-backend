@@ -1,0 +1,8 @@
+type Article {
+    id: UUID!
+    title: String!
+    text: String!
+
+    law: Law! @belongsTo
+    annotations: [Annotation!]! @hasMany
+}

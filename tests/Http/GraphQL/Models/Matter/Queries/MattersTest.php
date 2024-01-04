@@ -15,20 +15,18 @@ class MattersTest extends AbstractHttpGraphQLTestCase
 
         Matter::factory()->createMany([
             [
-                'id'   => $this->createUUIDFromID(1),
+                'id' => $this->createUUIDFromID(1),
             ],
             [
-                'id'   => $this->createUUIDFromID(2),
+                'id' => $this->createUUIDFromID(2),
             ],
             [
-                'id'   => $this->createUUIDFromID(3),
+                'id' => $this->createUUIDFromID(3),
             ],
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_all_matters(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

@@ -16,10 +16,10 @@ final class ArticleStruct
 
     public function toModel(): ?Article
     {
-        $law = new Article();
-        $law->title = $this->label . ' ' . $this->nr . ' ' . $this->titel;
-        $law->text = $this->text ?: '';
+        $article = new Article();
+        $article->title = $this->label . ' ' . $this->nr . ' ' . $this->titel;
+        $article->text = $this->text ?: '';
 
-        return $law;
+        return $article;
     }
 }

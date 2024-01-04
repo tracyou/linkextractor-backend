@@ -48,9 +48,7 @@ class AnnotationsByLawTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_all_annotations_for_given_law(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -74,20 +72,20 @@ class AnnotationsByLawTest extends AbstractHttpGraphQLTestCase
             'data' => [
                 'annotationsByLaw' => [
                     [
-                        'id' => $this->createUUIDFromID(1),
+                        'id'    => $this->createUUIDFromID(1),
                         'pivot' => [
                             'cursorIndex' => 111,
-                            'comment' => 'This is a test comment!',
+                            'comment'     => 'This is a test comment!',
                         ],
                         'matter' => [
                             'id' => $this->createUUIDFromID(1),
                         ],
                     ],
                     [
-                        'id' => $this->createUUIDFromID(2),
+                        'id'    => $this->createUUIDFromID(2),
                         'pivot' => [
                             'cursorIndex' => 222,
-                            'comment' => 'This is another test comment!',
+                            'comment'     => 'This is another test comment!',
                         ],
                         'matter' => [
                             'id' => $this->createUUIDFromID(2),
@@ -98,9 +96,7 @@ class AnnotationsByLawTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_a_validation_error_for_non_existing_law_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

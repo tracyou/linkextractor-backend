@@ -2,6 +2,7 @@ type Query
 type Mutation
 
 scalar UUID
+scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
 #import models/*
 #import enums/*

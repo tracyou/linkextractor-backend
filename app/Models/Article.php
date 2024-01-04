@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,20 +23,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $annotations_count
  * @property-read \App\Models\Law $law
  *
- * @method static \Database\Factories\ArticleFactory            factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Article newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Article onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Article query()
- * @method static \Illuminate\Database\Eloquent\Builder|Article whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Article whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Article whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Article whereLawId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Article whereText($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Article whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Article whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Article withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Article withoutTrashed()
+ * @method static \Database\Factories\ArticleFactory factory($count = null, $state = [])
+ * @method static Builder|Article                    findDuplicated(string $title, string $lawId)
+ * @method static Builder|Article                    newModelQuery()
+ * @method static Builder|Article                    newQuery()
+ * @method static Builder|Article                    onlyTrashed()
+ * @method static Builder|Article                    query()
+ * @method static Builder|Article                    whereCreatedAt($value)
+ * @method static Builder|Article                    whereDeletedAt($value)
+ * @method static Builder|Article                    whereId($value)
+ * @method static Builder|Article                    whereLawId($value)
+ * @method static Builder|Article                    whereText($value)
+ * @method static Builder|Article                    whereTitle($value)
+ * @method static Builder|Article                    whereUpdatedAt($value)
+ * @method static Builder|Article                    withTrashed()
+ * @method static Builder|Article                    withoutTrashed()
  *
  * @mixin \Eloquent
  */
@@ -54,5 +56,10 @@ final class Article extends AbstractModel
     public function annotations(): HasMany
     {
         return $this->hasMany(Annotation::class);
+    }
+
+    public function scopeFindDuplicated(Builder $query, string $title, string $lawId): Builder
+    {
+        return $query->where('title', $title)->where('law_id', $lawId);
     }
 }

@@ -3,6 +3,10 @@ extend type Query {
     law(id: UUID! @eq @rules(apply: ["exists:laws,id"])): Law! @find
 }
 
+extend type Mutation {
+    importXml(file: Upload): Law!
+}
+
 type Law {
     id: UUID!
     title: String!
@@ -11,5 +15,5 @@ type Law {
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
 
-    annotations: [Annotation!]! @hasMany
+    articles: [Article!]! @hasMany
 }

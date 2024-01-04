@@ -2,6 +2,7 @@
 
 namespace App\Structs;
 
+use App\Models\Article;
 use App\Models\Law;
 use Illuminate\Support\Arr;
 
@@ -24,13 +25,23 @@ final class LawStruct
         Arr::pull($this->articles, $key);
     }
 
-    public function save(): void
+    public function save(): Law
     {
         $law = Law::firstOrCreate(['title' => $this->title]);
         foreach ($this->articles as $article) {
             $model = $article->toModel();
-            $model?->law()->associate($law);
-            $model?->save();
+            if (!$model) {
+                continue;
+            }
+
+            if (Article::findDuplicated($model->title, $law->id)->exists()) {
+                continue;
+            }
+
+            $model->law()->associate($law);
+            $model->save();
         }
+
+        return $law;
     }
 }
