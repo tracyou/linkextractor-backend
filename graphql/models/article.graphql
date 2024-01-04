@@ -8,7 +8,7 @@ type Article{
     id: UUID!
     title: String!
     text: String!
-    textJson: String @rename(attribute: "json_text")
+    jsonText: String @rename(attribute: "json_text")
     law: Law! @belongsTo
     annotations: [Annotation!]! @hasMany
 }

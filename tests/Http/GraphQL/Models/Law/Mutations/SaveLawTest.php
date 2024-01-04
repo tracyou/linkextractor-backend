@@ -42,7 +42,7 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                       id
                       title
                       text
-                      textJson
+                      jsonText
                       annotations {
                          text
                          definition
@@ -67,7 +67,7 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                         'articleId' => $article->id,
                         'title' => $article->title,
                         'text' => $article->text,
-                        'textJson' => $article->json_text,
+                        'jsonText' => $article->json_text,
                         'annotations' => [
                             [
                                 'text' => 'this is the annotation text',
@@ -95,7 +95,7 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                             'id' => $article->id,
                             'title' => $article->title,
                             'text' => $article->text,
-                            'textJson' => json_encode($article->json_text),
+                            'jsonText' => json_encode($article->json_text),
                             'annotations' => [
                                 [
                                     'text' => 'this is the annotation text',

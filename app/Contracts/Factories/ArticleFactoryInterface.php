@@ -8,6 +8,6 @@ use Psy\Util\Json;
 
 interface ArticleFactoryInterface
 {
-    public function create(Law $law, string $title, string $text): Article;
+    public function create(Law $law, string $title, string $text, array $jsonData): Article;
 
 }
