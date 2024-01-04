@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Http\GraphQL\Models\Law\Queries;
+namespace Tests\Http\GraphQL\Models\Law\Queries;
 
+use App\Models\Annotation;
 use App\Models\Article;
 use App\Models\Law;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
@@ -14,18 +15,24 @@ class LawTest extends AbstractHttpGraphQLTestCase
     {
         parent::setUp();
 
-        $law = Law::factory()->create([
+        Law::factory()->create([
             'id' => $this->createUUIDFromID(1),
         ]);
 
-        Article::factory(10)->create([
-            'law_id' => $law->id,
-            'text'   => 'This is a test comment!',
+        Article::factory()->create([
+            'id' => $this->createUUIDFromID(1),
+            'law_id' => $this->createUUIDFromID(1),
         ]);
 
+        Annotation::factory()->create([
+            'id' => $this->createUUIDFromID(1),
+            'article_id' => $this->createUUIDFromID(1),
+        ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_returns_a_law_by_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -33,7 +40,10 @@ class LawTest extends AbstractHttpGraphQLTestCase
                 law(id: $id) {
                     id
                     articles {
-                        text
+                        id
+                        annotations {
+                            id
+                        }
                     }
                 }
             }
@@ -42,25 +52,25 @@ class LawTest extends AbstractHttpGraphQLTestCase
         ])->assertJson([
             'data' => [
                 'law' => [
-                    'id'       => $this->createUUIDFromID(1),
-                    'articles' => [
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
+                    'id'          => $this->createUUIDFromID(1),
+                    'articles'    => [
+                        [
+                            'id'          => $this->createUUIDFromID(1),
+                            'annotations' => [
+                                [
+                                    'id' => $this->createUUIDFromID(1),
+                                ],
+                            ],
+                        ],
                     ],
                 ],
             ],
         ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_throws_a_validation_error_for_unknown_law_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

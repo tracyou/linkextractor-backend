@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Http\GraphQL\Models\Law\Queries;
+namespace Tests\Http\GraphQL\Models\Law\Queries;
 
+use App\Models\Annotation;
 use App\Models\Article;
 use App\Models\Law;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
@@ -14,25 +15,33 @@ class LawsTest extends AbstractHttpGraphQLTestCase
     {
         parent::setUp();
 
-        $law = Law::factory()->create([
+        Law::factory()->create([
             'id' => $this->createUUIDFromID(1),
+        ]);
+
+        Article::factory()->create([
+            'id' => $this->createUUIDFromID(1),
+            'law_id' => $this->createUUIDFromID(1),
         ]);
 
         Law::factory()->createMany([
             [
-                'id' => $this->createUUIDFromID(2),
+                'id'   => $this->createUUIDFromID(2),
             ],
             [
-                'id' => $this->createUUIDFromID(3),
+                'id'   => $this->createUUIDFromID(3),
             ],
         ]);
-        Article::factory()->create([
-            'law_id' => $law->id,
-            'title'  => 'Artikel 1',
+
+        Annotation::factory()->create([
+            'id' => $this->createUUIDFromID(1),
+            'article_id' => $this->createUUIDFromID(1),
         ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_returns_all_laws(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -52,7 +61,9 @@ class LawsTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_returns_pivot_attributes_with_annotations(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -60,7 +71,10 @@ class LawsTest extends AbstractHttpGraphQLTestCase
                 laws {
                     id
                     articles {
-                        title
+                        id
+                        annotations {
+                            id
+                        }
                     }
                 }
             }
@@ -68,17 +82,24 @@ class LawsTest extends AbstractHttpGraphQLTestCase
             'data' => [
                 'laws' => [
                     [
-                        'id'       => $this->createUUIDFromID(1),
-                        'articles' => [[
-                            'title' => 'Artikel 1',
-                        ]],
+                        'id' => $this->createUUIDFromID(1),
+                        'articles' => [
+                            [
+                                'id' => $this->createUUIDFromID(1),
+                                'annotations' => [
+                                    [
+                                        'id' => $this->createUUIDFromID(1),
+                                    ],
+                                ],
+                            ],
+                        ],
                     ],
                     [
-                        'id'       => $this->createUUIDFromID(2),
+                        'id' => $this->createUUIDFromID(2),
                         'articles' => [],
                     ],
                     [
-                        'id'       => $this->createUUIDFromID(3),
+                        'id' => $this->createUUIDFromID(3),
                         'articles' => [],
                     ],
                 ],

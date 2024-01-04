@@ -9,6 +9,7 @@ use App\Contracts\Factories\MatterFactoryInterface;
 use App\Contracts\Factories\MatterRelationFactoryInterface;
 use App\Contracts\Factories\MatterRelationSchemaFactoryInterface;
 use App\Contracts\Factories\RelationSchemaFactoryInterface;
+use App\Enums\MatterRelationEnum;
 use App\Factories\MatterRelationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -21,6 +22,7 @@ class MatterFactoryTest extends TestCase
     protected MatterFactoryInterface $matterFactory;
     protected LawFactoryInterface $lawFactory;
     protected RelationSchemaFactoryInterface $relationSchemaFactory;
+    protected MatterRelationSchemaFactoryInterface $matterRelationSchemaFactory;
     protected ArticleFactoryInterface $articleFactory;
     protected MatterRelationFactoryInterface $matterRelationFactory;
 
@@ -32,8 +34,9 @@ class MatterFactoryTest extends TestCase
         $this->matterFactory = $this->app->make(MatterFactoryInterface::class);
         $this->lawFactory = $this->app->make(LawFactoryInterface::class);
         $this->relationSchemaFactory = $this->app->make(RelationSchemaFactoryInterface::class);
+        $this->matterRelationSchemaFactory = $this->app->make(MatterRelationSchemaFactoryInterface::class);
         $this->articleFactory = $this->app->make(ArticleFactoryInterface::class);
-        $this->matterRelationFactory = $this->app->make(MatterRelationFactory::class);
+        $this->matterRelationFactory = $this->app->make(MatterRelationFactoryInterface::class);
     }
 
     public function test_matter_has_many_annotations(): void
@@ -78,19 +81,21 @@ class MatterFactoryTest extends TestCase
         $matterParent = $this->matterFactory->create("matter1", "#000000");
         $matterChild = $this->matterFactory->create("matter2", "#000000");
         $relationSchema = $this->relationSchemaFactory->create(false);
+        $matterRelationSchema = $this->matterRelationSchemaFactory->create($matterParent, $relationSchema, '{}');
+        $relationSchema = $this->relationSchemaFactory->create(false);
 
         // Act
-        $matterRelation = $this->matterRelationFactory->create($matterParent, $matterChild, "description", $relationSchema);
+        $matterRelation = $this->matterRelationFactory->create($matterChild, $matterRelationSchema, MatterRelationEnum::REQUIRES_ONE(), 'this is a description');
 
         $matterParent->refresh();
         $matterChild->refresh();
 
 
         // Assert
-        $this->assertTrue($matterRelation->matter_parent_id === $matterParent->id);
-        $this->assertTrue($matterRelation->matter_child_id === $matterChild->id);
-        $this->assertTrue($matterRelation->matter_relation_schema_id === $relationSchema->id);
-        $this->assertTrue($matterParent->matterParentRelations->isNotEmpty());
+        $this->assertTrue($matterRelation->matterRelationSchema->matter->id === $matterParent->id);
+        $this->assertTrue($matterRelation->relatedMatter->id === $matterChild->id);
+        $this->assertTrue($matterRelation->matterRelationSchema->id === $matterRelationSchema->id);
+        $this->assertTrue($matterParent->matterRelations->isNotEmpty());
 
     }
 }
