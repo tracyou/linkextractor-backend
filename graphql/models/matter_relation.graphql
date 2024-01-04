@@ -1,7 +1,7 @@
 type MatterRelation {
     id: UUID!
     relation            : MatterRelationEnum!
-    description         : String!
+    description         : String
     createdAt           : DateTime!
     updatedAt           : DateTime!
 

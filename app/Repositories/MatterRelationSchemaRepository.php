@@ -17,4 +17,12 @@ class MatterRelationSchemaRepository extends AbstractModelRepository implements 
     {
         $this->model = $model;
     }
+
+    public function getMatterRelationSchema(string $relationSchemaId, string $matterId): MatterRelationSchema
+    {
+        return $this->model
+            ->where('relation_schema_id', $relationSchemaId)
+            ->where('matter_id', $matterId)
+            ->first();
+    }
 }
