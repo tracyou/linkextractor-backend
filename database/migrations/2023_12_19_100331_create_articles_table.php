@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->string('title');
             $table->text('text');
+            $table->json('json_text')->nullable();
             $table->foreignUuid('law_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();

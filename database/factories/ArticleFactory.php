@@ -21,9 +21,10 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'law_id' => Law::factory(),
-            'title'  => $this->faker->title,
-            'text'   => $this->faker->text,
+            'title'     => $this->faker->sentence,
+            'text'      => $this->faker->text,
+            'json_text' => null,
+            'law_id'    => Law::factory(),
         ];
     }
 }

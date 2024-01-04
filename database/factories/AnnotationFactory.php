@@ -20,10 +20,12 @@ class AnnotationFactory extends Factory
     public function definition(): array
     {
         return [
-            'matter_id'          => Matter::factory(),
-            'relation_schema_id' => RelationSchema::factory(),
-            'article_id'         => Article::factory(),
             'text'               => $this->faker->sentence,
+            'definition'         => $this->faker->word,
+            'comment'            => $this->faker->sentence,
+            'matter_id'          => Matter::factory(),
+            'article_id'         => Article::factory(),
+            'relation_schema_id' => RelationSchema::factory(),
         ];
     }
 }

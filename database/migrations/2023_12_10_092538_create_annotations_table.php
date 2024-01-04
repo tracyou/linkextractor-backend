@@ -12,14 +12,13 @@ return new class () extends Migration {
     {
         Schema::create('annotations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('matter_id');
-            $table->uuid('article_id');
             $table->text("text");
+            $table->text('comment')->nullable();
+            $table->text('definition')->nullable();
+            $table->foreignUuid('matter_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('article_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('matter_id')->on('matters')->references('id');
-            $table->foreign('article_id')->on('articles')->references('id');
         });
     }
 
