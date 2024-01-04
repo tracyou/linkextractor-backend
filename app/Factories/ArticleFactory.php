@@ -14,8 +14,8 @@ class ArticleFactory implements ArticleFactoryInterface
     public function create(Law $law, string $title, string $text): Article
     {
         $article = new Article([
-            'title' => 'title of the article',
-            'text' => 'this is the text of the article',
+            'title' => $title,
+            'text' => $text,
         ]);
         $article->law()->associate($law);
         $article->save();

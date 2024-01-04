@@ -11,5 +11,12 @@ use App\Models\RelationSchema;
 
 interface AnnotationFactoryInterface
 {
-    public function create(RelationSchema $schema, Article $article, Matter $matter, string $text): Annotation;
+    public function create(
+        Article $article,
+        RelationSchema $relationSchema,
+        Matter $matter,
+        string $text,
+        ?string $definition,
+        ?string $comment,
+    ): Annotation;
 }
