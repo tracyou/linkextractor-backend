@@ -4,11 +4,12 @@ extend type Query {
 }
 
 type Matter {
-    id: UUID!
-    name: String!
-    color: String!
-    createdAt: DateTime! @rename(attribute: "created_at")
-    updatedAt: DateTime! @rename(attribute: "updated_at")
+    id             : UUID!
+    name           : String!
+    color          : String!
+    createdAt      : DateTime!          @rename(attribute: "created_at")
+    updatedAt      : DateTime!          @rename(attribute: "updated_at")
 
-    annotations: [Annotation!]! @hasMany
+    annotations    : [Annotation!]!     @hasMany
+    matterRelations: [MatterRelation!]! @hasManyThrough(relation: "matterRelationSchemas")
 }

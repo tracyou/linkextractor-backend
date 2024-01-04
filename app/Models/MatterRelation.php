@@ -12,16 +12,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * App\Models\MatterRelation.
  *
- * @property string                          $id
- * @property string                          $matter_parent_id
- * @property string                          $matter_child_id
- * @property MatterRelationEnum              $relation
- * @property string                          $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\Matter         $matterChild
- * @property-read \App\Models\Matter         $matterParent
+ * @property string                                $id
+ * @property string                                $related_matter_id
+ * @property MatterRelationEnum                    $relation
+ * @property string                                $description
+ * @property \Illuminate\Support\Carbon|null       $created_at
+ * @property \Illuminate\Support\Carbon|null       $updated_at
+ * @property \Illuminate\Support\Carbon|null       $deleted_at
+ * @property-read \App\Models\Matter               $relatedMatter
+ * @property-read \App\Models\MatterRelationSchema $matterRelationSchema
  *
  * @method static \Database\Factories\MatterRelationFactory factory($count = null, $state = [])
  * @method static Builder|MatterRelation                    newModelQuery()
@@ -56,13 +55,13 @@ final class MatterRelation extends AbstractModel
         'relation' => MatterRelationEnum::class,
     ];
 
-    public function matterParent(): BelongsTo
+    public function relatedMatter(): BelongsTo
     {
-        return $this->belongsTo(Matter::class, 'matter_parent_id', 'id');
+        return $this->belongsTo(Matter::class, 'related_matter_id', 'id');
     }
 
-    public function matterChild(): BelongsTo
+    public function matterRelationSchema(): BelongsTo
     {
-        return $this->belongsTo(Matter::class, 'matter_child_id', 'id');
+        return $this->belongsTo(MatterRelationSchema::class);
     }
 }

@@ -1,0 +1,11 @@
+type MatterRelation {
+    id: UUID!
+    relation            : MatterRelationEnum!
+    description         : String!
+    createdAt           : DateTime!
+    updatedAt           : DateTime!
+
+    relatedMatter       : Matter!               @belongsTo
+    matterRelationSchema: MatterRelationSchema! @belongsTo
+}
+

@@ -1,0 +1,14 @@
+extend type Query {
+    relationSchemas: [RelationSchema!]! @all
+}
+
+type RelationSchema {
+    id                   : UUID!
+    isPublished          : Boolean!                 @rename(attribute: "is_published")
+    expiredAt            : DateTime                 @rename(attribute: "expired_at")
+    createdAt            : DateTime!                @rename(attribute: "created_at")
+    updatedAt            : DateTime!                @rename(attribute: "updated_at")
+
+    matterRelationSchemas: [MatterRelationSchema!]! @hasMany
+    annotations          : [Annotation!]!           @hasMany
+}

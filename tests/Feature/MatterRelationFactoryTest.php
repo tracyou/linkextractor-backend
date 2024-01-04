@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Enums\MatterRelationEnum;
 use App\Factories\MatterFactory;
 use App\Factories\MatterRelationFactory;
+use App\Factories\MatterRelationSchemaFactory;
+use App\Factories\RelationSchemaFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -13,10 +16,21 @@ class MatterRelationFactoryTest extends TestCase
 
     public function testRelationBelongsToMatters()
     {
-        $matterA = (new MatterFactory())->create("matterA", "#000000");
-        $matterB = (new MatterFactory())->create("matterB", "#000000");
-        $matterRelation = (new MatterRelationFactory())->create($matterA, $matterB, "requires 1", "description");
-        $this->assertEquals($matterA->id, $matterRelation->matter_a_id);
-        $this->assertEquals($matterB->id, $matterRelation->matter_b_id);
+        $matter = (new MatterFactory())->create("matterA", "#000000");
+        $relatedMatter = (new MatterFactory())->create("matterB", "#000000");
+        $relationSchema = (new RelationSchemaFactory())->create(true);
+        $matterRelationSchema = (new MatterRelationSchemaFactory())->create(
+            $matter,
+            $relationSchema,
+            '{}',
+        );
+        $matterRelation = (new MatterRelationFactory())->create(
+            $relatedMatter,
+            $matterRelationSchema,
+            MatterRelationEnum::REQUIRES_ONE(),
+            "description",
+        );
+        $this->assertEquals($matter->getKey(), $matterRelation->matterRelationSchema->matter->getKey());
+        $this->assertEquals($relatedMatter->getKey(), $matterRelation->relatedMatter->getKey());
     }
 }

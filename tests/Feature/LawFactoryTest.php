@@ -29,14 +29,13 @@ class LawFactoryTest extends TestCase
         $this->assertEquals(false, $isPublished, 'isPublished should be set correctly');
     }
 
-
     public function testRelationWithAnnotation()
     {
         //Arrange
         $law = Law::factory()->create([
-            'title'       => 'rijbewijs',
-            'text'        => 'je mag een brommer met je B rijbewijs rijen',
-            'isPublished' => false,
+            'title'        => 'rijbewijs',
+            'text'         => 'je mag een brommer met je B rijbewijs rijen',
+            'is_published' => false,
         ]);
 
         $matter = Matter::factory()->create([
@@ -50,7 +49,7 @@ class LawFactoryTest extends TestCase
         ]);
 
         //Act
-        $law->annotations()->attach($annotation, ['cursorIndex' => 22]);
+        $law->annotations()->attach($annotation, ['cursor_index' => 22]);
 
         // Assert that the relationship exists in the pivot table
         $this->assertDatabaseHas('annotation_law', [
@@ -58,6 +57,4 @@ class LawFactoryTest extends TestCase
             'annotation_id' => $annotation->id,
         ]);
     }
-
-
 }

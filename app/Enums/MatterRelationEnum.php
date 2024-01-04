@@ -14,8 +14,8 @@ use BenSampo\Enum\Enum;
  */
 final class MatterRelationEnum extends Enum
 {
-    public const REQUIRES_ONE = 'requires_one';
-    public const REQUIRES_ZERO_OR_ONE = 'requires_zero_or_one';
-    public const REQUIRES_ONE_OR_MORE = 'requires_one_or_more';
-    public const REQUIRES_ZERO_OR_MORE = 'requires_zero_or_more';
+    public const REQUIRES_ONE = 'Requires one';
+    public const REQUIRES_ZERO_OR_ONE = 'Requires zero or one';
+    public const REQUIRES_ONE_OR_MORE = 'Requires one or more';
+    public const REQUIRES_ZERO_OR_MORE = 'Requires zero or more';
 }

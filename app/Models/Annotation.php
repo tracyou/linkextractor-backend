@@ -13,15 +13,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * App\Models\Annotation.
  *
- * @property string                          $id
- * @property string                          $matter_id
- * @property string                          $text
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string                                $id
+ * @property string                                $matter_id
+ * @property string                                $text
+ * @property \Illuminate\Support\Carbon|null       $created_at
+ * @property \Illuminate\Support\Carbon|null       $updated_at
+ * @property \Illuminate\Support\Carbon|null       $deleted_at
  * @property-read Collection<int, \App\Models\Law> $laws
- * @property-read int|null $laws_count
- * @property-read \App\Models\Matter $matter
+ * @property-read int|null                         $laws_count
+ * @property-read \App\Models\Matter               $matter
+ * @property-read \App\Models\RelationSchema       $relationSchema
  *
  * @method static \Database\Factories\AnnotationFactory factory($count = null, $state = [])
  * @method static Builder|Annotation                    newModelQuery()
@@ -63,5 +64,10 @@ final class Annotation extends AbstractModel
                 'comment',
             ])
             ->using(LawAnnotationPivot::class);
+    }
+
+    public function relationSchema(): BelongsTo
+    {
+        return $this->belongsTo(RelationSchema::class);
     }
 }
