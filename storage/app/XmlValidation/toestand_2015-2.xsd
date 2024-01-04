@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:redefine schemaLocation="toestand_base_2015-2.xsd">
+		<xsd:attributeGroup name="att.extref">
+			<xsd:attributeGroup ref="att.extref"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+			<xsd:attribute name="label-id" type="xsd:string"/>
+			<xsd:attribute name="verwijzing-id" type="xsd:string"/>
+			<xsd:attribute name="bwb-id" type="xsd:string"/>
+			<xsd:attribute name="eurlex" type="xsd:string"/>
+			<xsd:attribute name="groep" type="xsd:string"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="att.intref">
+			<xsd:attributeGroup ref="att.intref"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+			<xsd:attribute name="label-id" type="xsd:string"/>
+			<xsd:attribute name="verwijzing-id" type="xsd:string"/>
+			<xsd:attribute name="bwb-id" type="xsd:string"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.considerans">
+			<xsd:attributeGroup ref="attlist.considerans"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.li">
+			<xsd:attributeGroup ref="attlist.li"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.lijst">
+			<xsd:attributeGroup ref="attlist.lijst"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.wijzig-divisie">
+			<xsd:attributeGroup ref="attlist.wijzig-divisie"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.lid">
+			<xsd:attributeGroup ref="attlist.lid"/>
+			<xsd:attribute name="label-id"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.vrije-tekst">
+			<xsd:attributeGroup ref="attlist.vrije-tekst"/>
+			<xsd:attributeGroup ref="r1"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.verdrag">
+			<xsd:attributeGroup ref="attlist.verdrag"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attribute name="inwerking" type="xsd:date"/>
+			<xsd:attribute name="voorlopige-toepassing" type="xsd:date"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.regeling-tekst">
+			<xsd:attributeGroup ref="attlist.regeling-tekst"/>
+			<xsd:attributeGroup ref="r1"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.regeling">
+			<xsd:attributeGroup ref="attlist.regeling"/>
+			<xsd:attributeGroup ref="r1"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.circulaire">
+			<xsd:attributeGroup ref="attlist.circulaire"/>
+			<xsd:attributeGroup ref="r1"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.bijlage-sluiting">
+			<xsd:attributeGroup ref="attlist.bijlage-sluiting"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.bijlage">
+			<xsd:attributeGroup ref="attlist.bijlage"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.aanhef">
+			<xsd:attributeGroup ref="attlist.aanhef"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.tekst">
+			<xsd:attributeGroup ref="attlist.tekst"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.wijzig-artikel">
+			<xsd:attributeGroup ref="attlist.wijzig-artikel"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.regeling-sluiting">
+			<xsd:attributeGroup ref="attlist.regeling-sluiting"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.circulaire-tekst">
+			<xsd:attributeGroup ref="attlist.circulaire-tekst"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.circulaire-sluiting">
+			<xsd:attributeGroup ref="attlist.circulaire-sluiting"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.circulaire.divisie">
+			<xsd:attributeGroup ref="attlist.circulaire.divisie"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.circulaire.aanhef">
+			<xsd:attributeGroup ref="attlist.circulaire.aanhef"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.structuurtekst">
+			<xsd:attributeGroup ref="attlist.structuurtekst"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.sub-paragraaf">
+			<xsd:attributeGroup ref="attlist.sub-paragraaf"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.enig-artikel">
+			<xsd:attributeGroup ref="attlist.enig-artikel"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.officiele-inhoudsopgave">
+			<xsd:attributeGroup ref="attlist.officiele-inhoudsopgave"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.titeldeel">
+			<xsd:attributeGroup ref="attlist.titeldeel"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.divisie">
+			<xsd:attributeGroup ref="attlist.divisie"/>
+			<xsd:attribute name="status"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.verdragtekst">
+			<xsd:attributeGroup ref="attlist.verdragtekst"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute default="goed" name="status">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:token">
+						<xsd:enumeration value="vervallen"/>
+						<xsd:enumeration value="goed"/>
+						<xsd:enumeration value="nogniet"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.wetgeving">
+			<xsd:attributeGroup ref="attlist.wetgeving"/>
+			<xsd:attribute name="laatste_wijziging_goed" type="xsd:date"/>
+			<xsd:attribute name="terugwerkend_tot" type="xsd:string"/>
+			<xsd:attribute name="bronbestand"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attribute name="inwerkingtredingsdatum" type="xsd:date"/>
+			<xsd:attribute name="vervaldatum" type="xsd:date"/>
+			<xsd:attribute name="voorlopige-toepassing" type="xsd:date"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.wettekst">
+			<xsd:attributeGroup ref="attlist.wettekst"/>
+			<xsd:attributeGroup ref="r1"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.wet-besluit">
+			<xsd:attributeGroup ref="attlist.wet-besluit"/>
+			<xsd:attributeGroup ref="r1"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.artikel">
+			<xsd:attributeGroup ref="attlist.artikel"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="hashvalue"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.afdeling">
+			<xsd:attributeGroup ref="attlist.afdeling"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.boek">
+			<xsd:attributeGroup ref="attlist.boek"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.deel">
+			<xsd:attributeGroup ref="attlist.deel"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.hoofdstuk">
+			<xsd:attributeGroup ref="attlist.hoofdstuk"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.paragraaf">
+			<xsd:attributeGroup ref="attlist.paragraaf"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.alias-titels">
+			<xsd:attributeGroup ref="attlist.alias-titels"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attribute name="label-id"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.citeertitel">
+			<xsd:attributeGroup ref="attlist.citeertitel"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.eerst-verantwoordelijk">
+			<xsd:attributeGroup ref="attlist.eerst-verantwoordelijk"/>
+			<xsd:attributeGroup ref="r1"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.intitule">
+			<xsd:attributeGroup ref="attlist.intitule"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.parlementair">
+			<xsd:attributeGroup ref="attlist.parlementair"/>
+			<xsd:attributeGroup ref="r1"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.wetsluiting">
+			<xsd:attributeGroup ref="attlist.wetsluiting"/>
+			<xsd:attributeGroup ref="r1"/>
+			<xsd:attributeGroup ref="r2"/>
+			<xsd:attribute name="bwb-ng-variabel-deel"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.terugwerkende-kracht">
+			<xsd:attributeGroup ref="attlist.terugwerkende-kracht"/>
+			<xsd:attribute name="controle"/>
+		</xsd:attributeGroup>
+		<xsd:attributeGroup name="attlist.grondslagen">
+			<xsd:attributeGroup ref="attlist.grondslagen"/>
+		</xsd:attributeGroup>
+		<xsd:complexType name="class.meta-data">
+			<xsd:complexContent>
+				<xsd:extension base="class.meta-data">
+					<xsd:sequence>
+						<xsd:element ref="jcis" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="class.citaat-artikel">
+			<xsd:complexContent>
+				<xsd:extension base="class.citaat-artikel">
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="meta-data">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="jcis" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="class.lid">
+			<xsd:complexContent>
+				<xsd:extension base="class.lid">
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="meta-data">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="jcis" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="class.li">
+			<xsd:complexContent>
+				<xsd:extension base="class.li">
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="meta-data">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="jcis" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="class.ondertekening" mixed="true">
+			<xsd:complexContent>
+				<xsd:extension base="class.ondertekening">
+					<xsd:choice minOccurs="0" maxOccurs="unbounded">
+						<xsd:element minOccurs="0" name="meta-data">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="jcis" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:redefine>
+	<xsd:attributeGroup name="r1">
+		<xsd:attribute name="label"/>
+		<xsd:attribute name="tekstlengte" type="xsd:integer"/>
+		<xsd:attribute name="metadatalengte" type="xsd:integer"/>
+		<xsd:attribute name="metadatacontrole" type="xsd:string"/>
+		<xsd:attribute name="controle"/>
+	</xsd:attributeGroup>
+	<xsd:attributeGroup name="r2">
+		<xsd:attribute name="bron"/>
+		<xsd:attribute name="effect"/>
+		<xsd:attribute name="inwerking" type="xsd:date"/>
+		<xsd:attribute name="voorlopige-toepassing" type="xsd:date"/>
+		<xsd:attribute name="ondertekening_bron" type="xsd:date"/>
+		<xsd:attribute name="publicatie_bron" type="xsd:date"/>
+		<xsd:attribute name="publicatie_iwt" type="xsd:date"/>
+		<xsd:attribute name="publicatie_vt" type="xsd:date"/>
+	</xsd:attributeGroup>
+
+	<xsd:element name="jci">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="attlist.jci"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="jcis">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="jci" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:attributeGroup name="attlist.jci">
+		<xsd:attribute name="versie" type="xsd:string"/>
+		<xsd:attribute name="verwijzing" type="xsd:string"/>
+		<xsd:attribute name="onderdeel" type="xsd:string"/>
+		<xsd:attribute name="korte-verwijzing" type="xsd:string"/>
+		<xsd:attribute name="unieke-verwijzing" type="xsd:string"/>
+	</xsd:attributeGroup>
+
+	<xsd:element name="toestand">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="bwb-inputbestand">
+					<xsd:annotation>
+						<xsd:documentation>De bestandsnaam die als input heeft gediend voor deze
+                            toestand (m.a.w. waarop de wijzigingen zijn
+                            toegepast)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="bwb-wijzigingen"/>
+				<xsd:element ref="redactionele-correcties" minOccurs="0"/>
+				<xsd:element ref="wetgeving">
+					<xsd:annotation>
+						<xsd:documentation>Dit is het rootelement van hetgeen de Sdu levert / uit de
+                            EGW client komt.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="inwerkingtreding" type="xsd:date" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>Dit is de datum inwerkingtreding die heeft geleid tot deze
+                        toestand.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="bwb-id"/>
+			<xsd:attribute name="bwb-ng-vast-deel"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="bwb-wijzigingen">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="bwb-wijziging"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="bwb-wijziging">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="label"/>
+				<xsd:element minOccurs="0" ref="terugwerkend.datum"/>
+				<xsd:element minOccurs="0" ref="publicatie"/>
+			</xsd:sequence>
+			<xsd:attribute name="idref" type="xsd:NCName"/>
+			<xsd:attribute default="officieel" name="oorzaak">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="officieel"/>
+						<xsd:enumeration value="redactioneel"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="redactionele-correcties">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="redactionele-correctie"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="redactionele-correctie">
+		<xsd:complexType>
+			<xsd:attribute name="label-id" use="required"/>
+			<xsd:attribute name="oud-revisie-id" use="required"/>
+			<xsd:attribute name="nieuw-revisie-id" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

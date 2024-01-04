@@ -20,10 +20,10 @@ class LawsTest extends AbstractHttpGraphQLTestCase
 
         Law::factory()->createMany([
             [
-                'id'   => $this->createUUIDFromID(2),
+                'id' => $this->createUUIDFromID(2),
             ],
             [
-                'id'   => $this->createUUIDFromID(3),
+                'id' => $this->createUUIDFromID(3),
             ],
         ]);
 
@@ -33,13 +33,11 @@ class LawsTest extends AbstractHttpGraphQLTestCase
 
         $law->annotations()->attach($annotation, [
             'cursor_index' => 111,
-            'comment' => 'This is a test comment!',
+            'comment'      => 'This is a test comment!',
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_all_laws(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -59,9 +57,7 @@ class LawsTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_pivot_attributes_with_annotations(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -80,22 +76,22 @@ class LawsTest extends AbstractHttpGraphQLTestCase
             'data' => [
                 'laws' => [
                     [
-                        'id' => $this->createUUIDFromID(1),
+                        'id'          => $this->createUUIDFromID(1),
                         'annotations' => [
                             [
                                 'pivot' => [
                                     'cursorIndex' => 111,
-                                    'comment' => 'This is a test comment!',
+                                    'comment'     => 'This is a test comment!',
                                 ],
                             ],
                         ],
                     ],
                     [
-                        'id' => $this->createUUIDFromID(2),
+                        'id'          => $this->createUUIDFromID(2),
                         'annotations' => [],
                     ],
                     [
-                        'id' => $this->createUUIDFromID(3),
+                        'id'          => $this->createUUIDFromID(3),
                         'annotations' => [],
                     ],
                 ],

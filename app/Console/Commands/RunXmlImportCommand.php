@@ -4,26 +4,21 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Helpers\Import\LawXmlImport;
 use Illuminate\Console\Command;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Helpers\Import\LawBookImport;
 
 final class RunXmlImportCommand extends Command
 {
-    /** @var string $signature */
+    /** @var string */
     protected $signature = 'import:xml';
 
-    /**
-     * @var string $description
-     */
+    /** @var string */
     protected $description = 'Runs the import XML script';
 
     public function handle(): void
     {
         $file = storage_path('testXml.xml');
 
-        $xmlString = file_get_contents($file);
-
-        (new LawBookImport())->import($xmlString ?: '');
+        (new LawXmlImport())->import($file ?: '');
     }
 }

@@ -17,8 +17,8 @@ class AnnotationsByLaw
     }
 
     /**
-     * @param null $_
      * @param array<string, mixed> $args
+     *
      * @return Collection<int, Annotation>
      */
     public function __invoke(null $_, array $args): Collection
