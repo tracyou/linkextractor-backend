@@ -3,6 +3,7 @@
 namespace App\GraphQL\Mutations;
 
 use App\Contracts\Repositories\LawRepositoryInterface;
+use GraphQL\Error\Error;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
@@ -16,7 +17,7 @@ final class DeleteLaw
     }
 
     /**
-     * @throws ValidationException
+     * @throws Error
      */
     public function __invoke($_, array $args): bool
     {
@@ -28,17 +29,17 @@ final class DeleteLaw
     }
 
     /**
-     * @throws ValidationException
+     * @throws Error
      */
     private function deleteLaw(?Model $law): bool
     {
         if ($law) {
 
-            $law->update(['deleted_at' => Carbon::now()]);
+            $law->delete();
 
             return true;
         } else {
-            throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
+            throw new Error('This id is incorrect');
         }
     }
 

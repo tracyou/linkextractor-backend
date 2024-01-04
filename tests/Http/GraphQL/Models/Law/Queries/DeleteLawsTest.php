@@ -4,6 +4,7 @@ namespace Tests\Http\GraphQL\Models\Law\Queries;
 
 use App\GraphQL\Mutations\DeleteLaw;
 use App\Models\Law;
+use GraphQL\Error\Error;
 use Illuminate\Validation\ValidationException;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
@@ -11,28 +12,42 @@ class DeleteLawsTest extends AbstractHttpGraphQLTestCase
 {
 
     /**
-     * @throws ValidationException
+     * @test
      */
     public function delete_law(): void
     {
         $law = Law::factory()->create();
-        $args = ['id' => $law->id];
-        $resolver = new DeleteLaw($law);
 
-        $result = $resolver(null, $args);
+        $this->graphQL(/** @lang GraphQL */ '
+            mutation($id: UUID!) {
+                deleteLaw(input: {
+                    id: $id
+                })
+            }
+        ', [
+            'id' => $law->id,
+        ])->assertJson([
+            'data' => [
+                'deleteLaw' => true,
+            ],
+        ]);
 
-        $this->assertTrue($result);
         $this->assertSoftDeleted('laws', ['id' => $law->id]);
     }
 
+    /**
+     * @test
+     */
     public function delete_law_with_non_existing_law(): void
     {
-        $law = null;
-        $args = ['id' => 'non_existing_id'];
-        $resolver = new DeleteLaw($law);
-
-        $this->expectException(ValidationException::class);
-
-        $resolver(null, $args);
+        $this->graphQL(/** @lang GraphQL */ '
+            mutation($id: UUID!) {
+                deleteLaw(input: {
+                    id: $id
+                })
+            }
+        ', [
+            'id' => $this->createUUIDFromID(1)
+        ])->assertGraphQLErrorMessage('This id is incorrect');
     }
 }
