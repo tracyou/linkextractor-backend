@@ -53,11 +53,6 @@ final class SaveMatterRelationSchema
             schemaLayout          : $schemaLayout,
         );
 
-        $matterRelationSchema = $this->assignRelationsToMatterSchema(
-            matterRelationSchema: $matterRelationSchema,
-            relations           : $relations,
-        );
-
         return $this->assignRelationsToMatterSchema(
             matterRelationSchema: $matterRelationSchema,
             relations           : $relations
@@ -169,7 +164,7 @@ final class SaveMatterRelationSchema
                 relatedMatter: $this->matterRepository->findOrFail($relation['related_matter_id']),
                 schema       : $matterRelationSchema,
                 relation     : $relation['relation'],
-                description  : $relation['description'],
+                description  : $relation['description'] ?? null,
             );
         });
 
