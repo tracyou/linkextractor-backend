@@ -1,5 +1,6 @@
 extend type Query {
     laws: [Law!]! @all
+    law(id: UUID! @eq @rules(apply: ["exists:laws,id"])): Law! @find
 }
 
 type Law {
