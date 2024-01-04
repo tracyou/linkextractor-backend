@@ -8,11 +8,11 @@ use App\Models\Matter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class LawFactoryTest extends TestCase
+class ArticleFactoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCreateLaw()
+    public function testCreateArticle()
     {
         // Arrange create law object
         $law = Article::factory()->create(["title" => "rijbewijs", "text" => "je mag een brommer met je B rijbewijs rijen", "is_published" => false]);

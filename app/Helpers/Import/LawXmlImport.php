@@ -78,6 +78,12 @@ final class LawXmlImport
         return trim($string);
     }
 
+
+    /**
+     * @param SimpleXMLElement[] $articles
+     *
+     * @return SimpleXMLElement[]
+     */
     private function getArticles(SimpleXMLElement $data, array &$articles = []): array
     {
         foreach ($data->children() as $child) {
@@ -105,12 +111,12 @@ final class LawXmlImport
 
     private function getText(SimpleXMLElement $article): string
     {
-        $al = $this->trim(preg_replace('/<[^>]*>/', '', $article->al->asXML() ?: ''));
-        $list = $this->trim(preg_replace('/<[^>]*>/', '', $article->lijst->asXML() ?: ''));
+        $al = $this->trim(preg_replace('/<[^>]*>/', '', $article->al->asXML() ?: '') ?: '');
+        $list = $this->trim(preg_replace('/<[^>]*>/', '', $article->lijst->asXML() ?: '') ?: '');
 
         $lid = '';
         foreach ($article->lid as $lidItem) {
-            $lid .= $this->trim(preg_replace('/<[^>]*>/', '', $lidItem->asXML() ?: ''));
+            $lid .= $this->trim(preg_replace('/<[^>]*>/', '', $lidItem->asXML() ?: '') ?: '');
         }
 
         return $al . $list . $lid;

@@ -31,10 +31,10 @@ class AnnotationFactoryTest extends TestCase
         $this->assertEquals(1, $annotation->matter->count());
     }
 
-    public function testRelationshipWithLaw()
+    public function testRelationshipWithArticle()
     {
         //Arrange
-        $law = Article::factory()->create([
+        $article = Article::factory()->create([
             'title'        => 'rijbewijs',
             'text'         => 'je mag een brommer met je B rijbewijs rijen',
             'is_published' => false,
@@ -51,11 +51,11 @@ class AnnotationFactoryTest extends TestCase
         ]);
 
         //Act
-        $annotation->laws()->attach($law, ['cursor_index' => 222]);
+        $annotation->article()->attach($article, ['cursor_index' => 222]);
 
         // Assert that the relationship exists in the pivot table
         $this->assertDatabaseHas('annotation_law', [
-            'law_id'        => $law->id,
+            'law_id'        => $article->id,
             'annotation_id' => $annotation->id,
         ]);
     }

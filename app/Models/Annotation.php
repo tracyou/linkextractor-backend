@@ -55,7 +55,7 @@ final class Annotation extends AbstractModel
     }
 
     //relationship with Law
-    public function articles(): BelongsTo
+    public function article(): BelongsTo
     {
         return $this->belongsTo(Article::class);
 
