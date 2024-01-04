@@ -23,7 +23,6 @@ class SaveMatterRelationSchemaInputValidator extends Validator
             ],
             'relations.*.relatedMatterId' => [
                 'exists:matters,id',
-                Rule::notIn([$this->arg('matterId')]),
             ],
         ];
     }
