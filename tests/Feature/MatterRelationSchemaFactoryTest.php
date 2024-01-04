@@ -8,6 +8,7 @@ use App\Contracts\Factories\LawFactoryInterface;
 use App\Contracts\Factories\MatterFactoryInterface;
 use App\Contracts\Factories\MatterRelationFactoryInterface;
 use App\Contracts\Factories\MatterRelationSchemaFactoryInterface;
+use App\Contracts\Factories\RelationSchemaFactoryInterface;
 use App\Factories\MatterRelationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -20,7 +21,7 @@ class MatterRelationSchemaFactoryTest extends TestCase
     protected AnnotationFactoryInterface $annotationFactory;
     protected MatterFactoryInterface $matterFactory;
     protected LawFactoryInterface $lawFactory;
-    protected MatterRelationSchemaFactoryInterface $matterRelationSchemaFactory;
+    protected RelationSchemaFactoryInterface $relationSchemaFactory;
     protected ArticleFactoryInterface $articleFactory;
     protected MatterRelationFactoryInterface $matterRelationFactory;
 
@@ -48,8 +49,12 @@ class MatterRelationSchemaFactoryTest extends TestCase
 
         $matter = $this->matterFactory->create('matter', '#001000');
         $law = $this->lawFactory->create('title', false);
-        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article');
-        $matterRelationSchema = $this->matterRelationSchemaFactory->create();
+        $jsonData = [
+            'article 1' => 'oh my god',
+            'content' => 'i am so sleepy',
+        ];
+        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData);
+        $relationSchema = $this->relationSchemaFactory->create(false);
 
         //Act
         $annotation = $this->annotationFactory->create(
@@ -58,20 +63,20 @@ class MatterRelationSchemaFactoryTest extends TestCase
             200,
             'this is a comment',
             $article,
-            $matterRelationSchema
+            $relationSchema
         );
         $annotation1 = $this->annotationFactory->create(
             $matter,
             'this is another annotation',
-            200,
+            'this the difinition',
             'this is a comment',
             $article,
-            $matterRelationSchema
+            $relationSchema
         );
 
         // Assert
-        $this->assertDatabaseHas('matter_relation_schemas', [
-            'id' => $matterRelationSchema->id,
+        $this->assertDatabaseHas('matter_relations', [
+            'id' => $relationSchema->id,
         ]);
 
     }
@@ -83,8 +88,12 @@ class MatterRelationSchemaFactoryTest extends TestCase
 
         $matter = $this->matterFactory->create('matter', '#001000');
         $law = $this->lawFactory->create('title', false);
-        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article');
-        $matterRelationSchema = $this->matterRelationSchemaFactory->create();
+        $jsonData = [
+            'article 1' => 'oh my god',
+            'content' => 'i am so sleepy',
+        ];
+        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData);
+        $relationSchema = $this->relationSchemaFactory->create(false);
 
         //Act
         $annotation = $this->annotationFactory->create(
@@ -93,7 +102,7 @@ class MatterRelationSchemaFactoryTest extends TestCase
             200,
             'this is a comment',
             $article,
-            $matterRelationSchema
+            $relationSchema
         );
         $annotation1 = $this->annotationFactory->create(
             $matter,
@@ -101,13 +110,13 @@ class MatterRelationSchemaFactoryTest extends TestCase
             200,
             'this is a comment',
             $article,
-            $matterRelationSchema
+            $relationSchema
         );
 
         // Assert
         $annotation1->refresh();
-        $matterRelationSchema->refresh();
-        $this->assertEquals(2, $matterRelationSchema->annotations->count());
+        $relationSchema->refresh();
+        $this->assertEquals(2, $relationSchema->annotations->count());
     }
 
     public function test_the_relation_matter_relation()
@@ -116,15 +125,15 @@ class MatterRelationSchemaFactoryTest extends TestCase
         $matterParent = $this->matterFactory->create("matter1", "#000000");
         $matterChild = $this->matterFactory->create("matter2", "#000000");
         $matterChild1 = $this->matterFactory->create("matterChild2", "#000000");
-        $matterRelationSchema = $this->matterRelationSchemaFactory->create();
+        $relationSchema = $this->relationSchemaFactory->create(false);
 
 
         // Act
-        $matterRelation = $this->matterRelationFactory->create($matterParent, $matterChild, "requires_one", "description", $matterRelationSchema);
-        $matterRelation1 = $this->matterRelationFactory->create($matterParent, $matterChild1, "requires_one", "description of another matter relation", $matterRelationSchema);
+        $matterRelation = $this->matterRelationFactory->create($matterParent, $matterChild, "requires_one", "description", $relationSchema);
+        $matterRelation1 = $this->matterRelationFactory->create($matterParent, $matterChild1, "requires_one", "description of another matter relation", $relationSchema);
 
         // Assert
-        $this->assertEquals(2, $matterRelationSchema->matterRelations->count());
+        $this->assertEquals(2, $relationSchema->matterRelations->count());
 
     }
 

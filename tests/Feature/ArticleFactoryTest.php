@@ -2,13 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Contracts\Factories\AnnotationFactoryInterface;
 use App\Contracts\Factories\ArticleFactoryInterface;
 use App\Contracts\Factories\LawFactoryInterface;
-use App\Contracts\Factories\MatterFactoryInterface;
-use App\Contracts\Factories\MatterRelationFactoryInterface;
-use App\Contracts\Factories\MatterRelationSchemaFactoryInterface;
-use App\Factories\MatterRelationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -31,9 +26,13 @@ class ArticleFactoryTest extends TestCase
     {
         // Arrange
         $law = $this->lawFactory->create('title', false);
+        $jsonData = [
+            'article 1' => 'oh my god',
+            'content' => 'i am so sleepy',
+        ];
 
         // Act
-        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article');
+        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article',$jsonData);
 
         // Assert
         $this->assertDatabaseHas('articles', [
@@ -46,9 +45,13 @@ class ArticleFactoryTest extends TestCase
     {
         // Arrange
         $law = $this->lawFactory->create('title', false);
+        $jsonData = [
+            'article 1' => 'oh my god',
+            'content' => 'i am so sleepy',
+        ];
 
         // Act
-        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article');
+        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article',$jsonData);
 
         // Assert
         $this->assertDatabaseHas('articles', [

@@ -8,6 +8,7 @@ use App\Contracts\Factories\LawFactoryInterface;
 use App\Contracts\Factories\MatterFactoryInterface;
 use App\Contracts\Factories\MatterRelationFactoryInterface;
 use App\Contracts\Factories\MatterRelationSchemaFactoryInterface;
+use App\Contracts\Factories\RelationSchemaFactoryInterface;
 use App\Factories\MatterRelationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -19,7 +20,7 @@ class MatterFactoryTest extends TestCase
     protected AnnotationFactoryInterface $annotationFactory;
     protected MatterFactoryInterface $matterFactory;
     protected LawFactoryInterface $lawFactory;
-    protected MatterRelationSchemaFactoryInterface $matterRelationSchemaFactory;
+    protected RelationSchemaFactoryInterface $relationSchemaFactory;
     protected ArticleFactoryInterface $articleFactory;
     protected MatterRelationFactoryInterface $matterRelationFactory;
 
@@ -30,7 +31,7 @@ class MatterFactoryTest extends TestCase
         $this->annotationFactory = $this->app->make(AnnotationFactoryInterface::class);
         $this->matterFactory = $this->app->make(MatterFactoryInterface::class);
         $this->lawFactory = $this->app->make(LawFactoryInterface::class);
-        $this->matterRelationSchemaFactory = $this->app->make(MatterRelationSchemaFactoryInterface::class);
+        $this->relationSchemaFactory = $this->app->make(RelationSchemaFactoryInterface::class);
         $this->articleFactory = $this->app->make(ArticleFactoryInterface::class);
         $this->matterRelationFactory = $this->app->make(MatterRelationFactory::class);
     }
@@ -40,8 +41,12 @@ class MatterFactoryTest extends TestCase
         // Arrange
         $matter = $this->matterFactory->create('matter', '#001000');
         $law = $this->lawFactory->create('title', false);
-        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article');
-        $matterRelationSchema = $this->matterRelationSchemaFactory->create();
+        $jsonData = [
+            'article 1' => 'oh my god',
+            'content' => 'i am so sleepy',
+        ];
+        $article = $this->articleFactory->create($law, 'title of the article', 'this is the text of the article',$jsonData);
+        $relationSchema = $this->relationSchemaFactory->create(false);
 
         // Act
         $annotation1 = $this->annotationFactory->create(
@@ -50,7 +55,7 @@ class MatterFactoryTest extends TestCase
             200,
             'this is a comment',
             $article,
-            $matterRelationSchema
+            $relationSchema
         );
         $annotation2 = $this->annotationFactory->create(
             $matter,
@@ -58,7 +63,7 @@ class MatterFactoryTest extends TestCase
             200,
             'this is a comment',
             $article,
-            $matterRelationSchema
+            $relationSchema
         );
 
         // Assert
@@ -72,10 +77,10 @@ class MatterFactoryTest extends TestCase
         // Arrange
         $matterParent = $this->matterFactory->create("matter1", "#000000");
         $matterChild = $this->matterFactory->create("matter2", "#000000");
-        $matterRelationSchema = $this->matterRelationSchemaFactory->create();
+        $relationSchema = $this->relationSchemaFactory->create(false);
 
         // Act
-        $matterRelation = $this->matterRelationFactory->create($matterParent, $matterChild, "requires_one", "description", $matterRelationSchema);
+        $matterRelation = $this->matterRelationFactory->create($matterParent, $matterChild, "description", $relationSchema);
 
         $matterParent->refresh();
         $matterChild->refresh();
@@ -84,7 +89,7 @@ class MatterFactoryTest extends TestCase
         // Assert
         $this->assertTrue($matterRelation->matter_parent_id === $matterParent->id);
         $this->assertTrue($matterRelation->matter_child_id === $matterChild->id);
-        $this->assertTrue($matterRelation->matter_relation_schema_id === $matterRelationSchema->id);
+        $this->assertTrue($matterRelation->matter_relation_schema_id === $relationSchema->id);
         $this->assertTrue($matterParent->matterParentRelations->isNotEmpty());
 
     }

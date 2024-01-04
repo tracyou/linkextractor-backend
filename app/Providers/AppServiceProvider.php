@@ -28,6 +28,5 @@ class AppServiceProvider extends ServiceProvider
             'law'            => Law::class,
         ]);
 
-        MatterRelationSchema::observe(MatterRelationSchemaObserver::class);
     }
 }

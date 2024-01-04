@@ -9,6 +9,7 @@ use App\Contracts\Repositories\LawRepositoryInterface;
 use App\Contracts\Repositories\MatterRelationRepositoryInterface;
 use App\Contracts\Repositories\MatterRelationSchemaRepositoryInterface;
 use App\Contracts\Repositories\MatterRepositoryInterface;
+use App\Contracts\Repositories\RelationSchemaRepositoryInterface;
 use App\Models\Law;
 
 
@@ -16,13 +17,13 @@ class SaveAnnotatedLaw
 {
 
     public function __construct(
-        protected LawRepositoryInterface                  $lawRepository,
-        protected AnnotationRepositoryInterface           $annotationRepository,
-        protected MatterRepositoryInterface               $matterRepository,
-        protected AnnotationFactoryInterface              $annotationFactory,
-        protected ArticleRepositoryInterface              $articleRepository,
-        protected MatterRelationRepositoryInterface       $matterRelationRepository,
-        protected MatterRelationSchemaRepositoryInterface $matterRelationSchemaRepository,
+        protected LawRepositoryInterface            $lawRepository,
+        protected AnnotationRepositoryInterface     $annotationRepository,
+        protected MatterRepositoryInterface         $matterRepository,
+        protected AnnotationFactoryInterface        $annotationFactory,
+        protected ArticleRepositoryInterface        $articleRepository,
+        protected MatterRelationRepositoryInterface $matterRelationRepository,
+        protected RelationSchemaRepositoryInterface $relationSchemaRepository,
 
     )
     {
@@ -49,7 +50,7 @@ class SaveAnnotatedLaw
                 $comment = $annotationInput['comment'];
                 $cursorIndex = $annotationInput['cursorIndex'];
                 $text = $annotationInput['text'];
-                $matterRelationSchema = $this->matterRelationSchemaRepository->findOrFail($annotationInput['matterRelationSchemaId']);
+                $relationSchema = $this->relationSchemaRepository->findOrFail($annotationInput['relationSchemaId']);
 
                 return $this->annotationFactory->create(
                     $matter,
@@ -57,7 +58,7 @@ class SaveAnnotatedLaw
                     $cursorIndex,
                     $comment,
                     $article,
-                    $matterRelationSchema
+                    $relationSchema
                 );
             });
 

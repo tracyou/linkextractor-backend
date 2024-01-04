@@ -13,7 +13,6 @@ return new class () extends Migration {
         Schema::create('matter_relations', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('related_matter_id')->constrained('matters');
-            $table->string('relation');
             $table->string('description')->nullable();
             $table->string('relation');
             $table->timestamps();
