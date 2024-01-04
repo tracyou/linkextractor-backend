@@ -7,8 +7,11 @@ extend type Query {
 type Annotation {
     id: UUID!
     text: String!
+    comment:String
+    definition:String
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
+
     article: Article! @belongsTo
     matter: Matter! @belongsTo
     relationSchema: RelationSchema! @belongsTo

@@ -47,14 +47,14 @@ class SaveAnnotatedLaw
             $annotations = collect($articleInput['annotations'])->each(function ($annotationInput) use ($article) {
                 $matter = $this->matterRepository->findOrFail($annotationInput['matterId']);
                 $comment = $annotationInput['comment'];
-                $cursorIndex = $annotationInput['cursorIndex'];
+                $definition = $annotationInput['definition'];
                 $text = $annotationInput['text'];
                 $matterRelationSchema = $this->matterRelationSchemaRepository->findOrFail($annotationInput['matterRelationSchemaId']);
 
                 return $this->annotationFactory->create(
                     $matter,
                     $text,
-                    $cursorIndex,
+                    $definition,
                     $comment,
                     $article,
                     $matterRelationSchema

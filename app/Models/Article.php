@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string                          $law_id
  * @property string                          $title
  * @property string                          $text
- * @property string|null                     $text_json
+ * @property string|null                     $json_text
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -47,7 +47,7 @@ final class Article extends AbstractModel
     protected $fillable = [
         'title',
         'text',
-        'text_json'
+        'json_text'
     ];
 
     public function law(): BelongsTo

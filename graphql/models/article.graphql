@@ -3,11 +3,12 @@ extend type Query {
         lawId: UUID! @rules(apply: ["exists:laws,id"]) @rename(attribute: "law_id")
     ): [Article!]!
 }
-type Article {
-    id: UUID! @orderBy
+
+type Article{
+    id: UUID!
     title: String!
     text: String!
-
+    textJson: String @rename(attribute: "json_text")
     law: Law! @belongsTo
     annotations: [Annotation!]! @hasMany
 }
