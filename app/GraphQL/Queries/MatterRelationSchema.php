@@ -14,7 +14,7 @@ final class MatterRelationSchema
     }
 
     /** @param array<string, mixed> $args */
-    public function __invoke(null $_, array $args): \App\Models\MatterRelationSchema | null
+    public function __invoke(null $_, array $args): \App\Models\MatterRelationSchema|null
     {
         $relationSchemaId = $args['relation_schema_id'];
         $matterId = $args['matter_id'];

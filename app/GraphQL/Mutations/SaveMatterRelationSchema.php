@@ -15,7 +15,6 @@ use App\Models\MatterRelation;
 use App\Models\MatterRelationSchema;
 use App\Models\RelationSchema;
 use Illuminate\Support\Collection;
-use stdClass;
 
 final class SaveMatterRelationSchema
 {
@@ -23,7 +22,6 @@ final class SaveMatterRelationSchema
         protected MatterRepositoryInterface $matterRepository,
         protected RelationSchemaRepositoryInterface $relationSchemaRepository,
         protected MatterRelationSchemaRepositoryInterface $matterRelationSchemaRepository,
-
         protected MatterRelationFactoryInterface $matterRelationFactory,
         protected RelationSchemaFactoryInterface $relationSchemaFactory,
         protected MatterRelationSchemaFactoryInterface $matterRelationSchemaFactory,
@@ -31,10 +29,7 @@ final class SaveMatterRelationSchema
     }
 
     /**
-     * @param                      $_
      * @param array<string, mixed> $args
-     *
-     * @return MatterRelationSchema
      */
     public function __invoke($_, array $args): MatterRelationSchema
     {
@@ -62,10 +57,6 @@ final class SaveMatterRelationSchema
     /**
      * It will create a new relation schema if the id is null or the relation schema is already published, since we
      * don't want to update a published schema.
-     *
-     * @param string|null $relationSchemaId
-     *
-     * @return RelationSchema
      */
     protected function getOrCreateRelationSchema(?string $relationSchemaId): RelationSchema
     {
@@ -113,12 +104,6 @@ final class SaveMatterRelationSchema
     /**
      * It will create a new matter relation schema if the id is null or the relation schema is already published, since
      * we don't want to update a published schema.
-     *
-     * @param Matter         $matter
-     * @param RelationSchema $relationSchema
-     * @param string         $schemaLayout
-     *
-     * @return MatterRelationSchema
      */
     protected function getOrCreateMatterRelationSchema(
         Matter $matter,
@@ -148,10 +133,7 @@ final class SaveMatterRelationSchema
      * It will delete all the existing relations on this matter relation schema and create new ones. The deletion only
      * happens if the matter relation schema is not published, so we are allowed to alter it.
      *
-     * @param MatterRelationSchema      $matterRelationSchema
      * @param Collection<string, mixed> $relations
-     *
-     * @return MatterRelationSchema
      */
     protected function assignRelationsToMatterSchema(
         MatterRelationSchema $matterRelationSchema,

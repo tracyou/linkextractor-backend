@@ -2,15 +2,14 @@
 
 namespace Feature;
 
-use Tests\TestCase;
+use App\Helpers\Import\LawXmlImport;
 use App\Models\Law;
 use GraphQL\Error\Error;
-use App\Helpers\Import\LawXmlImport;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 final class ImportXmlTest extends TestCase
 {
-
     use RefreshDatabase;
 
     public function testImportXmlNotValidPath(): void

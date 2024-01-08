@@ -28,9 +28,7 @@ class LawTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_law_by_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -66,9 +64,7 @@ class LawTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_a_validation_error_for_unknown_law_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

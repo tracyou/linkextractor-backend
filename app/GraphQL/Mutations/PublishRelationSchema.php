@@ -19,10 +19,8 @@ final class PublishRelationSchema
     }
 
     /**
-     * @param                      $_
      * @param array<string, mixed> $args
      *
-     * @return RelationSchema
      * @throws Error
      */
     public function __invoke($_, array $args): RelationSchema

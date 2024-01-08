@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Factories\AnnotationFactory;
 use App\Factories\MatterFactory;
-use App\Factories\MatterRelationSchemaFactory;
 use App\Factories\RelationSchemaFactory;
 use App\Models\Annotation;
 use App\Models\Law;
@@ -35,8 +34,8 @@ class AnnotationFactoryTest extends TestCase
     {
         //Arrange
         $law = Law::factory()->create([
-            'title'       => 'rijbewijs',
-            'text'        => 'je mag een brommer met je B rijbewijs rijen',
+            'title'        => 'rijbewijs',
+            'text'         => 'je mag een brommer met je B rijbewijs rijen',
             'is_published' => false,
         ]);
 

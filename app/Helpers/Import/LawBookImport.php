@@ -4,24 +4,23 @@ declare(strict_types=1);
 
 namespace App\Helpers\Import;
 
-
+use App\Models\Law;
 use App\Structs\LawStruct;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 final class LawBookImport
 {
-    public function import(string $xmlString): bool
+    public function import(string $xmlString): Law
     {
         $data = $this->toArray($xmlString);
         $lawBook = $this->parseDataToStruct($data);
 
         foreach ($lawBook as $law) {
-            $model = $law->toModel();
-            $model?->save();
+            $law = $law->save();
         }
 
-        return true;
+        return $law;
     }
 
     /** @return array<mixed> */
@@ -33,11 +32,12 @@ final class LawBookImport
             /** @var array<mixed, mixed> */
             return json_decode($json, true);
         }
+
         return [];
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array<mixed>  $data
      *
      * @return Collection<LawStruct>
      */
@@ -50,10 +50,11 @@ final class LawBookImport
                 $lawBookStructCollection->add($law);
             }
         }
+
         return $lawBookStructCollection;
     }
 
-    /** @param array<mixed> $article */
+    /** @param array<mixed>  $article */
     private function hydrateLaw(array $article): LawStruct
     {
         $lawStruct = new LawStruct();
@@ -80,10 +81,11 @@ final class LawBookImport
             }
             $lawStruct->text = $text;
         }
+
         return $lawStruct;
     }
 
-    /** @param array<string, mixed> $list */
+    /** @param array<string, mixed>  $list */
     private function getListedText(array $list): string
     {
         $text = '';
@@ -110,6 +112,7 @@ final class LawBookImport
                 $text .= "$litnr $al\n";
             }
         }
+
         return $text;
     }
 }

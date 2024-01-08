@@ -69,9 +69,7 @@ class MatterRelationSchemasTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_all_matter_relation_schemas(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -92,23 +90,23 @@ class MatterRelationSchemasTest extends AbstractHttpGraphQLTestCase
             'data' => [
                 'matterRelationSchemas' => [
                     [
-                        'id'          => $this->createUUIDFromID(1),
-                        'relations'   => [
+                        'id'        => $this->createUUIDFromID(1),
+                        'relations' => [
                             [
                                 'id'            => $this->createUUIDFromID(1),
                                 'relatedMatter' => [
                                     'id' => $this->createUUIDFromID(2),
                                 ],
-                                'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
-                                'description'   => 'first test description',
+                                'relation'    => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                                'description' => 'first test description',
                             ],
                             [
                                 'id'            => $this->createUUIDFromID(2),
                                 'relatedMatter' => [
                                     'id' => $this->createUUIDFromID(3),
                                 ],
-                                'relation'      => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
-                                'description'   => 'second test description',
+                                'relation'    => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                                'description' => 'second test description',
                             ],
                         ],
                     ],

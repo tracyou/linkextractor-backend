@@ -11,6 +11,7 @@ class MatterRelationTypes
     /**
      * @param null                  $_
      * @param array<string, string> $args
+     *
      * @return array<int, array<string, mixed>>
      */
     public function __invoke($_, array $args): array
@@ -19,7 +20,7 @@ class MatterRelationTypes
 
         foreach (MatterRelationEnum::asArray() as $value) {
             $statuses[] = [
-                'key' => $value,
+                'key'   => $value,
                 'value' => $value,
             ];
         }
