@@ -15,16 +15,16 @@ final class ImportXmlTest extends TestCase
 
     public function testImportXmlNotValidPath(): void
     {
-        assert($this->assertThrows(fn () => (new LawXmlImport())->import('testXml.xml'), Error::class));
+        $this->assertThrows(fn () => (new LawXmlImport())->import('testXml.xml'), Error::class);
     }
 
     public function testImportXmlValidPathValidXml(): void
     {
-        assert($this->instance(Law::class, (new LawXmlImport())->import(storage_path('testXml.xml'))));
+        $this->assertInstanceOf(Law::class, (new LawXmlImport())->import(storage_path('testXml.xml')));
     }
 
     public function testImportXmlValidPathInvalidXml(): void
     {
-        assert($this->instance(Law::class, (new LawXmlImport())->import(storage_path('testXmlInvalid.xml'))));
+        $this->assertThrows(fn () => (new LawXmlImport())->import('testXmlInvalid.xml'), Error::class);
     }
 }
