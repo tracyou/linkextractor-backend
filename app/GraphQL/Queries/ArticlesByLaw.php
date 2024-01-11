@@ -26,6 +26,6 @@ class ArticlesByLaw
     {
         $id = $args['law_id'];
 
-        return $this->articleRepository->where('law_id', $id)->toArray();
+        return $this->articleRepository->where('law_id', $id)->sortBy('title', SORT_NATURAL)->toArray();
     }
 }
