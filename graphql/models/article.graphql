@@ -1,5 +1,7 @@
 extend type Query {
-    articles: [Article!]! @all
+    articlesByLaw(
+        lawId: UUID! @rules(apply: ["exists:laws,id"]) @rename(attribute: "law_id")
+    ): [Article!]!
 }
 type Article {
     id: UUID!
