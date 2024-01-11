@@ -1,3 +1,6 @@
+extend type Query {
+    articles: [Article!]! @all
+}
 type Article {
     id: UUID!
     title: String!
