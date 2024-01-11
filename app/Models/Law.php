@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
  * App\Models\Law.
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon|null              $created_at
  * @property \Illuminate\Support\Carbon|null              $updated_at
  * @property \Illuminate\Support\Carbon|null              $deleted_at
+ * @property-read Collection<int, \App\Models\Article>    $articles
  * @property-read Collection<int, \App\Models\Annotation> $annotations
  * @property-read int|null                                $annotations_count
  * @property-read Collection<int, \App\Models\Article>    $articles
@@ -47,5 +49,10 @@ final class Law extends AbstractModel
     public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function annotations(): HasManyThrough
+    {
+        return $this->hasManyThrough(Annotation::class, Article::class);
     }
 }

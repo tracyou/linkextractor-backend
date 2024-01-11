@@ -32,14 +32,14 @@ input AnnotatedLawInput{
 }
 
 input ArticleInput{
-    articleId: UUID! @rules(apply: ["exists:articles,id"])
-    jsonText: String!
-    annotations: [AnnotationInput!]!@spread
+    articleId:UUID! @rules(apply: ["exists:articles,id"])
+    jsonText: String @rename(attribute: "json_text")
+    annotations: [AnnotationInput!]!
 }
 
-input AnnotationInput {
+input AnnotationInput{
     text: String!
-    comment: String
     definition: String
+    comment: String
     matterId: UUID! @rules(apply: ["exists:matters,id"])
 }

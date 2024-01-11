@@ -32,31 +32,31 @@ class SaveAnnotatedLaw
     public function __invoke($_, array $args): Law|null
     {
         $lawId = $args['lawId'];
-        $lawTitle = $args['title'];
         $isPublished = $args['isPublished'];
         $articles = collect($args['articles']);
-
 
         /** @var Law $law */
         $law = $this->lawRepository->findOrFail($lawId);
 
         $law->is_published = $isPublished;
-        $law->title = $lawTitle;
 
-        $articles->each(function (array $articleInput) {
+        $newRevisionNumber = $this->annotationRepository->getNewRevisionNumber($law);
+
+        $articles->each(function (array $articleInput) use ($newRevisionNumber) {
             $article = $this->articleRepository->findOrFail($articleInput['articleId']);
-            $annotations = collect($articleInput['annotations'])->each(function ($annotationInput) use ($article) {
+            collect($articleInput['annotations'])->each(function ($annotationInput) use ($article, $newRevisionNumber) {
                 $matter = $this->matterRepository->findOrFail($annotationInput['matterId']);
                 $comment = $annotationInput['comment'];
                 $definition = $annotationInput['definition'];
                 $text = $annotationInput['text'];
-                $relationSchema = $this->relationSchemaRepository->findOrFail($annotationInput['relationSchemaId']);
+                $relationSchema = $this->relationSchemaRepository->getMostRecent();
 
                 return $this->annotationFactory->create(
                     $matter,
                     $text,
                     $definition,
                     $comment,
+                    $newRevisionNumber,
                     $article,
                     $relationSchema
                 );

@@ -13,7 +13,10 @@ class ArticleSeeder extends Seeder
      */
     public function run(): void
     {
-        $law = Law::first();
-        Article::factory()->count(5)->create();
+        foreach (Law::all() as $law) {
+            Article::factory()->count(5)->create([
+                'law_id' => $law->id,
+            ]);
+        }
     }
 }
