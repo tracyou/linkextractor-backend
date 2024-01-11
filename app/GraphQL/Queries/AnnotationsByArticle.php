@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Contracts\Repositories\LawRepositoryInterface;
+use App\Models\Article;
+use App\Contracts\Repositories\ArticleRepositoryInterface;
 use App\Models\Annotation;
 use App\Models\Law;
 use Illuminate\Support\Collection;
 
-class AnnotationsByLaw
+class AnnotationsByArticle
 {
     public function __construct(
-        protected LawRepositoryInterface $lawRepository,
+        protected ArticleRepositoryInterface $articleRepository,
     ) {
     }
 
@@ -23,11 +24,11 @@ class AnnotationsByLaw
      */
     public function __invoke(null $_, array $args): Collection
     {
-        $id = $args['law_id'];
+        $id = $args['article_id'];
 
-        /** @var Law $law */
-        $law = $this->lawRepository->findOrFail($id);
+        /** @var Article $article */
+        $article = $this->articleRepository->findOrFail($id);
 
-        return $law->annotations()->get();
+        return $article->annotations()->get();
     }
 }

@@ -19,19 +19,20 @@ use Illuminate\Support\Collection;
 final class SaveMatterRelationSchema
 {
     public function __construct(
-        protected MatterRepositoryInterface $matterRepository,
-        protected RelationSchemaRepositoryInterface $relationSchemaRepository,
+        protected MatterRepositoryInterface               $matterRepository,
+        protected RelationSchemaRepositoryInterface       $relationSchemaRepository,
         protected MatterRelationSchemaRepositoryInterface $matterRelationSchemaRepository,
-        protected MatterRelationFactoryInterface $matterRelationFactory,
-        protected RelationSchemaFactoryInterface $relationSchemaFactory,
-        protected MatterRelationSchemaFactoryInterface $matterRelationSchemaFactory,
+        protected MatterRelationFactoryInterface          $matterRelationFactory,
+        protected RelationSchemaFactoryInterface          $relationSchemaFactory,
+        protected MatterRelationSchemaFactoryInterface    $matterRelationSchemaFactory,
     ) {
     }
+
 
     /**
      * @param array<string, mixed> $args
      */
-    public function __invoke($_, array $args): MatterRelationSchema
+    public function __invoke(null $_, array $args): MatterRelationSchema
     {
         $matterId = $args['matter_id'];
         $relationSchemaId = $args['relation_schema_id'] ?? null;
@@ -43,14 +44,14 @@ final class SaveMatterRelationSchema
         $relationSchema = $this->getOrCreateRelationSchema($relationSchemaId);
 
         $matterRelationSchema = $this->getOrCreateMatterRelationSchema(
-            matter                : $matter,
-            relationSchema        : $relationSchema,
-            schemaLayout          : $schemaLayout,
+            matter: $matter,
+            relationSchema: $relationSchema,
+            schemaLayout: $schemaLayout,
         );
 
         return $this->assignRelationsToMatterSchema(
             matterRelationSchema: $matterRelationSchema,
-            relations           : $relations
+            relations: $relations,
         );
     }
 
@@ -75,9 +76,9 @@ final class SaveMatterRelationSchema
 
             $oldRelationSchema->matterRelationSchemas->each(function (MatterRelationSchema $oldMatterRelationSchema) use ($newRelationSchema): void {
                 $newMatterRelationSchema = $this->matterRelationSchemaFactory->create(
-                    matter        : $oldMatterRelationSchema->matter,
+                    matter: $oldMatterRelationSchema->matter,
                     relationSchema: $newRelationSchema,
-                    schemaLayout  : $oldMatterRelationSchema->schema_layout,
+                    schemaLayout: $oldMatterRelationSchema->schema_layout,
                 );
 
                 $oldMatterRelationSchema->relations->each(function (MatterRelation $oldRelation) use (
@@ -86,9 +87,9 @@ final class SaveMatterRelationSchema
                 ): void {
                     $this->matterRelationFactory->create(
                         relatedMatter: $oldRelation->relatedMatter,
-                        schema       : $newMatterRelationSchema,
-                        relation     : $oldRelation->relation,
-                        description  : $oldRelation->description,
+                        schema: $newMatterRelationSchema,
+                        relation: $oldRelation->relation,
+                        description: $oldRelation->description,
                     );
                 });
             });
@@ -106,20 +107,20 @@ final class SaveMatterRelationSchema
      * we don't want to update a published schema.
      */
     protected function getOrCreateMatterRelationSchema(
-        Matter $matter,
+        Matter         $matter,
         RelationSchema $relationSchema,
-        string $schemaLayout,
+        string         $schemaLayout,
     ): MatterRelationSchema {
         $matterRelationSchema = $this->matterRelationSchemaRepository->getMatterRelationSchema(
             relationSchemaId: $relationSchema->getKey(),
-            matterId        : $matter->getKey(),
+            matterId: $matter->getKey(),
         );
 
         if (!$matterRelationSchema) {
             return $this->matterRelationSchemaFactory->create(
-                matter        : $matter,
+                matter: $matter,
                 relationSchema: $relationSchema,
-                schemaLayout  : $schemaLayout,
+                schemaLayout: $schemaLayout,
             );
         }
 
@@ -137,16 +138,16 @@ final class SaveMatterRelationSchema
      */
     protected function assignRelationsToMatterSchema(
         MatterRelationSchema $matterRelationSchema,
-        Collection $relations,
+        Collection           $relations,
     ): MatterRelationSchema {
         $matterRelationSchema->relations()->delete();
 
         $relations->each(function (array $relation) use ($matterRelationSchema): void {
             $this->matterRelationFactory->create(
                 relatedMatter: $this->matterRepository->findOrFail($relation['related_matter_id']),
-                schema       : $matterRelationSchema,
-                relation     : $relation['relation'],
-                description  : $relation['description'] ?? null,
+                schema: $matterRelationSchema,
+                relation: $relation['relation'],
+                description: $relation['description'] ?? null,
             );
         });
 

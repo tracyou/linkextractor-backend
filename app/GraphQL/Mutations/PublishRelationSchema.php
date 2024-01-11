@@ -23,7 +23,7 @@ final class PublishRelationSchema
      *
      * @throws Error
      */
-    public function __invoke($_, array $args): RelationSchema
+    public function __invoke(null $_, array $args): RelationSchema
     {
         $id = $args['id'];
 

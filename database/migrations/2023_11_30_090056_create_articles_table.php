@@ -10,21 +10,19 @@ return new class () extends Migration {
     /** Run the migrations. */
     public function up(): void
     {
-        Schema::create('annotation_law', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->foreignUuid('law_id')->constrained()->cascadeOnDelete();
-            $table->foreignUuid('annotation_id')->constrained()->cascadeOnDelete();
-            $table->integer('cursor_index');
-            $table->string('comment')->nullable();
+            $table->string('title');
+            $table->text('text');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->unique(['law_id', 'annotation_id', 'cursor_index']);
         });
     }
 
     /** Reverse the migrations. */
     public function down(): void
     {
-        Schema::dropIfExists('laws_annotations');
+        Schema::dropIfExists('articles');
     }
 };

@@ -21,8 +21,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string                          $relation_schema_id
- * @property-read Collection<int, \App\Models\Law> $laws
- * @property-read int|null $laws_count
  * @property-read \App\Models\Matter $matter
  * @property-read \App\Models\RelationSchema $relationSchema
  *
@@ -58,16 +56,9 @@ final class Annotation extends AbstractModel
         return $this->belongsTo(Matter::class);
     }
 
-    //relationship with Law
-    public function laws(): BelongsToMany
+    public function article(): BelongsTo
     {
-        return $this
-            ->belongsToMany(Law::class)
-            ->withPivot([
-                'cursor_index',
-                'comment',
-            ])
-            ->using(LawAnnotationPivot::class);
+        return $this->belongsTo(Article::class);
     }
 
     public function relationSchema(): BelongsTo

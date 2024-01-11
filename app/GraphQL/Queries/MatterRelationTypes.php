@@ -14,7 +14,7 @@ class MatterRelationTypes
      *
      * @return array<int, array<string, mixed>>
      */
-    public function __invoke($_, array $args): array
+    public function __invoke(null $_, array $args): array
     {
         $statuses = [];
 

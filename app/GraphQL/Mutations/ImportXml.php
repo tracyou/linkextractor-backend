@@ -3,10 +3,8 @@
 namespace App\GraphQL\Mutations;
 
 use App\Helpers\Import\LawXmlImport;
-use App\Models\Annotation;
 use App\Models\Law;
 use GraphQL\Error\Error;
-use Illuminate\Support\Collection;
 use Storage;
 
 final class ImportXml
@@ -19,8 +17,6 @@ final class ImportXml
      * @param array<string, mixed> $args
      *
      * @throws Error
-     *
-     * @return Collection<int, Annotation>
      */
     public function __invoke(null $_, array $args): Law
     {

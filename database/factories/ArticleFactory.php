@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\Law;
+use App\Models\Article;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Law>
+ * @extends Factory<Article>
  */
-class LawFactory extends Factory
+class ArticleFactory extends Factory
 {
-    protected $model = Law::class;
+    protected $model = Article::class;
 
     /**
      * Define the model's default state.
@@ -20,8 +20,8 @@ class LawFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'        => $this->faker->title,
-            'is_published' => $this->faker->boolean,
+            'title' => $this->faker->title,
+            'text'  => $this->faker->text,
         ];
     }
 }

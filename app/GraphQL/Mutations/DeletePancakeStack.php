@@ -22,7 +22,7 @@ final class DeletePancakeStack
      *
      * @throws Exception
      */
-    public function __invoke($_, array $args): bool
+    public function __invoke(null $_, array $args): bool
     {
         $id = $args['id'];
 
