@@ -12,13 +12,13 @@ class AnnotationSeeder extends Seeder
     /** Run the database seeds. */
     public function run(): void
     {
-        $matters = Matter::all();
-
-        foreach ($matters as $matter) {
-            Annotation::factory()->count(2)->create([
-                'matter_id'          => $matter->id,
-                'relation_schema_id' => RelationSchema::first()->getKey(),
-            ]);
-        }
+//        $matters = Matter::all();
+//
+//        foreach ($matters as $matter) {
+//            Annotation::factory()->count(2)->create([
+//                'matter_id'          => $matter->id,
+//                'relation_schema_id' => RelationSchema::first()->getKey(),
+//            ]);
+//        }
     }
 }
