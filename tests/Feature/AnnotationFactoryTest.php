@@ -2,15 +2,15 @@
 
 namespace Tests\Feature;
 
-use App\Factories\AnnotationFactory;
-use App\Factories\MatterFactory;
-use App\Factories\MatterRelationSchemaFactory;
-use App\Factories\RelationSchemaFactory;
-use App\Models\Annotation;
-use App\Models\Article;
-use App\Models\Matter;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Law;
 use Tests\TestCase;
+use App\Models\Matter;
+use App\Models\Article;
+use App\Models\Annotation;
+use App\Factories\MatterFactory;
+use App\Factories\AnnotationFactory;
+use App\Factories\RelationSchemaFactory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AnnotationFactoryTest extends TestCase
 {
@@ -21,22 +21,23 @@ class AnnotationFactoryTest extends TestCase
         $matterFactory = $this->app->make(MatterFactory::class);
 
         $matter = (new MatterFactory())->create("matter", "#000000");
+        $article = Article::factory()->create(['law_id' => Law::factory()->create()->id]);
         $relationSchema = (new RelationSchemaFactory())->create(true);
         $annotation = (new AnnotationFactory())->create(
             schema: $relationSchema,
+            article: $article,
             matter: $matter,
-            text  : "this is an annotation"
+            text: "this is an annotation",
         );
         $this->assertEquals($matter->id, $annotation->matter->id);
         $this->assertEquals(1, $annotation->matter->count());
     }
 
-    public function testRelationshipWithArticle()
+    public function testRelationshipWithLaw()
     {
         //Arrange
-        $article = Article::factory()->create([
+        $law = Law::factory()->create([
             'title'        => 'rijbewijs',
-            'text'         => 'je mag een brommer met je B rijbewijs rijen',
             'is_published' => false,
         ]);
 
@@ -45,18 +46,25 @@ class AnnotationFactoryTest extends TestCase
             'color' => '#001000',
         ]);
 
+        $article = Article::factory()->create([
+            'law_id' => $law->id,
+        ]);
+
         $annotation = Annotation::factory()->create([
             'matter_id' => $matter->id,
+            'article_id' => $article->id,
             'text'      => 'this is an annotation',
         ]);
 
         //Act
-        $annotation->article()->attach($article, ['cursor_index' => 222]);
+        $annotation->article()->associate($article);
 
-        // Assert that the relationship exists in the pivot table
-        $this->assertDatabaseHas('annotation_law', [
-            'law_id'        => $article->id,
-            'annotation_id' => $annotation->id,
+        // Assert that the relationship exists in the tables
+        $this->assertDatabaseHas('articles', [
+            'law_id' => $law->id,
+        ]);
+        $this->assertDatabaseHas('annotations', [
+            'article_id' => $article->id,
         ]);
     }
 }

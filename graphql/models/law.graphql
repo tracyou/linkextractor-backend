@@ -7,6 +7,12 @@ extend type Mutation {
     importXml(file: Upload): Law!
 }
 
+extend type Mutation {
+    deleteLaw(
+        input: DeleteLawInput! @spread
+    ):Boolean!
+}
+
 type Law {
     id: UUID!
     title: String!
@@ -16,4 +22,8 @@ type Law {
     updatedAt: DateTime! @rename(attribute: "updated_at")
 
     articles: [Article!]! @hasMany
+}
+
+input DeleteLawInput {
+    id: UUID!
 }

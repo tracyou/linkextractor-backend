@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Contracts\Repositories\ArticleRepositoryInterface;
 use App\Models\Article;
+use App\Contracts\Repositories\ArticleRepositoryInterface;
 use Wimski\ModelRepositories\Repositories\AbstractModelRepository;
 
 final class ArticleRepository extends AbstractModelRepository implements ArticleRepositoryInterface

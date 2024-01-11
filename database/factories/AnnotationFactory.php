@@ -19,9 +19,9 @@ class AnnotationFactory extends Factory
     public function definition(): array
     {
         return [
-            'matter_id'                 => Matter::factory(),
-            'relation_schema_id'        => RelationSchema::factory(),
-            'text'                      => $this->faker->sentence,
+            'matter_id'          => Matter::factory(),
+            'relation_schema_id' => RelationSchema::factory(),
+            'text'               => $this->faker->sentence,
         ];
     }
 }

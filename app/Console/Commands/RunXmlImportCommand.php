@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 final class RunXmlImportCommand extends Command
 {
     /** @var string */
-    protected $signature = 'import:xml {filename}';
+    protected $signature = 'import:xml {filename=testXml.xml}';
 
     /** @var string */
     protected $description = 'Runs the import XML script';

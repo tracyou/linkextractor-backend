@@ -12,8 +12,6 @@ use Wimski\ModelRepositories\Contracts\Repositories\ModelRepositoryInterface;
  */
 interface RelationSchemaRepositoryInterface extends ModelRepositoryInterface
 {
-    /**
-     * This method expires all *PUBLISHED* schemas except the one with the given ID.
-     */
-    public function expireAllExcept(string $id): bool | int;
+    /** This method expires all *PUBLISHED* schemas except the one with the given ID. */
+    public function expireAllExcept(string $id): bool|int;
 }

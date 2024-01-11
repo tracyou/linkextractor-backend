@@ -24,7 +24,7 @@ class RelationSchemaFactory extends Factory
     {
         return [
             'is_published' => true,
-            'expired_at' => null,
+            'expired_at'   => null,
         ];
     }
 }

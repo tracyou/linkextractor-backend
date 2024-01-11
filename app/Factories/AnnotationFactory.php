@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Factories;
 
+use App\Models\Article;
 use App\Contracts\Factories\AnnotationFactoryInterface;
 use App\Models\Annotation;
 use App\Models\Article;
@@ -21,6 +22,7 @@ final class AnnotationFactory implements AnnotationFactoryInterface
         $annotation->relationSchema()->associate($schema);
         $annotation->article()->associate($article);
         $annotation->matter()->associate($matter);
+        $annotation->article()->associate($article);
         $annotation->save();
 
         return $annotation;

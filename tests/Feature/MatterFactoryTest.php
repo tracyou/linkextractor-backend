@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Law;
+use App\Models\Article;
 use App\Enums\MatterRelationEnum;
 use App\Factories\AnnotationFactory;
 use App\Factories\MatterFactory;
@@ -19,9 +21,11 @@ class MatterFactoryTest extends TestCase
     public function testMatterHasManyAnnotations(): void
     {
         $matter = (new MatterFactory())->create("matter", "#000000");
+        $article = Article::factory()->create(['law_id' => Law::factory()->create()->id]);
         $relationSchema = (new RelationSchemaFactory())->create(true);
         (new AnnotationFactory())->create(
             schema: $relationSchema,
+            article: $article,
             matter: $matter,
             text: "this is an annotation"
         );

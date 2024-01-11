@@ -3,7 +3,6 @@ setup:
 	@make up
 	@docker-compose exec api composer install
 	@docker-compose exec api sh -c 'echo "Waiting for database connection..."'
-	@docker-compose exec api ./scripts/wait-for.sh database:5432 -t 120 -- echo "Database connection established"
 	@make db-fresh
 	@docker-compose exec api php artisan key:generate
 	@docker-compose exec api php artisan ide-helper:meta

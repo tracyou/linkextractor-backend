@@ -15,28 +15,24 @@ use App\Models\MatterRelation;
 use App\Models\MatterRelationSchema;
 use App\Models\RelationSchema;
 use Illuminate\Support\Collection;
-use stdClass;
 
 final class SaveMatterRelationSchema
 {
     public function __construct(
-        protected MatterRepositoryInterface $matterRepository,
-        protected RelationSchemaRepositoryInterface $relationSchemaRepository,
+        protected MatterRepositoryInterface               $matterRepository,
+        protected RelationSchemaRepositoryInterface       $relationSchemaRepository,
         protected MatterRelationSchemaRepositoryInterface $matterRelationSchemaRepository,
-
-        protected MatterRelationFactoryInterface $matterRelationFactory,
-        protected RelationSchemaFactoryInterface $relationSchemaFactory,
-        protected MatterRelationSchemaFactoryInterface $matterRelationSchemaFactory,
+        protected MatterRelationFactoryInterface          $matterRelationFactory,
+        protected RelationSchemaFactoryInterface          $relationSchemaFactory,
+        protected MatterRelationSchemaFactoryInterface    $matterRelationSchemaFactory,
     ) {
     }
 
+
     /**
-     * @param                      $_
      * @param array<string, mixed> $args
-     *
-     * @return MatterRelationSchema
      */
-    public function __invoke($_, array $args): MatterRelationSchema
+    public function __invoke(null $_, array $args): MatterRelationSchema
     {
         $matterId = $args['matter_id'];
         $relationSchemaId = $args['relation_schema_id'] ?? null;
@@ -48,24 +44,20 @@ final class SaveMatterRelationSchema
         $relationSchema = $this->getOrCreateRelationSchema($relationSchemaId);
 
         $matterRelationSchema = $this->getOrCreateMatterRelationSchema(
-            matter                : $matter,
-            relationSchema        : $relationSchema,
-            schemaLayout          : $schemaLayout,
+            matter: $matter,
+            relationSchema: $relationSchema,
+            schemaLayout: $schemaLayout,
         );
 
         return $this->assignRelationsToMatterSchema(
             matterRelationSchema: $matterRelationSchema,
-            relations           : $relations
+            relations: $relations,
         );
     }
 
     /**
      * It will create a new relation schema if the id is null or the relation schema is already published, since we
      * don't want to update a published schema.
-     *
-     * @param string|null $relationSchemaId
-     *
-     * @return RelationSchema
      */
     protected function getOrCreateRelationSchema(?string $relationSchemaId): RelationSchema
     {
@@ -84,9 +76,9 @@ final class SaveMatterRelationSchema
 
             $oldRelationSchema->matterRelationSchemas->each(function (MatterRelationSchema $oldMatterRelationSchema) use ($newRelationSchema): void {
                 $newMatterRelationSchema = $this->matterRelationSchemaFactory->create(
-                    matter        : $oldMatterRelationSchema->matter,
+                    matter: $oldMatterRelationSchema->matter,
                     relationSchema: $newRelationSchema,
-                    schemaLayout  : $oldMatterRelationSchema->schema_layout,
+                    schemaLayout: $oldMatterRelationSchema->schema_layout,
                 );
 
                 $oldMatterRelationSchema->relations->each(function (MatterRelation $oldRelation) use (
@@ -95,9 +87,9 @@ final class SaveMatterRelationSchema
                 ): void {
                     $this->matterRelationFactory->create(
                         relatedMatter: $oldRelation->relatedMatter,
-                        schema       : $newMatterRelationSchema,
-                        relation     : $oldRelation->relation,
-                        description  : $oldRelation->description,
+                        schema: $newMatterRelationSchema,
+                        relation: $oldRelation->relation,
+                        description: $oldRelation->description,
                     );
                 });
             });
@@ -113,28 +105,22 @@ final class SaveMatterRelationSchema
     /**
      * It will create a new matter relation schema if the id is null or the relation schema is already published, since
      * we don't want to update a published schema.
-     *
-     * @param Matter         $matter
-     * @param RelationSchema $relationSchema
-     * @param string         $schemaLayout
-     *
-     * @return MatterRelationSchema
      */
     protected function getOrCreateMatterRelationSchema(
-        Matter $matter,
+        Matter         $matter,
         RelationSchema $relationSchema,
-        string $schemaLayout,
+        string         $schemaLayout,
     ): MatterRelationSchema {
         $matterRelationSchema = $this->matterRelationSchemaRepository->getMatterRelationSchema(
             relationSchemaId: $relationSchema->getKey(),
-            matterId        : $matter->getKey(),
+            matterId: $matter->getKey(),
         );
 
         if (!$matterRelationSchema) {
             return $this->matterRelationSchemaFactory->create(
-                matter        : $matter,
+                matter: $matter,
                 relationSchema: $relationSchema,
-                schemaLayout  : $schemaLayout,
+                schemaLayout: $schemaLayout,
             );
         }
 
@@ -148,23 +134,20 @@ final class SaveMatterRelationSchema
      * It will delete all the existing relations on this matter relation schema and create new ones. The deletion only
      * happens if the matter relation schema is not published, so we are allowed to alter it.
      *
-     * @param MatterRelationSchema      $matterRelationSchema
      * @param Collection<string, mixed> $relations
-     *
-     * @return MatterRelationSchema
      */
     protected function assignRelationsToMatterSchema(
         MatterRelationSchema $matterRelationSchema,
-        Collection $relations,
+        Collection           $relations,
     ): MatterRelationSchema {
         $matterRelationSchema->relations()->delete();
 
         $relations->each(function (array $relation) use ($matterRelationSchema): void {
             $this->matterRelationFactory->create(
                 relatedMatter: $this->matterRepository->findOrFail($relation['related_matter_id']),
-                schema       : $matterRelationSchema,
-                relation     : $relation['relation'],
-                description  : $relation['description'] ?? null,
+                schema: $matterRelationSchema,
+                relation: $relation['relation'],
+                description: $relation['description'] ?? null,
             );
         });
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Http\GraphQL\Models\MatterRelationSchema\Queries;
 
+use App\Models\Law;
+use App\Models\Article;
 use App\Enums\MatterRelationEnum;
 use App\Models\Annotation;
 use App\Models\Matter;
@@ -57,21 +59,25 @@ class MatterRelationSchemasTest extends AbstractHttpGraphQLTestCase
             ],
         ]);
 
+        $article = Article::factory()->create([
+            'law_id' => Law::factory()->create(),
+        ]);
+
         Annotation::factory()->createMany([
             [
                 'id'                 => $this->createUUIDFromID(1),
                 'relation_schema_id' => $this->createUUIDFromID(1),
+                'article_id'         => $article->id,
             ],
             [
                 'id'                 => $this->createUUIDFromID(2),
                 'relation_schema_id' => $this->createUUIDFromID(1),
+                'article_id'         => $article->id,
             ],
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_all_matter_relation_schemas(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -92,23 +98,23 @@ class MatterRelationSchemasTest extends AbstractHttpGraphQLTestCase
             'data' => [
                 'matterRelationSchemas' => [
                     [
-                        'id'          => $this->createUUIDFromID(1),
-                        'relations'   => [
+                        'id'        => $this->createUUIDFromID(1),
+                        'relations' => [
                             [
                                 'id'            => $this->createUUIDFromID(1),
                                 'relatedMatter' => [
                                     'id' => $this->createUUIDFromID(2),
                                 ],
-                                'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
-                                'description'   => 'first test description',
+                                'relation'    => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                                'description' => 'first test description',
                             ],
                             [
                                 'id'            => $this->createUUIDFromID(2),
                                 'relatedMatter' => [
                                     'id' => $this->createUUIDFromID(3),
                                 ],
-                                'relation'      => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
-                                'description'   => 'second test description',
+                                'relation'    => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                                'description' => 'second test description',
                             ],
                         ],
                     ],
