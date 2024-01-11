@@ -10,8 +10,9 @@ use App\Contracts\Repositories\MatterRelationRepositoryInterface;
 use App\Contracts\Repositories\MatterRelationSchemaRepositoryInterface;
 use App\Contracts\Repositories\MatterRepositoryInterface;
 use App\Contracts\Repositories\RelationSchemaRepositoryInterface;
+use App\Models\Article;
 use App\Models\Law;
-
+use Illuminate\Support\Collection;
 
 class SaveAnnotatedLaw
 {
@@ -29,7 +30,7 @@ class SaveAnnotatedLaw
     {
     }
 
-    public function __invoke($_, array $args): Law|null
+    public function __invoke($_, array $args): Law
     {
         $lawId = $args['lawId'];
         $isPublished = $args['isPublished'];
@@ -43,15 +44,20 @@ class SaveAnnotatedLaw
         $newRevisionNumber = $this->annotationRepository->getNewRevisionNumber($law);
 
         $articles->each(function (array $articleInput) use ($newRevisionNumber) {
+            $annotationMappings = new Collection();
+
+            /** @var Article $article */
             $article = $this->articleRepository->findOrFail($articleInput['articleId']);
-            collect($articleInput['annotations'])->each(function ($annotationInput) use ($article, $newRevisionNumber) {
+
+            $articleAnnotationMapping = collect($articleInput['annotations'])->map(function ($annotationInput) use ($article, $newRevisionNumber) {
                 $matter = $this->matterRepository->findOrFail($annotationInput['matterId']);
                 $comment = $annotationInput['comment'];
                 $definition = $annotationInput['definition'];
                 $text = $annotationInput['text'];
+                $tempId = $annotationInput['tempId'];
                 $relationSchema = $this->relationSchemaRepository->getMostRecent();
 
-                return $this->annotationFactory->create(
+                $annotation = $this->annotationFactory->create(
                     $matter,
                     $text,
                     $definition,
@@ -60,11 +66,27 @@ class SaveAnnotatedLaw
                     $article,
                     $relationSchema
                 );
+
+                return [
+                    'tempId' => $tempId,
+                    'newId' => $annotation->getKey(),
+                ];
             });
 
+            $jsonText = json_encode($articleInput['json_text']);
+
+            $articleAnnotationMapping->each(function ($mapping) use (&$jsonText) {
+                $jsonText = str_replace($mapping['tempId'], $mapping['newId'], $jsonText);
+            });
+
+            $article->json_text = $jsonText;
+            $article->save();
+
+            $annotationMappings->merge($articleAnnotationMapping);
         });
 
         $law->save();
+
         return $law;
     }
 
