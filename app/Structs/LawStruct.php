@@ -28,9 +28,9 @@ final class LawStruct
     public function save(): Law
     {
         $law = Law::firstOrCreate(['title' => $this->title]);
-        foreach (collect($this->articles)->sortBy('nr', SORT_NATURAL) as $article) {
+        foreach ($this->articles as $article) {
             $model = $article->toModel();
-            if (!$model) {
+            if (! $model) {
                 continue;
             }
 

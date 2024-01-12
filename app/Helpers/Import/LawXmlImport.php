@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Helpers\Import;
 
-use App\Models\Law;
-use App\Structs\ArticleStruct;
-use App\Structs\LawStruct;
 use DOMDocument;
-use GraphQL\Error\Error;
+use App\Models\Law;
 use SimpleXMLElement;
+use GraphQL\Error\Error;
+use App\Structs\LawStruct;
+use App\Structs\ArticleStruct;
 
 final class LawXmlImport
 {
@@ -17,11 +17,11 @@ final class LawXmlImport
     {
         ini_set('memory_limit', '-1');
 
-        if (!$this->isValidXML($xmlFilePath)) {
+        if (! $this->isValidXML($xmlFilePath)) {
             throw new Error("invalid xml data");
         }
 
-        if (!$data = simplexml_load_file($xmlFilePath)) {
+        if (! $data = simplexml_load_file($xmlFilePath)) {
             throw new Error("invalid xml data");
         }
 
@@ -35,11 +35,11 @@ final class LawXmlImport
     {
         $xsdFilePath = storage_path('app/XmlValidation/toestand_2016-1.xsd');
 
-        if (!file_exists($xmlFilePath)) {
+        if (! file_exists($xmlFilePath)) {
             throw new Error('XML file not found');
         }
 
-        if (!file_exists($xsdFilePath)) {
+        if (! file_exists($xsdFilePath)) {
             throw new Error('XSD file not found');
         }
 
@@ -48,7 +48,7 @@ final class LawXmlImport
 
         libxml_use_internal_errors(true);
 
-        if (!$tempDom->schemaValidate($xsdFilePath)) {
+        if (! $tempDom->schemaValidate($xsdFilePath)) {
             return false;
         }
 
@@ -59,9 +59,9 @@ final class LawXmlImport
     {
         $law = $this->getLaw($data);
         $articles = $this->getArticles($data);
-
+        collect($articles)->sortBy('sort_order');
         foreach ($articles as $article) {
-            $hydratedArticle = $this->hydrateLaw($article);
+            $hydratedArticle = $this->hydrateLaw($article['article']);
             $law->add($hydratedArticle);
         }
 
@@ -79,17 +79,18 @@ final class LawXmlImport
     }
 
     /**
-     * @param SimpleXMLElement[] $articles
+     * @param SimpleXMLElement[]  $articles
      *
      * @return SimpleXMLElement[]
      */
-    private function getArticles(SimpleXMLElement $data, array &$articles = []): array
+    private function getArticles(SimpleXMLElement $data, array &$articles = [], int &$sortOrder = 0): array
     {
         foreach ($data->children() as $child) {
+            $sortOrder++;
             if ($child->getName() === 'artikel') {
-                $articles[] = $child;
+                $articles[] = ['article' => $child, 'sort_order' => $sortOrder];
             } else {
-                $articles = $this->getArticles($child, $articles);
+                $this->getArticles($child, $articles, $sortOrder);
             }
         }
 
