@@ -30,11 +30,11 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
 
         Article::factory()->createMany([
             [
-                'id'     => $this->createUUIDFromID(1),
+                'id' => $this->createUUIDFromID(1),
                 'law_id' => $this->createUUIDFromID(1),
             ],
             [
-                'id'     => $this->createUUIDFromID(2),
+                'id' => $this->createUUIDFromID(2),
                 'law_id' => $this->createUUIDFromID(1),
             ],
         ]);
@@ -77,9 +77,9 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
         $law = $lawFactory->create('title of the law', false);
         $jsonData = [
             'article 1' => 'oh my god',
-            'content'   => 'i am so sleepy',
+            'content' => 'i am so sleepy',
         ];
-        $article = $articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData,1);
+        $article = $articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData, 1);
         $relationSchema = $relationSchemaFactory->create(false);
 
         $response = $this->graphQL(/** @lang GraphQL */ '
@@ -106,22 +106,22 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
           }
         ', [
             'input' => [
-                'lawId'       => $law->id,
-                'title'       => $law->title,
+                'lawId' => $law->id,
+                'title' => $law->title,
                 'isPublished' => $law->is_published,
-                'articles'    => [
+                'articles' => [
                     [
-                        'articleId'   => $article->id,
-                        'title'       => $article->title,
-                        'text'        => $article->text,
-                        'jsonText'    => $article->json_text,
+                        'articleId' => $article->id,
+                        'title' => $article->title,
+                        'text' => $article->text,
+                        'jsonText' => $article->json_text,
                         'annotations' => [
                             [
-                                'text'             => 'this is the annotation text',
-                                'definition'       => 'this is the definition of the annotation',
-                                'comment'          => 'this is the annotation comment',
-                                'matterId'         => $matter->id,
-                                'tempId'           => $this->createUUIDFromID(1)
+                                'text' => 'this is the annotation text',
+                                'definition' => 'this is the definition of the annotation',
+                                'comment' => 'this is the annotation comment',
+                                'matterId' => $matter->id,
+                                'tempId' => $this->createUUIDFromID(1)
                             ],
                         ],
                     ],
@@ -134,23 +134,24 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
         $response->assertExactJson([
             'data' => [
                 'saveAnnotatedLaw' => [
-                    'id'          => $law->id,
-                    'title'       => $law->title,
+                    'id' => $law->id,
+                    'title' => $law->title,
                     'isPublished' => $law->is_published,
-                    'articles'    => [
+                    'articles' => [
                         [
-                            'id'          => $article->id,
-                            'title'       => $article->title,
-                            'text'        => $article->text,
-                            'jsonText'    => json_encode($article->json_text),
+                            'id' => $article->id,
+                            'title' => $article->title,
+                            'text' => $article->text,
+                            'jsonText' => json_encode($article->json_text),
                             'annotations' => [
                                 [
-                                    'text'           => 'this is the annotation text',
-                                    'definition'     => 'this is the definition of the annotation',
-                                    'comment'        => 'this is the annotation comment',
-                                    'matter'         => [
-                                        'id'         => $matter->id,
-                                    ],
+                                    'text' => 'this is the annotation text',
+                                    'definition' => 'this is the definition of the annotation',
+                                    'comment' => 'this is the annotation comment',
+                                    'matter' =>
+                                        [
+                                            'id' => $matter->id,
+                                        ],
                                 ],
                             ],
                         ],
