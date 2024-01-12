@@ -8,6 +8,7 @@ use App\Contracts\Factories\LawFactoryInterface;
 use App\Contracts\Factories\MatterFactoryInterface;
 use App\Contracts\Factories\MatterRelationSchemaFactoryInterface;
 use App\Contracts\Factories\RelationSchemaFactoryInterface;
+use App\Contracts\Repositories\AnnotationRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,6 +29,9 @@ class AnnotationFactoryTest extends TestCase
         $relationSchemaFactory = $this->app->make(RelationSchemaFactoryInterface::class);
         $articleFactory = $this->app->make(ArticleFactoryInterface::class);
 
+        // Inject repositories
+        $annotationRepository = $this->app->make(AnnotationRepositoryInterface::class);
+
         $matter = $matterFactory->create('matter', '#001000');
         $law = $lawFactory->create('title', false);
         $relationSchema = $relationSchemaFactory->create(false);
@@ -36,13 +40,14 @@ class AnnotationFactoryTest extends TestCase
             'content' => 'i am so sleepy',
         ];
         $article = $articleFactory->create($law,'title of the article', 'this is the text of the article', $jsonData);
-
+        $newRevisionNumber = $annotationRepository->getNewRevisionNumber($law);
         //Act
         $annotation = $annotationFactory->create(
             $matter,
             'this is an annotation',
             'this is the definition of the annotation',
             'this is a comment',
+            $newRevisionNumber,
             $article,
             $relationSchema
         );

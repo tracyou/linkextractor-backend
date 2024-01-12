@@ -79,7 +79,7 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
             'article 1' => 'oh my god',
             'content'   => 'i am so sleepy',
         ];
-        $article = $articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData);
+        $article = $articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData,1);
         $relationSchema = $relationSchemaFactory->create(false);
 
         $response = $this->graphQL(/** @lang GraphQL */ '
@@ -99,9 +99,6 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                          comment
                          matter {
                              id
-                         }
-                         relationSchema {
-                            id
                          }
                       }
                   }
@@ -124,7 +121,7 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                                 'definition'       => 'this is the definition of the annotation',
                                 'comment'          => 'this is the annotation comment',
                                 'matterId'         => $matter->id,
-                                'relationSchemaId' => $relationSchema->id,
+                                'tempId'           => $this->createUUIDFromID(1)
                             ],
                         ],
                     ],
@@ -152,10 +149,7 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                                     'definition'     => 'this is the definition of the annotation',
                                     'comment'        => 'this is the annotation comment',
                                     'matter'         => [
-                                        'id' => $matter->id,
-                                    ],
-                                    'relationSchema' => [
-                                        'id' => $relationSchema->id,
+                                        'id'         => $matter->id,
                                     ],
                                 ],
                             ],

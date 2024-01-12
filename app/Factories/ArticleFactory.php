@@ -17,7 +17,8 @@ class ArticleFactory implements ArticleFactoryInterface
         $article = new Article([
             'title' => $title,
             'text' => $text,
-            'json_text' => $jsonText
+            'json_text' => $jsonText,
+
         ]);
         $article->law()->associate($law);
         $article->save();
