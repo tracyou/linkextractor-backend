@@ -79,19 +79,18 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
             'article 1' => 'oh my god',
             'content' => 'i am so sleepy',
         ];
-        $article = $articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData, 1);
-        $relationSchema = $relationSchemaFactory->create(false);
+
+
+        $article = $articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData, );
+        $relationSchema = $relationSchemaFactory->create(true);
 
         $response = $this->graphQL(/** @lang GraphQL */ '
           mutation saveAnnotatedLaw($input: AnnotatedArticleInput!) {
               saveAnnotatedLaw(input: $input) {
                   id
-                  title
                   isPublished
                   articles {
                       id
-                      title
-                      text
                       jsonText
                       annotations {
                          text
@@ -107,17 +106,14 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
         ', [
             'input' => [
                 'lawId' => $law->id,
-                'title' => $law->title,
                 'isPublished' => $law->is_published,
                 'articles' => [
                     [
                         'articleId' => $article->id,
-                        'title' => $article->title,
-                        'text' => $article->text,
-                        'jsonText' => $article->json_text,
+                        'jsonText' =>  $article->json_text,
                         'annotations' => [
                             [
-                                'text' => 'this is the annotation text',
+                                'text' => 'am',
                                 'definition' => 'this is the definition of the annotation',
                                 'comment' => 'this is the annotation comment',
                                 'matterId' => $matter->id,
@@ -135,17 +131,14 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
             'data' => [
                 'saveAnnotatedLaw' => [
                     'id' => $law->id,
-                    'title' => $law->title,
                     'isPublished' => $law->is_published,
                     'articles' => [
                         [
                             'id' => $article->id,
-                            'title' => $article->title,
-                            'text' => $article->text,
-                            'jsonText' => json_encode($article->json_text),
+                            'jsonText' => $article->json_text,
                             'annotations' => [
                                 [
-                                    'text' => 'this is the annotation text',
+                                    'text' => 'am',
                                     'definition' => 'this is the definition of the annotation',
                                     'comment' => 'this is the annotation comment',
                                     'matter' =>

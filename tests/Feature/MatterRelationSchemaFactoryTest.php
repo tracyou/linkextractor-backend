@@ -78,6 +78,7 @@ class MatterRelationSchemaFactoryTest extends TestCase
             'this is an annotation',
             200,
             'this is a comment',
+            1,
             $article,
             $relationSchema
         );
@@ -86,6 +87,7 @@ class MatterRelationSchemaFactoryTest extends TestCase
             'this is another annotation',
             200,
             'this is a comment',
+            1,
             $article,
             $relationSchema
         );
