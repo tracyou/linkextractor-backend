@@ -26,9 +26,6 @@ class SaveFileXml
         $title = $args['title'];
         $content = $args['content'];
 
-        return $this->fileXmlRepository->create([
-            'title' => $title,
-            'content' => $content
-        ]);
+        return $this->fileXmlFactory->create($title,$content);
     }
 }

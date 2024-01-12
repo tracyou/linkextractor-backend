@@ -12,7 +12,7 @@ class FileXmlFactory implements FileXmlFactoryInterface
     {
         $fileXml = new FileXml();
         $fileXml->title = $title;
-        $fileXml->text = $content;
+        $fileXml->content = $content;
 
         $fileXml->save();
         return $fileXml;
