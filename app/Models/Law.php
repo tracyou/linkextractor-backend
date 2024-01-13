@@ -52,6 +52,6 @@ final class Law extends AbstractModel
 
     public function articles(): HasMany
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class)->orderBy('id');
     }
 }
