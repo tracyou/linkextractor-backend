@@ -3,6 +3,7 @@
 namespace App\Structs;
 
 use App\Models\Article;
+use Illuminate\Support\Str;
 
 final class ArticleStruct
 {
@@ -17,6 +18,7 @@ final class ArticleStruct
     public function toModel(): ?Article
     {
         $article = new Article();
+        $article->id = Str::orderedUuid();
         $article->title = $this->label . ' ' . $this->nr . ' ' . $this->titel;
         $article->text = $this->text ?: '';
 
