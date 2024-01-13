@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Http\GraphQL\Models\MatterRelationSchema\Queries;
 
-use App\Models\Law;
-use App\Models\Article;
 use App\Enums\MatterRelationEnum;
 use App\Models\Annotation;
 use App\Models\Matter;
@@ -59,20 +57,14 @@ class MatterRelationSchemasTest extends AbstractHttpGraphQLTestCase
             ],
         ]);
 
-        $article = Article::factory()->create([
-            'law_id' => Law::factory()->create(),
-        ]);
-
         Annotation::factory()->createMany([
             [
                 'id'                 => $this->createUUIDFromID(1),
                 'relation_schema_id' => $this->createUUIDFromID(1),
-                'article_id'         => $article->id,
             ],
             [
                 'id'                 => $this->createUUIDFromID(2),
                 'relation_schema_id' => $this->createUUIDFromID(1),
-                'article_id'         => $article->id,
             ],
         ]);
     }

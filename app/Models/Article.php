@@ -23,20 +23,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $annotations_count
  * @property-read \App\Models\Law $law
  *
- * @method static Builder|Article findDuplicated(string $title, string $lawId)
- * @method static Builder|Article newModelQuery()
- * @method static Builder|Article newQuery()
- * @method static Builder|Article onlyTrashed()
- * @method static Builder|Article query()
- * @method static Builder|Article whereCreatedAt($value)
- * @method static Builder|Article whereDeletedAt($value)
- * @method static Builder|Article whereId($value)
- * @method static Builder|Article whereLawId($value)
- * @method static Builder|Article whereText($value)
- * @method static Builder|Article whereTitle($value)
- * @method static Builder|Article whereUpdatedAt($value)
- * @method static Builder|Article withTrashed()
- * @method static Builder|Article withoutTrashed()
+ * @method static \Database\Factories\ArticleFactory factory($count = null, $state = [])
+ * @method static Builder|Article                    findDuplicated(string $title, string $lawId)
+ * @method static Builder|Article                    newModelQuery()
+ * @method static Builder|Article                    newQuery()
+ * @method static Builder|Article                    onlyTrashed()
+ * @method static Builder|Article                    query()
+ * @method static Builder|Article                    whereCreatedAt($value)
+ * @method static Builder|Article                    whereDeletedAt($value)
+ * @method static Builder|Article                    whereId($value)
+ * @method static Builder|Article                    whereLawId($value)
+ * @method static Builder|Article                    whereText($value)
+ * @method static Builder|Article                    whereTitle($value)
+ * @method static Builder|Article                    whereUpdatedAt($value)
+ * @method static Builder|Article                    withTrashed()
+ * @method static Builder|Article                    withoutTrashed()
  *
  * @mixin \Eloquent
  */

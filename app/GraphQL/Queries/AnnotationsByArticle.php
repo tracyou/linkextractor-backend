@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Article;
 use App\Contracts\Repositories\ArticleRepositoryInterface;
 use App\Models\Annotation;
-use App\Models\Law;
+use App\Models\Article;
 use Illuminate\Support\Collection;
 
 class AnnotationsByArticle

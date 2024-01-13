@@ -3,11 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Law;
-use Tests\TestCase;
-use App\Models\Matter;
-use App\Models\Article;
-use App\Models\Annotation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class LawFactoryTest extends TestCase
 {

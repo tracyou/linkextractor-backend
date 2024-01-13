@@ -9,7 +9,7 @@ type Annotation {
     text: String!
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
-
+    article: Article! @belongsTo
     matter: Matter! @belongsTo
     relationSchema: RelationSchema! @belongsTo
 }

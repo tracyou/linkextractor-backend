@@ -4,63 +4,14 @@ declare(strict_types=1);
 
 namespace Http\GraphQL\Models\Annotation\Queries;
 
+use App\Models\Annotation;
+use App\Models\Article;
 use App\Models\Law;
 use App\Models\Matter;
-use App\Models\Article;
-use App\Models\Annotation;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
 class AnnotationsByArticleTest extends AbstractHttpGraphQLTestCase
 {
-    /** @test */
-    public function it_returns_all_annotations_for_given_law(): void
-    {
-        $this->graphQL(/** @lang GraphQL */ '
-            query($id: UUID!) {
-                annotationsByArticle(articleId: $id) {
-                    id
-                    matter {
-                        id
-                    }
-                }
-            }
-        ',
-            [
-                'id' => $this->createUUIDFromID(3),
-            ],
-        )->assertJson([
-            'data' => [
-                'annotationsByArticle' => [
-                    [
-                        'id' => $this->createUUIDFromID(5),
-                        'matter' => [
-                            'id' => $this->createUUIDFromID(2)
-                        ]
-                    ],
-                ],
-            ],
-        ]);
-    }
-
-    /** @test */
-    public function it_throws_a_validation_error_for_non_existing_law_id(): void
-    {
-        $this->graphQL(/** @lang GraphQL */ '
-            query($id: UUID!) {
-                annotationsByArticle(articleId: $id) {
-                    id,
-                    matter {
-                        id
-                    }
-                }
-            }
-        ',
-            [
-                'id' => $this->createUUIDFromID(12),
-            ],
-        )->assertGraphQLValidationError('articleId', 'The selected article id is invalid.');
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -100,5 +51,54 @@ class AnnotationsByArticleTest extends AbstractHttpGraphQLTestCase
         ]);
 
 
+    }
+
+    /** @test */
+    public function it_returns_all_annotations_for_given_law(): void
+    {
+        $this->graphQL(/** @lang GraphQL */ '
+            query($id: UUID!) {
+                annotationsByArticle(articleId: $id) {
+                    id
+                    matter {
+                        id
+                    }
+                }
+            }
+        ',
+            [
+                'id' => $this->createUUIDFromID(3),
+            ],
+        )->assertJson([
+            'data' => [
+                'annotationsByArticle' => [
+                    [
+                        'id'     => $this->createUUIDFromID(5),
+                        'matter' => [
+                            'id' => $this->createUUIDFromID(2),
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function it_throws_a_validation_error_for_non_existing_law_id(): void
+    {
+        $this->graphQL(/** @lang GraphQL */ '
+            query($id: UUID!) {
+                annotationsByArticle(articleId: $id) {
+                    id,
+                    matter {
+                        id
+                    }
+                }
+            }
+        ',
+            [
+                'id' => $this->createUUIDFromID(12),
+            ],
+        )->assertGraphQLValidationError('articleId', 'The selected article id is invalid.');
     }
 }

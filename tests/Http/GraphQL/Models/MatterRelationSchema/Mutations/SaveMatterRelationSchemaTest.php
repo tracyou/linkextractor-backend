@@ -378,9 +378,7 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
         ])->assertGraphQLValidationError('input.relations.0.relatedMatterId', 'The related matter id cannot be the same as the matter id.');
     }
 
-    /**
-     * @param array<string, mixed> $data
-     */
+    /** @param array<string, mixed> $data */
     protected function makeRequest(array $data): TestResponse
     {
         return $this->graphQL(/** @lang GraphQL */ '

@@ -2,18 +2,12 @@
 
 namespace Tests\Http\GraphQL\Models\Law\Queries;
 
-use App\GraphQL\Mutations\DeleteLaw;
 use App\Models\Law;
-use GraphQL\Error\Error;
-use Illuminate\Validation\ValidationException;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
 class DeleteLawsTest extends AbstractHttpGraphQLTestCase
 {
-
-    /**
-     * @test
-     */
+    /** @test */
     public function delete_law(): void
     {
         $law = Law::factory()->create();
@@ -35,9 +29,7 @@ class DeleteLawsTest extends AbstractHttpGraphQLTestCase
         $this->assertSoftDeleted('laws', ['id' => $law->id]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function delete_law_with_non_existing_law(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -47,7 +39,7 @@ class DeleteLawsTest extends AbstractHttpGraphQLTestCase
                 })
             }
         ', [
-            'id' => $this->createUUIDFromID(1)
+            'id' => $this->createUUIDFromID(1),
         ])->assertGraphQLErrorMessage('This id is incorrect');
     }
 }

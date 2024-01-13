@@ -6,9 +6,7 @@ namespace App\Models;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Annotation.
@@ -21,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string                          $relation_schema_id
+ * @property-read \App\Models\Article $article
  * @property-read \App\Models\Matter $matter
  * @property-read \App\Models\RelationSchema $relationSchema
  *

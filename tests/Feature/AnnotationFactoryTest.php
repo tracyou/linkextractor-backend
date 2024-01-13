@@ -2,15 +2,15 @@
 
 namespace Tests\Feature;
 
-use App\Models\Law;
-use Tests\TestCase;
-use App\Models\Matter;
-use App\Models\Article;
-use App\Models\Annotation;
-use App\Factories\MatterFactory;
 use App\Factories\AnnotationFactory;
+use App\Factories\MatterFactory;
 use App\Factories\RelationSchemaFactory;
+use App\Models\Annotation;
+use App\Models\Article;
+use App\Models\Law;
+use App\Models\Matter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AnnotationFactoryTest extends TestCase
 {
@@ -21,7 +21,7 @@ class AnnotationFactoryTest extends TestCase
         $matterFactory = $this->app->make(MatterFactory::class);
 
         $matter = (new MatterFactory())->create("matter", "#000000");
-        $article = Article::factory()->create(['law_id' => Law::factory()->create()->id]);
+        $article = Article::factory()->create();
         $relationSchema = (new RelationSchemaFactory())->create(true);
         $annotation = (new AnnotationFactory())->create(
             schema: $relationSchema,
@@ -51,9 +51,9 @@ class AnnotationFactoryTest extends TestCase
         ]);
 
         $annotation = Annotation::factory()->create([
-            'matter_id' => $matter->id,
+            'matter_id'  => $matter->id,
             'article_id' => $article->id,
-            'text'      => 'this is an annotation',
+            'text'       => 'this is an annotation',
         ]);
 
         //Act

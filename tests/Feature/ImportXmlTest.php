@@ -14,7 +14,7 @@ final class ImportXmlTest extends TestCase
 
     public function testImportXmlNotValidPath(): void
     {
-        $this->assertThrows(fn () => (new LawXmlImport())->import('testXml.xml'), Error::class);
+        $this->assertThrows(fn () => (new LawXmlImport())->import('testXml.xml'), Error::class, 'XML file not found');
     }
 
     public function testImportXmlValidPathValidXml(): void
@@ -24,6 +24,6 @@ final class ImportXmlTest extends TestCase
 
     public function testImportXmlValidPathInvalidXml(): void
     {
-        $this->assertThrows(fn () => (new LawXmlImport())->import('testXmlInvalid.xml'), Error::class);
+        $this->assertThrows(fn () => (new LawXmlImport())->import(storage_path('testXmlInvalid.xml')), Error::class, 'invalid xml data');
     }
 }

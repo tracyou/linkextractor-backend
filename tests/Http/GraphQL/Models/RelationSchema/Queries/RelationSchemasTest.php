@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Http\GraphQL\Models\RelationSchema\Queries;
 
-use App\Models\Law;
-use App\Models\Article;
 use App\Models\Annotation;
 use App\Models\MatterRelationSchema;
 use App\Models\RelationSchema;
@@ -27,20 +25,14 @@ class RelationSchemasTest extends AbstractHttpGraphQLTestCase
             'relation_schema_id' => $this->createUUIDFromID(1),
         ]);
 
-        $article = Article::factory()->create([
-            'law_id' => Law::factory()->create(),
-        ]);
-
         Annotation::factory()->createMany([
             [
                 'id'                 => $this->createUUIDFromID(1),
                 'relation_schema_id' => $this->createUUIDFromID(1),
-                'article_id'         => $article->id,
             ],
             [
                 'id'                 => $this->createUUIDFromID(2),
                 'relation_schema_id' => $this->createUUIDFromID(1),
-                'article_id'         => $article->id,
             ],
         ]);
     }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Models\Law;
 use App\Contracts\Repositories\LawRepositoryInterface;
+use App\Models\Law;
 use Wimski\ModelRepositories\Repositories\AbstractModelRepository;
 
 final class LawRepository extends AbstractModelRepository implements LawRepositoryInterface

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Article;
-use App\Models\Annotation;
-use Illuminate\Support\Collection;
 use App\Contracts\Repositories\ArticleRepositoryInterface;
+use App\Models\Article;
 
 class ArticlesByLaw
 {
@@ -17,8 +15,7 @@ class ArticlesByLaw
     }
 
     /**
-     * @param null                  $_
-     * @param array<string, mixed>  $args
+     * @param array<string, mixed> $args
      *
      * @return array<int, Article>
      */

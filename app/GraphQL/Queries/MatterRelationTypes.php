@@ -9,7 +9,6 @@ use App\Enums\MatterRelationEnum;
 class MatterRelationTypes
 {
     /**
-     * @param null                  $_
      * @param array<string, string> $args
      *
      * @return array<int, array<string, mixed>>

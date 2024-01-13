@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace App\Helpers\Import;
 
-use DOMDocument;
 use App\Models\Law;
-use SimpleXMLElement;
-use GraphQL\Error\Error;
-use App\Structs\LawStruct;
 use App\Structs\ArticleStruct;
+use App\Structs\LawStruct;
+use DOMDocument;
+use GraphQL\Error\Error;
+use SimpleXMLElement;
 
 final class LawXmlImport
 {
-    private int $sortOrder = 0;
-
     public function import(string $xmlFilePath): Law
     {
         ini_set('memory_limit', '-1');
 
-        if (! $this->isValidXML($xmlFilePath)) {
+        if (!$this->isValidXML($xmlFilePath)) {
             throw new Error("invalid xml data");
         }
 
-        if (! $data = simplexml_load_file($xmlFilePath)) {
+        if (!$data = simplexml_load_file($xmlFilePath)) {
             throw new Error("invalid xml data");
         }
 
@@ -37,11 +35,11 @@ final class LawXmlImport
     {
         $xsdFilePath = storage_path('app/XmlValidation/toestand_2016-1.xsd');
 
-        if (! file_exists($xmlFilePath)) {
+        if (!file_exists($xmlFilePath)) {
             throw new Error('XML file not found');
         }
 
-        if (! file_exists($xsdFilePath)) {
+        if (!file_exists($xsdFilePath)) {
             throw new Error('XSD file not found');
         }
 
@@ -50,7 +48,7 @@ final class LawXmlImport
 
         libxml_use_internal_errors(true);
 
-        if (! $tempDom->schemaValidate($xsdFilePath)) {
+        if (!$tempDom->schemaValidate($xsdFilePath)) {
             return false;
         }
 
@@ -80,7 +78,7 @@ final class LawXmlImport
     }
 
     /**
-     * @param SimpleXMLElement[]  $articles
+     * @param SimpleXMLElement[] $articles
      *
      * @return SimpleXMLElement[]
      */
@@ -105,7 +103,6 @@ final class LawXmlImport
         $articleStruct->nr = (string) $kop->nr;
         $articleStruct->titel = (string) $kop->titel;
         $articleStruct->text = $this->getText($article);
-        $articleStruct->sortOrder = $this->sortOrder++;
 
         return $articleStruct;
     }

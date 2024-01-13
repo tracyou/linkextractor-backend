@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Article;
+use App\Models\Law;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,8 +21,9 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->title,
-            'text'  => $this->faker->text,
+            'law_id' => Law::factory(),
+            'title'  => $this->faker->title,
+            'text'   => $this->faker->text,
         ];
     }
 }

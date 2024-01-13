@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Structs;
 
 use App\Models\Article;
@@ -18,7 +20,7 @@ final class ArticleStruct
     public function toModel(): ?Article
     {
         $article = new Article();
-        $article->id = Str::orderedUuid();
+        $article->id = (string) Str::orderedUuid();
         $article->title = $this->label . ' ' . $this->nr . ' ' . $this->titel;
         $article->text = $this->text ?: '';
 

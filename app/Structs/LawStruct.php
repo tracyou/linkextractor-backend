@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Structs;
 
 use App\Models\Article;
@@ -30,7 +32,7 @@ final class LawStruct
         $law = Law::firstOrCreate(['title' => $this->title]);
         foreach ($this->articles as $article) {
             $model = $article->toModel();
-            if (! $model) {
+            if (!$model) {
                 continue;
             }
 
