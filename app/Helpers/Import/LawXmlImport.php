@@ -13,6 +13,8 @@ use App\Structs\ArticleStruct;
 
 final class LawXmlImport
 {
+    private int $sortOrder = 0;
+
     public function import(string $xmlFilePath): Law
     {
         ini_set('memory_limit', '-1');
@@ -59,9 +61,8 @@ final class LawXmlImport
     {
         $law = $this->getLaw($data);
         $articles = $this->getArticles($data);
-        collect($articles)->sortBy('sort_order');
         foreach ($articles as $article) {
-            $hydratedArticle = $this->hydrateLaw($article['article']);
+            $hydratedArticle = $this->hydrateLaw($article);
             $law->add($hydratedArticle);
         }
 
@@ -83,14 +84,13 @@ final class LawXmlImport
      *
      * @return SimpleXMLElement[]
      */
-    private function getArticles(SimpleXMLElement $data, array &$articles = [], int &$sortOrder = 0): array
+    private function getArticles(SimpleXMLElement $data, array &$articles = []): array
     {
         foreach ($data->children() as $child) {
-            $sortOrder++;
             if ($child->getName() === 'artikel') {
-                $articles[] = ['article' => $child, 'sort_order' => $sortOrder];
+                $articles[] = $child;
             } else {
-                $this->getArticles($child, $articles, $sortOrder);
+                $this->getArticles($child, $articles);
             }
         }
 
@@ -105,6 +105,7 @@ final class LawXmlImport
         $articleStruct->nr = (string) $kop->nr;
         $articleStruct->titel = (string) $kop->titel;
         $articleStruct->text = $this->getText($article);
+        $articleStruct->sortOrder = $this->sortOrder++;
 
         return $articleStruct;
     }
