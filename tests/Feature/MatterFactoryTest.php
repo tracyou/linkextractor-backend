@@ -8,6 +8,7 @@ use App\Factories\MatterFactory;
 use App\Factories\MatterRelationFactory;
 use App\Factories\MatterRelationSchemaFactory;
 use App\Factories\RelationSchemaFactory;
+use App\Models\Article;
 use App\Models\MatterRelationSchema;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -19,9 +20,11 @@ class MatterFactoryTest extends TestCase
     public function testMatterHasManyAnnotations(): void
     {
         $matter = (new MatterFactory())->create("matter", "#000000");
+        $article = Article::factory()->create();
         $relationSchema = (new RelationSchemaFactory())->create(true);
         (new AnnotationFactory())->create(
             schema: $relationSchema,
+            article: $article,
             matter: $matter,
             text: "this is an annotation"
         );

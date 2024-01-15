@@ -14,6 +14,4 @@ final class LawRepository extends AbstractModelRepository implements LawReposito
     {
         $this->model = $model;
     }
-
-
 }

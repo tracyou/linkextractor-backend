@@ -20,8 +20,7 @@ class LawFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'       => $this->faker->title,
-            'text'        => $this->faker->text,
+            'title'        => $this->faker->title,
             'is_published' => $this->faker->boolean,
         ];
     }

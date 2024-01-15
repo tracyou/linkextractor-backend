@@ -9,63 +9,63 @@ class MatterSeeder extends Seeder
 {
     public const MATTERS = [
         [
-            'name' => 'Rechtssubject',
+            'name'  => 'Rechtssubject',
             'color' => '#d7e9f9',
         ],
         [
-            'name' => 'Rechtsobject',
+            'name'  => 'Rechtsobject',
             'color' => '#b1c3e6',
         ],
         [
-            'name' => 'Rechtsfeit',
+            'name'  => 'Rechtsfeit',
             'color' => '#bad8f4',
         ],
         [
-            'name' => 'Rechtsbetrekking',
+            'name'  => 'Rechtsbetrekking',
             'color' => '#8fa1d3',
         ],
         [
-            'name' => 'Voorwaarde',
+            'name'  => 'Voorwaarde',
             'color' => '#b7d7cc',
         ],
         [
-            'name' => 'Operator',
+            'name'  => 'Operator',
             'color' => '#d5e7e2',
         ],
         [
-            'name' => 'Afleidingsregel',
+            'name'  => 'Afleidingsregel',
             'color' => '#d47478',
         ],
         [
-            'name' => 'Variabele',
+            'name'  => 'Variabele',
             'color' => '#f7da60',
         ],
         [
-            'name' => 'Variabele waarde',
+            'name'  => 'Variabele waarde',
             'color' => '#fbf184',
         ],
         [
-            'name' => 'Tijdsaanduiding',
+            'name'  => 'Tijdsaanduiding',
             'color' => '#cdb9d9',
         ],
         [
-            'name' => 'Plaatsonaanduiding',
+            'name'  => 'Plaatsonaanduiding',
             'color' => '#e5d2e6',
         ],
         [
-            'name' => 'Parameter',
+            'name'  => 'Parameter',
             'color' => '#e7b8bb',
         ],
         [
-            'name' => 'Parameterwaarde',
+            'name'  => 'Parameterwaarde',
             'color' => '#f2deec',
         ],
         [
-            'name' => 'Delegatie bevoegdheid',
+            'name'  => 'Delegatie bevoegdheid',
             'color' => '#d6d5d5',
         ],
         [
-            'name' => 'Delegatie invulling',
+            'name'  => 'Delegatie invulling',
             'color' => '#e9e8e9',
         ],
     ];

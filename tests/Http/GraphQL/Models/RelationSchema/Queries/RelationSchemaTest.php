@@ -70,9 +70,7 @@ class RelationSchemaTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_matter_relation_schema_by_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -108,26 +106,26 @@ class RelationSchemaTest extends AbstractHttpGraphQLTestCase
                     'expiredAt'             => null,
                     'matterRelationSchemas' => [
                         [
-                            'id'             => $this->createUUIDFromID(1),
-                            'matter'         => [
+                            'id'     => $this->createUUIDFromID(1),
+                            'matter' => [
                                 'id' => $this->createUUIDFromID(1),
                             ],
-                            'relations'      => [
+                            'relations' => [
                                 [
                                     'id'            => $this->createUUIDFromID(1),
                                     'relatedMatter' => [
                                         'id' => $this->createUUIDFromID(2),
                                     ],
-                                    'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
-                                    'description'   => 'first test description',
+                                    'relation'    => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                                    'description' => 'first test description',
                                 ],
                                 [
                                     'id'            => $this->createUUIDFromID(2),
                                     'relatedMatter' => [
                                         'id' => $this->createUUIDFromID(3),
                                     ],
-                                    'relation'      => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
-                                    'description'   => 'second test description',
+                                    'relation'    => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                                    'description' => 'second test description',
                                 ],
                             ],
                             'relationSchema' => [
@@ -140,9 +138,7 @@ class RelationSchemaTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_for_non_existing_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

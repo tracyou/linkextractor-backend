@@ -5,20 +5,17 @@ declare(strict_types=1);
 namespace Tests\Http\GraphQL\Enums\MatterRelationEnum\Queries;
 
 use App\Enums\MatterRelationEnum;
-use App\GraphQL\Queries\MatterRelationTypes;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
 class MatterRelationTypesTest extends AbstractHttpGraphQLTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_matter_relation_types(): void
     {
         $outcome = [];
         foreach (MatterRelationEnum::asArray() as $value) {
             $outcome[] = [
-                'key' => MatterRelationEnum::fromValue($value)->key,
+                'key'   => MatterRelationEnum::fromValue($value)->key,
                 'value' => $value,
             ];
         }

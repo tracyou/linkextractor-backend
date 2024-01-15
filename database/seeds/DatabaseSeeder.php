@@ -1,7 +1,6 @@
 <?php
 
 use Database\Seeders\AnnotationSeeder;
-use Database\Seeders\LawAnnotationPivotSeeder;
 use Database\Seeders\LawSeeder;
 use Database\Seeders\MatterRelationSchemaSeeder;
 use Database\Seeders\MatterRelationSeeder;

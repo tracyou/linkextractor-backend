@@ -25,7 +25,7 @@ final class CreatePancakeStack
      *
      * @throws Exception
      */
-    public function __invoke($_, array $args): PancakeStack
+    public function __invoke(null $_, array $args): PancakeStack
     {
         $name = $args['name'];
 

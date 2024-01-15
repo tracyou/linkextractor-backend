@@ -19,9 +19,12 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read Collection<int, \App\Models\MatterRelationSchema> $matterRelationSchemas
  * @property-read Collection<int, \App\Models\Annotation> $annotations
+ * @property-read int|null $annotations_count
+ * @property-read Collection<int, \App\Models\MatterRelationSchema> $matterRelationSchemas
+ * @property-read int|null $matter_relation_schemas_count
  * @property-read Collection<int, \App\Models\MatterRelation> $matterRelations
+ * @property-read int|null $matter_relations_count
  *
  * @method static \Database\Factories\MatterFactory factory($count = null, $state = [])
  * @method static Builder|Matter                    newModelQuery()

@@ -6,6 +6,8 @@ namespace Http\GraphQL\Models\MatterRelationSchema\Queries;
 
 use App\Enums\MatterRelationEnum;
 use App\Models\Annotation;
+use App\Models\Article;
+use App\Models\Law;
 use App\Models\Matter;
 use App\Models\MatterRelation;
 use App\Models\MatterRelationSchema;
@@ -57,21 +59,25 @@ class MatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
             ],
         ]);
 
+        $article = Article::factory()->create([
+            'law_id' => Law::factory()->create(),
+        ]);
+
         Annotation::factory()->createMany([
             [
                 'id'                 => $this->createUUIDFromID(1),
                 'relation_schema_id' => $this->createUUIDFromID(1),
+                'article_id'         => $article->id,
             ],
             [
                 'id'                 => $this->createUUIDFromID(2),
                 'relation_schema_id' => $this->createUUIDFromID(1),
+                'article_id'         => $article->id,
             ],
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_matter_relation_schema_by_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -103,26 +109,26 @@ class MatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
         ])->assertJson([
             'data' => [
                 'matterRelationSchema' => [
-                    'id'             => $this->createUUIDFromID(1),
-                    'matter'         => [
+                    'id'     => $this->createUUIDFromID(1),
+                    'matter' => [
                         'id' => $this->createUUIDFromID(1),
                     ],
-                    'relations'      => [
+                    'relations' => [
                         [
                             'id'            => $this->createUUIDFromID(1),
                             'relatedMatter' => [
                                 'id' => $this->createUUIDFromID(2),
                             ],
-                            'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
-                            'description'   => 'first test description',
+                            'relation'    => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                            'description' => 'first test description',
                         ],
                         [
                             'id'            => $this->createUUIDFromID(2),
                             'relatedMatter' => [
                                 'id' => $this->createUUIDFromID(3),
                             ],
-                            'relation'      => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
-                            'description'   => 'second test description',
+                            'relation'    => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                            'description' => 'second test description',
                         ],
                     ],
                     'relationSchema' => [
@@ -133,9 +139,7 @@ class MatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_for_non_existing_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

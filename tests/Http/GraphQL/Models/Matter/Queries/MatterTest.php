@@ -26,9 +26,7 @@ class MatterTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_matter_by_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -50,9 +48,7 @@ class MatterTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_a_validation_error_for_non_existing_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

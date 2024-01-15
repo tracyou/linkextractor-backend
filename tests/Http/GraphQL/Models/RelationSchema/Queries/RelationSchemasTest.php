@@ -37,9 +37,7 @@ class RelationSchemasTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_all_matter_relation_schemas(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -60,10 +58,10 @@ class RelationSchemasTest extends AbstractHttpGraphQLTestCase
             'data' => [
                 'relationSchemas' => [
                     [
-                        'id'                    => $this->createUUIDFromID(1),
-                        'isPublished'           => true,
-                        'expiredAt'             => null,
-                        'annotations'           => [
+                        'id'          => $this->createUUIDFromID(1),
+                        'isPublished' => true,
+                        'expiredAt'   => null,
+                        'annotations' => [
                             [
                                 'id' => $this->createUUIDFromID(1),
                             ],

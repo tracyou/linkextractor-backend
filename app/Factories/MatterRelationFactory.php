@@ -17,8 +17,7 @@ final class MatterRelationFactory implements MatterRelationFactoryInterface
         MatterRelationSchema $schema,
         MatterRelationEnum $relation,
         ?string $description
-    ): MatterRelation
-    {
+    ): MatterRelation {
         $matterRelation = new MatterRelation([
             'relation'    => $relation,
             'description' => $description,

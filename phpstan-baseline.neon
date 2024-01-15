@@ -6,34 +6,24 @@ parameters:
 			path: app/Console/Kernel.php
 
 		-
-			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\CreatePancake\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			message: "#^Anonymous function has an unused use \\$newRelationSchema\\.$#"
 			count: 1
-			path: app/GraphQL/Mutations/CreatePancake.php
+			path: app/GraphQL/Mutations/SaveMatterRelationSchema.php
 
 		-
-			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\CreatePancakeStack\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			message: "#^Parameter \\$relation of method App\\\\Contracts\\\\Factories\\\\MatterRelationFactoryInterface\\:\\:create\\(\\) expects App\\\\Enums\\\\MatterRelationEnum, BenSampo\\\\Enum\\\\Enum\\|null given\\.$#"
 			count: 1
-			path: app/GraphQL/Mutations/CreatePancakeStack.php
+			path: app/GraphQL/Mutations/SaveMatterRelationSchema.php
 
 		-
-			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\DeletePancake\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
 			count: 1
-			path: app/GraphQL/Mutations/DeletePancake.php
+			path: app/GraphQL/Mutations/SaveMatterRelationSchema.php
 
 		-
-			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\DeletePancakeStack\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
 			count: 1
-			path: app/GraphQL/Mutations/DeletePancakeStack.php
-
-		-
-			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\UpdatePancake\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
-			count: 1
-			path: app/GraphQL/Mutations/UpdatePancake.php
-
-		-
-			message: "#^Method App\\\\GraphQL\\\\Mutations\\\\UpdatePancakeStack\\:\\:__invoke\\(\\) has parameter \\$_ with no type specified\\.$#"
-			count: 1
-			path: app/GraphQL/Mutations/UpdatePancakeStack.php
+			path: app/GraphQL/Mutations/SaveMatterRelationSchema.php
 
 		-
 			message: "#^Parameter \\#1 \\$enumClass of class Nuwave\\\\Lighthouse\\\\Schema\\\\Types\\\\LaravelEnumType constructor expects class\\-string\\<TEnum of BenSampo\\\\Enum\\\\Enum\\<TValue\\>\\>, string given\\.$#"
