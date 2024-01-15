@@ -13,7 +13,6 @@ class SaveFileXml
 {
     public function __construct(
         protected FileXmlFactoryInterface    $fileXmlFactory,
-        protected FileXmlRepositoryInterface $fileXmlRepository
     )
     {
     }
