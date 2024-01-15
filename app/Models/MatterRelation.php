@@ -11,8 +11,8 @@ use Illuminate\Support\Carbon;
  * App\Models\MatterRelation
  *
  * @property string $id
- * @property string $matter_a_id
- * @property string $matter_b_id
+ * @property string $matter_parent_id
+ * @property string $matter_child_id
  * @property string $relation
  * @property string $description
  * @property Carbon|null $created_at

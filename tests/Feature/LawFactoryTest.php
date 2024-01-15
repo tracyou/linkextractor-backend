@@ -22,7 +22,7 @@ class LawFactoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCreateLaw()
+    public function test_create_law()
     {
         // Arrange create law object
         $law = Law::factory()->create(["title" => "rijbewijs", "text" => "je mag een brommer met je B rijbewijs rijen", "isPublished" => false]);
@@ -40,7 +40,7 @@ class LawFactoryTest extends TestCase
     }
 
 
-    public function testRelationWithAnnotation()
+    public function test_relation_with_annotation()
     {
         //Arrange
         $law = Law::factory()->create([

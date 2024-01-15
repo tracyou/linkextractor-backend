@@ -15,7 +15,7 @@ class AnnotationFactoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testAnnotationBelongsToMatter(): void
+    public function test_annotation_belongs_to_matter(): void
     {
         $matter = (new MatterFactory)->create("matter", "#000000");
         $annotation = (new AnnotationFactory)->create($matter, "this is an annotation");
@@ -23,7 +23,7 @@ class AnnotationFactoryTest extends TestCase
         $this->assertEquals(1, $annotation->matter->count());
     }
 
-    public function testRelationshipWithLaw()
+    public function test_relationship_with_law()
     {
         //Arrange
         $law = Law::factory()->create([

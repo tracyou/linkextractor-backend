@@ -12,7 +12,7 @@ class MatterFactoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testMatterHasManyAnnotations(): void
+    public function test_matter_has_many_annotations(): void
     {
         $matter = (new MatterFactory)->create("matter", "#000000");
         $annotation = (new AnnotationFactory)->create($matter, "this is an annotation");
@@ -20,7 +20,7 @@ class MatterFactoryTest extends TestCase
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $matter->annotations);
     }
 
-    public function testMatterHasManyRelations(): void
+    public function test_matter_has_many_relations(): void
     {
         $matterA = (new MatterFactory)->create("matter1", "#000000");
         $matterB = (new MatterFactory)->create("matter2", "#000000");

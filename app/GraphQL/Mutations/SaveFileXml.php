@@ -22,6 +22,7 @@ class SaveFileXml
      */
     public function __invoke($_, array $args): FileXml
     {
+        // get the values form the endpoint
         $title = $args['title'];
         $content = $args['content'];
 

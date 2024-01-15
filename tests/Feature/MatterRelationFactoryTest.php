@@ -12,11 +12,11 @@ class MatterRelationFactoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testRelationBelongsToMatters() {
+    public function test_relation_belongs_to_matters() {
         $matterA = (new MatterFactory)->create("matterA", "#000000");
         $matterB = (new MatterFactory)->create("matterB", "#000000");
         $matterRelation = (new MatterRelationFactory)->create($matterA, $matterB, "requires 1", "description");
-        $this->assertEquals($matterA->id, $matterRelation->matter_a_id);
-        $this->assertEquals($matterB->id, $matterRelation->matter_b_id);
+        $this->assertEquals($matterA->id, $matterRelation->matter_parent_id);
+        $this->assertEquals($matterB->id, $matterRelation->matter_child_id);
     }
 }
