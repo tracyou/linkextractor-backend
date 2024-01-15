@@ -4,6 +4,10 @@ extend type Query {
 }
 
 extend type Mutation {
+    importXml(file: Upload!): Law!
+}
+
+extend type Mutation {
     deleteLaw(
         input: DeleteLawInput! @spread
     ):Boolean!
@@ -17,7 +21,7 @@ type Law {
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
 
-    annotations: [Annotation!]! @hasMany
+    articles: [Article!]! @hasMany
 }
 
 input DeleteLawInput {

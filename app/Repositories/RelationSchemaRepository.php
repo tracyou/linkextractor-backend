@@ -19,7 +19,7 @@ class RelationSchemaRepository extends AbstractModelRepository implements Relati
         $this->model = $model;
     }
 
-    public function expireAllExcept(string $id): bool | int
+    public function expireAllExcept(string $id): bool|int
     {
         return $this->model->newQuery()
             ->where('id', '!=', $id)

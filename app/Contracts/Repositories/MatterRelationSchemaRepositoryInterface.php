@@ -13,10 +13,9 @@ use Wimski\ModelRepositories\Contracts\Repositories\ModelRepositoryInterface;
  */
 interface MatterRelationSchemaRepositoryInterface extends ModelRepositoryInterface
 {
-    public function getMatterRelationSchema(string $relationSchemaId, string $matterId): MatterRelationSchema | null;
+    public function getMatterRelationSchema(string $relationSchemaId, string $matterId): MatterRelationSchema|null;
 
     /**
-     * @param string $relationSchemaId
      * @return Collection<MatterRelationSchema>
      */
     public function getMatterRelationSchemasForRelationSchema(string $relationSchemaId): Collection;

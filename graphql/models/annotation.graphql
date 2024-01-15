@@ -1,17 +1,15 @@
 extend type Query {
-    annotationsByLaw(
-        lawId: UUID! @rules(apply: ["exists:laws,id"]) @rename(attribute: "law_id")
+    annotationsByArticle(
+        articleId: UUID! @rules(apply: ["exists:articles,id"]) @rename(attribute: "article_id")
     ): [Annotation!]!
 }
 
 type Annotation {
     id: UUID!
     text: String!
-    pivot: LawAnnotationPivot
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
-
+    article: Article! @belongsTo
     matter: Matter! @belongsTo
-    laws: Law! @belongsTo
     relationSchema: RelationSchema! @belongsTo
 }

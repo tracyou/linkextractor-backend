@@ -5,21 +5,20 @@ namespace App\GraphQL\Mutations;
 use App\Contracts\Repositories\LawRepositoryInterface;
 use GraphQL\Error\Error;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
-use Illuminate\Validation\ValidationException;
 
 final class DeleteLaw
 {
-
     public function __construct(
         protected LawRepositoryInterface $lawRepository,
     ) {
     }
 
     /**
+     * @param mixed[] $args
+     *
      * @throws Error
      */
-    public function __invoke($_, array $args): bool
+    public function __invoke(null $_, array $args): bool
     {
         $id = $args['id'];
 
@@ -28,9 +27,7 @@ final class DeleteLaw
         return $this->deleteLaw($law);
     }
 
-    /**
-     * @throws Error
-     */
+    /** @throws Error */
     private function deleteLaw(?Model $law): bool
     {
         if ($law) {

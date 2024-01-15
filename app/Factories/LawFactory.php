@@ -13,7 +13,6 @@ final class LawFactory implements LawFactoryInterface
     {
         $law = new Law();
         $law->title = $title;
-        $law->text = $text;
         $law->is_published = $isPublished;
 
         $law->save();

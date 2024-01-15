@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Http\GraphQL\Models\RelationSchema\Mutations;
 
-use App\Enums\MatterRelationEnum;
-use App\Models\Annotation;
-use App\Models\Matter;
-use App\Models\MatterRelation;
-use App\Models\MatterRelationSchema;
 use App\Models\RelationSchema;
 use Carbon\Carbon;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
@@ -34,9 +29,7 @@ class PublishRelationSchemaTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_publishes_a_schema_and_expires_the_existing_ones(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
@@ -52,7 +45,7 @@ class PublishRelationSchemaTest extends AbstractHttpGraphQLTestCase
         ])->assertJson([
             'data' => [
                 'publishRelationSchema' => [
-                    'id'         => $this->createUUIDFromID(2),
+                    'id'          => $this->createUUIDFromID(2),
                     'isPublished' => true,
                     'expiredAt'   => null,
                 ],
@@ -66,9 +59,7 @@ class PublishRelationSchemaTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_throws_an_exception_when_schema_is_already_published(): void
     {
         $this->graphQL(/** @lang GraphQL */ '

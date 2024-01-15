@@ -22,7 +22,7 @@ final class UpdatePancake
      *
      * @throws Exception
      */
-    public function __invoke($_, array $args): Pancake
+    public function __invoke(null $_, array $args): Pancake
     {
         $id = $args['id'];
         $diameter = $args['diameter'];

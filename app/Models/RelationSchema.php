@@ -4,40 +4,37 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\MatterRelationEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 
 /**
  * App\Models\RelationSchema.
  *
- * @property string                                                 $id
- * @property bool                                                   $is_published
- * @property \Illuminate\Support\Carbon|null                        $expired_at
- * @property \Illuminate\Support\Carbon|null                        $created_at
- * @property \Illuminate\Support\Carbon|null                        $updated_at
- * @property \Illuminate\Support\Carbon|null                        $deleted_at
- * @property-read Collection<int, \App\Models\MatterRelationSchema> $matterRelationSchemas
- * @property-read Collection<int, \App\Models\Annotation>           $annotations
+ * @property string                          $id
+ * @property bool                            $is_published
+ * @property \Illuminate\Support\Carbon|null $expired_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Annotation> $annotations
+ * @property-read int|null $annotations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MatterRelationSchema> $matterRelationSchemas
+ * @property-read int|null $matter_relation_schemas_count
  *
  * @method static \Database\Factories\RelationSchemaFactory factory($count = null, $state = [])
- * @method static Builder|MatterRelationSchema                    newModelQuery()
- * @method static Builder|MatterRelationSchema                    newQuery()
- * @method static Builder|MatterRelationSchema                    onlyTrashed()
- * @method static Builder|MatterRelationSchema                    query()
- * @method static Builder|MatterRelationSchema                    whereCreatedAt($value)
- * @method static Builder|MatterRelationSchema                    whereDeletedAt($value)
- * @method static Builder|MatterRelationSchema                    whereDescription($value)
- * @method static Builder|MatterRelationSchema                    whereId($value)
- * @method static Builder|MatterRelationSchema                    whereMatterChildId($value)
- * @method static Builder|MatterRelationSchema                    whereMatterParentId($value)
- * @method static Builder|MatterRelationSchema                    whereRelation($value)
- * @method static Builder|MatterRelationSchema                    whereUpdatedAt($value)
- * @method static Builder|MatterRelationSchema                    withTrashed()
- * @method static Builder|MatterRelationSchema                    withoutTrashed()
+ * @method static Builder|RelationSchema                    newModelQuery()
+ * @method static Builder|RelationSchema                    newQuery()
+ * @method static Builder|RelationSchema                    onlyTrashed()
+ * @method static Builder|RelationSchema                    query()
+ * @method static Builder|RelationSchema                    whereCreatedAt($value)
+ * @method static Builder|RelationSchema                    whereDeletedAt($value)
+ * @method static Builder|RelationSchema                    whereExpiredAt($value)
+ * @method static Builder|RelationSchema                    whereId($value)
+ * @method static Builder|RelationSchema                    whereIsPublished($value)
+ * @method static Builder|RelationSchema                    whereUpdatedAt($value)
+ * @method static Builder|RelationSchema                    withTrashed()
+ * @method static Builder|RelationSchema                    withoutTrashed()
  *
  * @mixin Eloquent
  */
