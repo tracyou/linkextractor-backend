@@ -3,15 +3,15 @@
 namespace Database\Factories;
 
 use App\Models\Article;
-use App\Models\Law;
+use App\Models\ArticleRevision;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Article>
+ * @extends Factory<ArticleRevision>
  */
-class ArticleFactory extends Factory
+class ArticleRevisionFactory extends Factory
 {
-    protected $model = Article::class;
+    protected $model = ArticleRevision::class;
 
     /**
      * Define the model's default state.
@@ -21,9 +21,8 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'     => $this->faker->sentence,
-            'text'      => $this->faker->text,
-            'law_id'    => Law::factory(),
+            'article_id' => Article::factory(),
+            'json_text'  => null,
         ];
     }
 }

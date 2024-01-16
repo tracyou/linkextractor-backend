@@ -13,5 +13,4 @@ use Wimski\ModelRepositories\Contracts\Repositories\ModelRepositoryInterface;
  */
 interface AnnotationRepositoryInterface extends ModelRepositoryInterface
 {
-    public function getNewRevisionNumber(Law $law): int;
 }

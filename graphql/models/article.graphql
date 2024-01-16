@@ -1,14 +1,8 @@
-extend type Query {
-    articlesByLaw(
-        lawId: UUID! @rules(apply: ["exists:laws,id"]) @rename(attribute: "law_id")
-    ): [Article!]!
-}
-
 type Article{
-    id: UUID!
+    id:UUID!
     title: String!
-    text: String!
-    jsonText: String @rename(attribute: "json_text")
+    text: String
     law: Law! @belongsTo
-    annotations: [Annotation!]! @hasMany
+    revisions: [ArticleRevision!]! @hasMany
+    latestRevision: ArticleRevision @method(name:"getLatestRevision")
 }

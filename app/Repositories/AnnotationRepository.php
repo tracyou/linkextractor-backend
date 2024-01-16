@@ -18,11 +18,4 @@ final class AnnotationRepository extends AbstractModelRepository implements Anno
     {
         $this->model = $model;
     }
-
-    public function getNewRevisionNumber(Law $law): int
-    {
-        $latest = $law->annotations->sortByDesc('revision_number')->first();
-
-        return $latest ? $latest->revision_number + 1 : 1;
-    }
 }

@@ -4,86 +4,53 @@ declare(strict_types=1);
 
 namespace Tests\Http\GraphQL\Models\Law\Mutations;
 
-use App\Contracts\Factories\ArticleFactoryInterface;
-use App\Contracts\Factories\LawFactoryInterface;
-use App\Contracts\Factories\MatterFactoryInterface;
-use App\Contracts\Factories\MatterRelationSchemaFactoryInterface;
-use App\Contracts\Factories\RelationSchemaFactoryInterface;
-use App\Contracts\Repositories\AnnotationRepositoryInterface;
-use App\Contracts\Repositories\LawRepositoryInterface;
-use App\Models\Annotation;
 use App\Models\Article;
 use App\Models\Law;
-use PHPUnit\Util\Json;
+use App\Models\Matter;
+use App\Models\RelationSchema;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
 class SaveLawTest extends AbstractHttpGraphQLTestCase
 {
-    /**
-     * @test
-     */
-    public function test(): void
+    public function setUp(): void
     {
-        $law = Law::factory()->create([
-            'id' => $this->createUUIDFromID(1),
+        parent::setUp();
+
+        Matter::factory()->createMany([
+            [
+                'id' => $this->createUUIDFromID(1),
+            ],
+            [
+                'id' => $this->createUUIDFromID(2),
+            ],
+        ]);
+
+        Law::factory()->create([
+            'id'           => $this->createUUIDFromID(1),
+            'is_published' => false,
         ]);
 
         Article::factory()->createMany([
             [
-                'id' => $this->createUUIDFromID(1),
+                'id'     => $this->createUUIDFromID(1),
                 'law_id' => $this->createUUIDFromID(1),
             ],
             [
-                'id' => $this->createUUIDFromID(2),
+                'id'     => $this->createUUIDFromID(2),
                 'law_id' => $this->createUUIDFromID(1),
             ],
         ]);
 
-        Annotation::factory()->createMany([
-            [
-                'id' => $this->createUUIDFromID(1),
-                'article_id' => $this->createUUIDFromID(1),
-                'revision_number' => 1,
-            ],
-            [
-                'id' => $this->createUUIDFromID(2),
-                'article_id' => $this->createUUIDFromID(1),
-                'revision_number' => 2,
-            ],
-            [
-                'id' => $this->createUUIDFromID(3),
-                'article_id' => $this->createUUIDFromID(2),
-                'revision_number' => 3,
-            ],
+        RelationSchema::factory()->create([
+            'id' => $this->createUUIDFromID(1),
         ]);
-
-        $repository = $this->app->make(AnnotationRepositoryInterface::class);
-
-        $this->assertEquals(4, $repository->getNewRevisionNumber($law));
     }
 
     /**
      * @test
      */
-    public function testSaveAnnotatedLaw()
+    public function it_saves_a_law_with_annotations()
     {
-        // Arrange
-        $lawFactory = app(LawFactoryInterface::class);
-        $articleFactory = app(ArticleFactoryInterface::class);
-        $matterFactory = app(MatterFactoryInterface::class);
-        $relationSchemaFactory = app(RelationSchemaFactoryInterface::class);
-
-        $matter = $matterFactory->create('matter', '#001000');
-        $law = $lawFactory->create('title of the law', false);
-        $jsonData = [
-            'article 1' => 'oh my god',
-            'content' => 'i am so sleepy',
-        ];
-
-
-        $article = $articleFactory->create($law, 'title of the article', 'this is the text of the article', $jsonData, );
-        $relationSchema = $relationSchemaFactory->create(true);
-
         $response = $this->graphQL(/** @lang GraphQL */ '
           mutation saveAnnotatedLaw($input: AnnotatedArticleInput!) {
               saveAnnotatedLaw(input: $input) {
@@ -91,33 +58,42 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                   isPublished
                   articles {
                       id
-                      jsonText
-                      annotations {
-                         text
-                         definition
-                         comment
-                         matter {
-                             id
-                         }
+                      latestRevision {
+                        jsonText
+                        annotations {
+                            text
+                             definition
+                             comment
+                             matter {
+                                 id
+                             }
+                        }
                       }
                   }
               }
           }
         ', [
             'input' => [
-                'lawId' => $law->id,
-                'isPublished' => $law->is_published,
-                'articles' => [
+                'lawId'       => $this->createUUIDFromID(1),
+                'isPublished' => false,
+                'articles'    => [
                     [
-                        'articleId' => $article->id,
-                        'jsonText' =>  $article->json_text,
+                        'articleId'   => $this->createUUIDFromID(1),
+                        'jsonText'    => '{"text": "this is the json text"}',
                         'annotations' => [
                             [
-                                'text' => 'am',
-                                'definition' => 'this is the definition of the annotation',
-                                'comment' => 'this is the annotation comment',
-                                'matterId' => $matter->id,
-                                'tempId' => $this->createUUIDFromID(1)
+                                'text'       => 'This is the first text of the annotation',
+                                'definition' => 'This is the first definition of the annotation',
+                                'comment'    => 'This is the first comment of the annotation',
+                                'matterId'   => $this->createUUIDFromID(1),
+                                'tempId'     => $this->createUUIDFromID(1),
+                            ],
+                            [
+                                'text'       => 'This is the second text of the annotation',
+                                'definition' => 'This is the second definition of the annotation',
+                                'comment'    => 'This is the second comment of the annotation',
+                                'matterId'   => $this->createUUIDFromID(2),
+                                'tempId'     => $this->createUUIDFromID(1),
                             ],
                         ],
                     ],
@@ -130,23 +106,36 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
         $response->assertExactJson([
             'data' => [
                 'saveAnnotatedLaw' => [
-                    'id' => $law->id,
-                    'isPublished' => $law->is_published,
-                    'articles' => [
+                    'id'          => $this->createUUIDFromID(1),
+                    'isPublished' => false,
+                    'articles'    => [
                         [
-                            'id' => $article->id,
-                            'jsonText' => $article->json_text,
-                            'annotations' => [
-                                [
-                                    'text' => 'am',
-                                    'definition' => 'this is the definition of the annotation',
-                                    'comment' => 'this is the annotation comment',
-                                    'matter' =>
-                                        [
-                                            'id' => $matter->id,
+                            'id'             => $this->createUUIDFromID(1),
+                            'latestRevision' => [
+                                'jsonText'    => '{"text":"this is the json text"}',
+                                'annotations' => [
+                                    [
+                                        'text'       => 'This is the first text of the annotation',
+                                        'definition' => 'This is the first definition of the annotation',
+                                        'comment'    => 'This is the first comment of the annotation',
+                                        'matter'     => [
+                                            'id' => $this->createUUIDFromID(1),
                                         ],
+                                    ],
+                                    [
+                                        'text'       => 'This is the second text of the annotation',
+                                        'definition' => 'This is the second definition of the annotation',
+                                        'comment'    => 'This is the second comment of the annotation',
+                                        'matter'     => [
+                                            'id' => $this->createUUIDFromID(2),
+                                        ],
+                                    ],
                                 ],
                             ],
+                        ],
+                        [
+                            'id'             => $this->createUUIDFromID(2),
+                            'latestRevision' => null,
                         ],
                     ],
                 ],

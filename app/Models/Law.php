@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
@@ -20,8 +21,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property-read Collection<int, \App\Models\Article>    $articles
  * @property-read Collection<int, \App\Models\Annotation> $annotations
  * @property-read int|null                                $annotations_count
- * @property-read Collection<int, \App\Models\Article>    $articles
- * @property-read int|null                                $articles_count
  *
  * @method static \Database\Factories\LawFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Law newModelQuery()
@@ -32,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @method static \Illuminate\Database\Eloquent\Builder|Law whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Law whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Law whereIsPublished($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Law whereText($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Law whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Law whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Law withTrashed()
@@ -46,7 +46,11 @@ final class Law extends AbstractModel
         'is_published',
     ];
 
-    public function articles(): HasMany
+    // ------------------------------------------------------
+    //      Relationships
+    // ------------------------------------------------------
+
+    public function articles():HasMany
     {
         return $this->hasMany(Article::class);
     }
@@ -54,5 +58,14 @@ final class Law extends AbstractModel
     public function annotations(): HasManyThrough
     {
         return $this->hasManyThrough(Annotation::class, Article::class);
+    }
+
+    // ------------------------------------------------------
+    //      Helper methods
+    // ------------------------------------------------------
+
+    public function revisions(): int
+    {
+        return $this->articles()->first()->revisions()->count();
     }
 }

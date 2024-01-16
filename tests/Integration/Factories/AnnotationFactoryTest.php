@@ -6,6 +6,7 @@ namespace Integration\Factories;
 
 use App\Contracts\Factories\AnnotationFactoryInterface;
 use App\Models\Article;
+use App\Models\ArticleRevision;
 use App\Models\Law;
 use App\Models\Matter;
 use App\Models\RelationSchema;
@@ -46,26 +47,30 @@ class AnnotationFactoryTest extends AbstractHttpGraphQLTestCase
             'law_id' => $law->id,
         ]);
 
+        $articleRevision = ArticleRevision::factory()->create([
+            'id'         => $this->createUUIDFromID(1),
+            'article_id' => $article->id,
+        ]);
+
         //Act
         $annotation = $this->annotationFactory->create(
             $matter,
             'this is an annotation',
             'this is the definition of the annotation',
             'this is a comment',
-            1,
-            $article,
+            $articleRevision,
             $relationSchema
         );
 
         // Assert
         $this->assertDatabaseHas('annotations', [
-            'id'         => $annotation->id,
-            'article_id' => $this->createUUIDFromID(1),
-            'matter_id'  => $this->createUUIDFromID(1),
-            'text'       => 'this is an annotation',
+            'id'                  => $annotation->id,
+            'article_revision_id' => $this->createUUIDFromID(1),
+            'matter_id'           => $this->createUUIDFromID(1),
+            'text'                => 'this is an annotation',
         ]);
 
         $this->assertEquals(1, $matter->annotations->count());
-        $this->assertEquals($annotation->article->law->id, $this->createUUIDFromID(1));
+        $this->assertEquals($annotation->articleRevision->article->law->id, $this->createUUIDFromID(1));
     }
 }

@@ -15,7 +15,6 @@ return new class () extends Migration {
             $table->text("text");
             $table->text('comment')->nullable();
             $table->text('definition')->nullable();
-            $table->integer('revision_number');
             $table->foreignUuid('matter_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('article_id')->constrained()->cascadeOnDelete();
             $table->timestamps();

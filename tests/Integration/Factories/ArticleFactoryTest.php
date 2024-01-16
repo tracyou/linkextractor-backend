@@ -26,17 +26,11 @@ class ArticleFactoryTest extends AbstractHttpGraphQLTestCase
             'id' => $this->createUUIDFromID(1),
         ]);
 
-        $jsonData = [
-            'article 1' => 'oh my god',
-            'content'   => 'i am so sleepy',
-        ];
-
         // Act
         $article = $this->articleFactory->create(
             law     : $law,
             title   : 'title of the article',
             text    : 'this is the text of the article',
-            jsonData: $jsonData
         );
 
         // Assert
@@ -54,17 +48,11 @@ class ArticleFactoryTest extends AbstractHttpGraphQLTestCase
             'id' => $this->createUUIDFromID(1),
         ]);
 
-        $jsonData = [
-            'article 1' => 'oh my god',
-            'content'   => 'i am so sleepy',
-        ];
-
         // Act
         $article = $this->articleFactory->create(
             law     : $law,
             title   : 'title of the article',
             text    : 'this is the text of the article',
-            jsonData: $jsonData
         );
 
         // Assert

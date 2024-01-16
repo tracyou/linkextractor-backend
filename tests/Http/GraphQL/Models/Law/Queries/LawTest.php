@@ -6,6 +6,7 @@ namespace Tests\Http\GraphQL\Models\Law\Queries;
 
 use App\Models\Annotation;
 use App\Models\Article;
+use App\Models\ArticleRevision;
 use App\Models\Law;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
@@ -20,13 +21,18 @@ class LawTest extends AbstractHttpGraphQLTestCase
         ]);
 
         Article::factory()->create([
-            'id' => $this->createUUIDFromID(1),
+            'id'     => $this->createUUIDFromID(1),
             'law_id' => $this->createUUIDFromID(1),
         ]);
 
-        Annotation::factory()->create([
-            'id' => $this->createUUIDFromID(1),
+        ArticleRevision::factory()->create([
+            'id'         => $this->createUUIDFromID(1),
             'article_id' => $this->createUUIDFromID(1),
+        ]);
+
+        Annotation::factory()->create([
+            'id'                  => $this->createUUIDFromID(1),
+            'article_revision_id' => $this->createUUIDFromID(1),
         ]);
     }
 
@@ -41,8 +47,11 @@ class LawTest extends AbstractHttpGraphQLTestCase
                     id
                     articles {
                         id
-                        annotations {
+                        latestRevision {
                             id
+                            annotations {
+                                id
+                            }
                         }
                     }
                 }
@@ -52,13 +61,16 @@ class LawTest extends AbstractHttpGraphQLTestCase
         ])->assertJson([
             'data' => [
                 'law' => [
-                    'id'          => $this->createUUIDFromID(1),
-                    'articles'    => [
+                    'id'       => $this->createUUIDFromID(1),
+                    'articles' => [
                         [
-                            'id'          => $this->createUUIDFromID(1),
-                            'annotations' => [
-                                [
-                                    'id' => $this->createUUIDFromID(1),
+                            'id'             => $this->createUUIDFromID(1),
+                            'latestRevision' => [
+                                'id'          => $this->createUUIDFromID(1),
+                                'annotations' => [
+                                    [
+                                        'id' => $this->createUUIDFromID(1),
+                                    ],
                                 ],
                             ],
                         ],

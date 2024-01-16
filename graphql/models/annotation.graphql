@@ -12,7 +12,7 @@ type Annotation {
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
 
-    article: Article! @belongsTo
     matter: Matter! @belongsTo
+    articleRevision: ArticleRevision! @belongsTo
     relationSchema: RelationSchema! @belongsTo
 }
