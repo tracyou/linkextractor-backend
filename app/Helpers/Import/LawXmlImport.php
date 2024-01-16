@@ -69,7 +69,7 @@ final class LawXmlImport
 
     private function getLaw(SimpleXMLElement $data): LawStruct
     {
-        return new LawStruct($this->trim((string) $data->wetgeving->citeertitel));
+        return new LawStruct($this->trim((string) $data->wetgeving->citeertitel),false);
     }
 
     private function trim(string $string): string

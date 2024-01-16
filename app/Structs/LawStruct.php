@@ -7,12 +7,14 @@ namespace App\Structs;
 use App\Models\Article;
 use App\Models\Law;
 use Illuminate\Support\Arr;
+use phpDocumentor\Reflection\Types\Boolean;
 
 final class LawStruct
 {
     /** @param ArticleStruct[]  $articles */
     public function __construct(
         private string $title,
+        private bool $isPublished,
         private array $articles = [],
     ) {
     }
