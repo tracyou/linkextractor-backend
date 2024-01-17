@@ -8,5 +8,5 @@ use App\Models\Law;
 
 interface ArticleRevisionFactoryInterface
 {
-    public function create(Article $article, ?array $jsonData): ArticleRevision;
+    public function create(Article $article, ?array $jsonData = []): ArticleRevision;
 }

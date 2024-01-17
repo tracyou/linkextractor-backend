@@ -1,7 +1,7 @@
 type ArticleRevision {
     id: UUID!
     revision: Int!
-    jsonText: String @rename(attribute: "json_text")
+    jsonText: String! @rename(attribute: "json_text")
     article: Article! @belongsTo
     annotations: [Annotation!]! @hasMany
     createdAt: DateTime! @rename(attribute: "created_at")

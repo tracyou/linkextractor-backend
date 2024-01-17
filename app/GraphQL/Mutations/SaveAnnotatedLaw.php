@@ -41,8 +41,14 @@ class SaveAnnotatedLaw
         $articles->each(function (array $articleInput) {
             /** @var Article $article */
             $article = $this->articleRepository->findOrFail($articleInput['article_id']);
+            $annotations = collect($articleInput['annotations']);
 
-            $articleRevision = $this->articleRevisionFactory->create($article, null);
+            // If the article has no annotations, and also hasn't been annotated before, we can skip it.
+            if ($annotations->isEmpty() && $article->revisions->isEmpty()) {
+                return;
+            }
+
+            $articleRevision = $this->articleRevisionFactory->create($article);
 
             $articleAnnotationMapping = collect($articleInput['annotations'])->map(function ($annotationInput) use (
                 $article,

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('article_id')->constrained()->cascadeOnDelete();
             $table->integer('revision');
-            $table->json('json_text')->nullable();
+            $table->json('json_text');
             $table->timestamps();
             $table->softDeletes();
         });

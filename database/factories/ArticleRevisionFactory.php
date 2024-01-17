@@ -22,7 +22,7 @@ class ArticleRevisionFactory extends Factory
     {
         return [
             'article_id' => Article::factory(),
-            'json_text'  => null,
+            'json_text'  => '{}',
         ];
     }
 }

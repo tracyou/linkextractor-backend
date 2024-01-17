@@ -58,4 +58,13 @@ class Article extends AbstractModel
         /** @var ArticleRevision | null */
         return $this->revisions()->latest()->first();
     }
+
+    public function getText(): string | null
+    {
+        $latestRevision = $this->getLatestRevision();
+        if ($latestRevision === null) {
+            return $this->text;
+        }
+        return null;
+    }
 }

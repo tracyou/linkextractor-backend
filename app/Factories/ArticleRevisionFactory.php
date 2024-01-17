@@ -10,7 +10,7 @@ use App\Models\ArticleRevision;
 
 class ArticleRevisionFactory implements ArticleRevisionFactoryInterface
 {
-    public function create(Article $article, ?array $jsonData): ArticleRevision
+    public function create(Article $article, ?array $jsonData = []): ArticleRevision
     {
         $jsonText = json_encode($jsonData);
 

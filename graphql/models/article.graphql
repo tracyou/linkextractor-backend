@@ -1,7 +1,7 @@
 type Article{
     id:UUID!
     title: String!
-    text: String
+    text: String @method(name:"getText")
     law: Law! @belongsTo
     revisions: [ArticleRevision!]! @hasMany
     latestRevision: ArticleRevision @method(name:"getLatestRevision")

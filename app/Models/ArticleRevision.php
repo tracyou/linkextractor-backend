@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property string       $id
- * @property int          $revision
- * @property array | null $json_text
- * @property Article      $article
+ * @property string  $id
+ * @property int     $revision
+ * @property array   $json_text
+ * @property Article $article
  * @method static ArticleRevisionFactory factory($count = null, $state = [])
  */
 class ArticleRevision extends AbstractModel
