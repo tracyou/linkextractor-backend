@@ -1,9 +1,3 @@
-extend type Query {
-    annotationsByArticle(
-        articleId: UUID! @rules(apply: ["exists:articles,id"]) @rename(attribute: "article_id")
-    ): [Annotation!]!
-}
-
 type Annotation {
     id: UUID!
     text: String!

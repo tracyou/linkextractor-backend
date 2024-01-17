@@ -13,6 +13,7 @@ return new class () extends Migration {
         Schema::create('laws', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
+            $table->integer('revision')->default(0);
             $table->boolean('is_published')->default(false);
             $table->timestamps();
             $table->softDeletes();

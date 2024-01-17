@@ -37,7 +37,6 @@ class SaveAnnotatedLaw
         /** @var Law $law */
         $law = $this->lawRepository->findOrFail($lawId);
         $law->is_published = $isPublished ?? $law->is_published;
-        $law->save();
 
         $articles->each(function (array $articleInput) {
             /** @var Article $article */
@@ -71,7 +70,7 @@ class SaveAnnotatedLaw
                 ];
             });
 
-            $jsonText = json_encode($articleInput['json_text']);
+            $jsonText = $articleInput['json_text'];
             $articleAnnotationMapping->each(function ($mapping) use (&$jsonText) {
                 $jsonText = str_replace($mapping['tempId'], $mapping['newId'], $jsonText);
             });
@@ -80,6 +79,9 @@ class SaveAnnotatedLaw
 
             $articleRevision->save();
         });
+
+        $law->revision += 1;
+        $law->save();
 
         return $law;
     }

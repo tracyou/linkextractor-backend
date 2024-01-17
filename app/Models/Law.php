@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  *
  * @property string                                       $id
  * @property string                                       $title
+ * @property int                                          $revision
  * @property bool                                         $is_published
  * @property \Illuminate\Support\Carbon|null              $created_at
  * @property \Illuminate\Support\Carbon|null              $updated_at
@@ -44,6 +45,7 @@ final class Law extends AbstractModel
     protected $fillable = [
         'title',
         'is_published',
+        'revision',
     ];
 
     // ------------------------------------------------------

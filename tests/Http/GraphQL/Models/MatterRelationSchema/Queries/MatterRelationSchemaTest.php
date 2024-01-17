@@ -58,23 +58,6 @@ class MatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
                 'description'               => 'second test description',
             ],
         ]);
-
-        $article = Article::factory()->create([
-            'law_id' => Law::factory()->create(),
-        ]);
-
-        Annotation::factory()->createMany([
-            [
-                'id'                 => $this->createUUIDFromID(1),
-                'relation_schema_id' => $this->createUUIDFromID(1),
-                'article_id'         => $article->id,
-            ],
-            [
-                'id'                 => $this->createUUIDFromID(2),
-                'relation_schema_id' => $this->createUUIDFromID(1),
-                'article_id'         => $article->id,
-            ],
-        ]);
     }
 
     /** @test */

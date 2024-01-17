@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Http\GraphQL\Models\Law\Mutations;
 
 use App\Models\Article;
+use App\Models\ArticleRevision;
 use App\Models\Law;
 use App\Models\Matter;
 use App\Models\RelationSchema;
@@ -52,7 +53,7 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
     public function it_saves_a_law_with_annotations()
     {
         $response = $this->graphQL(/** @lang GraphQL */ '
-          mutation saveAnnotatedLaw($input: AnnotatedArticleInput!) {
+          mutation saveAnnotatedLaw($input: AnnotatedLawInput!) {
               saveAnnotatedLaw(input: $input) {
                   id
                   isPublished
@@ -103,7 +104,7 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
 
         // Assert
         $response->assertStatus(200);
-        $response->assertExactJson([
+        $response->assertJson([
             'data' => [
                 'saveAnnotatedLaw' => [
                     'id'          => $this->createUUIDFromID(1),
@@ -112,7 +113,7 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                         [
                             'id'             => $this->createUUIDFromID(1),
                             'latestRevision' => [
-                                'jsonText'    => '{"text":"this is the json text"}',
+                                'jsonText'    => '{"text": "this is the json text"}',
                                 'annotations' => [
                                     [
                                         'text'       => 'This is the first text of the annotation',

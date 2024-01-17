@@ -14,6 +14,7 @@ extend type Mutation {
 type Law {
     id: UUID!
     title: String!
+    revision: Int!
     isPublished: Boolean! @rename(attribute: "is_published")
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
@@ -26,20 +27,21 @@ input DeleteLawInput {
 }
 
 input AnnotatedLawInput{
-    lawId: UUID! @rules(apply: ["exists:laws,id"])
-    isPublished: Boolean
+    lawId: UUID! @rules(apply: ["exists:laws,id"]) @rename(attribute: "law_id")
+    isPublished: Boolean @rename(attribute: "is_published")
     articles: [ArticleInput!]!@spread
 }
 
 input ArticleInput{
-    articleId:UUID! @rules(apply: ["exists:articles,id"])
+    articleId:UUID! @rules(apply: ["exists:articles,id"]) @rename(attribute: "article_id")
     jsonText: String @rename(attribute: "json_text")
     annotations: [AnnotationInput!]!
 }
 
-input AnnotationInput{
+input AnnotationInput {
+    tempId: UUID! @rename(attribute: "temp_id")
     text: String!
     definition: String
     comment: String
-    matterId: UUID! @rules(apply: ["exists:matters,id"])
+    matterId: UUID! @rules(apply: ["exists:matters,id"]) @rename(attribute: "matter_id")
 }

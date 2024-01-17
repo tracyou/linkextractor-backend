@@ -10,6 +10,6 @@ class ArticleRevisionObserver
 {
     public function creating(ArticleRevision $model): void
     {
-        $model->revision = $model->article->revisions()->count() + 1;
+        $model->revision = $model->article->law->revision + 1;
     }
 }

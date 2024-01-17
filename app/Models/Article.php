@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\ArticleFactory;
-use Illuminate\Database\Eloquent\Casts\Json;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 
 /**
@@ -18,6 +17,7 @@ use Illuminate\Support\Collection;
  * @property Law                              $law
  * @property Collection<int, ArticleRevision> $revisions
  * @method static ArticleFactory factory($count = null, $state = [])
+ * @method static Builder|Article findDuplicated(string $title, string $lawId)
  */
 class Article extends AbstractModel
 {
@@ -38,6 +38,15 @@ class Article extends AbstractModel
     public function revisions(): HasMany
     {
         return $this->hasMany(ArticleRevision::class);
+    }
+
+    // -----------------------------------------------------------
+    //      Scopes
+    // -----------------------------------------------------------
+
+    public function scopeFindDuplicated(Builder $query, string $title, string $lawId): Builder
+    {
+        return $query->where('title', $title)->where('law_id', $lawId);
     }
 
     // -----------------------------------------------------------
