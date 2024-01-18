@@ -15,6 +15,7 @@ extend type Mutation {
     importXml(file: Upload!): Law!
 }
 
+
 type Law {
     id: UUID!
     title: String!

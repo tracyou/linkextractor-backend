@@ -10,8 +10,7 @@ final class DeleteLaw
 {
     public function __construct(
         protected LawRepositoryInterface $lawRepository,
-    )
-    {
+    ) {
     }
 
     /**
@@ -23,25 +22,8 @@ final class DeleteLaw
     {
         $id = $args['input'];
 
-        $law = $this->lawRepository->find($id);
+        $law = $this->lawRepository->findOrFail($id);
 
-        return $this->deleteLaw($law);
-
+        return $law->delete();
     }
-
-    /** @throws Error */
-    private function deleteLaw(?Model $law): bool
-    {
-        if ($law) {
-
-            $law->delete();
-            $law->update(array('is_published' => false));
-
-            return true;
-        } else {
-            throw new Error('This id is incorrect');
-        }
-    }
-
-
 }
