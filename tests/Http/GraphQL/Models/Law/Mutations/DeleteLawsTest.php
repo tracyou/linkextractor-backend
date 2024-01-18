@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\GraphQL\Models\Law\Queries;
+namespace Http\GraphQL\Models\Law\Mutations;
 
 use App\Models\Law;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;

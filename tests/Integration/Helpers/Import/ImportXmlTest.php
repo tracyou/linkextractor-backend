@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature;
+namespace Integration\Helpers\Import;
 
 use App\Helpers\Import\LawXmlImport;
 use App\Models\Law;
