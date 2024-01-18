@@ -20,25 +20,26 @@ final class DeleteLaw
      */
     public function __invoke(null $_, array $args): bool
     {
-        $id = $args['id'];
+        $id = $args['input'];
 
-        $law = $this->lawRepository->find($id);
+        $law = $this->lawRepository->findOrFail($id);
+       return $law->delete();
 
-        return $this->deleteLaw($law);
+//        return $this->deleteLaw($id);
     }
 
-    /** @throws Error */
-    private function deleteLaw(?Model $law): bool
-    {
-        if ($law) {
-
-            $law->delete();
-
-            return true;
-        } else {
-            throw new Error('This id is incorrect');
-        }
-    }
+//    /** @throws Error */
+//    private function deleteLaw(?Model $id): bool
+//    {
+//        if ($law) {
+//
+//            $law->delete();
+//
+//            return true;
+//        } else {
+//            throw new Error('This id is incorrect');
+//        }
+//    }
 
 
 }
