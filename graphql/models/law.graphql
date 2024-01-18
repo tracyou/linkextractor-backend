@@ -10,7 +10,7 @@ extend type Query {
 extend type Mutation {
     saveAnnotatedLaw(input: AnnotatedLawInput! @spread): Law!
     deleteLaw(
-        input: DeleteLawInput! @spread
+        input: UUID! @spread
     ):Boolean!
     importXml(file: Upload!): Law!
 }
@@ -34,10 +34,6 @@ type LawRevisions {
 type LawRevision {
     revision: Int!
     createdAt: DateTime!
-}
-
-input DeleteLawInput {
-    id: UUID!
 }
 
 input AnnotatedLawInput{
