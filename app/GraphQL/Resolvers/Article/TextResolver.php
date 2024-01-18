@@ -8,8 +8,8 @@ use App\Models\Article;
 
 class TextResolver
 {
-    public function __invoke(Article $root, array $args): string
+    public function __invoke(Article $root, array $args): ?string
     {
-        return $root->text;
+        return $root->revision ? null : $root->text;
     }
 }
