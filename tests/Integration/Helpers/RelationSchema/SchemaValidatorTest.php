@@ -26,16 +26,16 @@ class SchemaValidatorTest extends AbstractHttpGraphQLTestCase
 
         Matter::factory()->createMany([
             [
-                'id' => $this->createUUIDFromID(1),
-                'name' => 'Rechtssubject'
+                'id'   => $this->createUUIDFromID(1),
+                'name' => 'Rechtssubject',
             ],
             [
-                'id' => $this->createUUIDFromID(2),
-                'name' => 'Rechtsobject'
+                'id'   => $this->createUUIDFromID(2),
+                'name' => 'Rechtsobject',
             ],
             [
-                'id' => $this->createUUIDFromID(3),
-                'name' => 'Rechtsfeit'
+                'id'   => $this->createUUIDFromID(3),
+                'name' => 'Rechtsfeit',
             ],
         ]);
 
@@ -87,9 +87,18 @@ class SchemaValidatorTest extends AbstractHttpGraphQLTestCase
         $this->validator->validate(
             RelationSchema::find($this->createUUIDFromID(1)),
             collect([
-                $this->createAnnotation(matterId: $this->createUUIDFromID(1)),
-                $this->createAnnotation(matterId: $this->createUUIDFromID(2)),
-                $this->createAnnotation(matterId: $this->createUUIDFromID(3)),
+                $this->createAnnotation(
+                    id      : $this->createUUIDFromID(1),
+                    matterId: $this->createUUIDFromID(1)
+                ),
+                $this->createAnnotation(
+                    id      : $this->createUUIDFromID(2),
+                    matterId: $this->createUUIDFromID(2)
+                ),
+                $this->createAnnotation(
+                    id      : $this->createUUIDFromID(3),
+                    matterId: $this->createUUIDFromID(3)
+                ),
             ])
         );
     }
@@ -99,8 +108,7 @@ class SchemaValidatorTest extends AbstractHttpGraphQLTestCase
      */
     public function it_should_not_pass_the_validation(): void
     {
-        $this->expectNotToPerformAssertions();
-        $this->expectExceptionMessage('Voorwaarde in het relatieschema: "Test matter 1 requires one Test matter 2" wordt niet vervuld in artikel: "Test article"');
+        $this->expectExceptionMessage('Voorwaarde in het relatieschema: "Rechtsobject requires one Rechtsfeit" wordt niet vervuld in artikel: "Test article"');
 
         MatterRelation::factory()->create([
             'id'                        => $this->createUUIDFromID(1),
@@ -119,22 +127,33 @@ class SchemaValidatorTest extends AbstractHttpGraphQLTestCase
         $this->validator->validate(
             RelationSchema::find($this->createUUIDFromID(1)),
             collect([
-                $this->createAnnotation(matterId: $this->createUUIDFromID(1)),
-                $this->createAnnotation(matterId: $this->createUUIDFromID(2)),
-                $this->createAnnotation(matterId: $this->createUUIDFromID(3)),
+                $this->createAnnotation(
+                    id      : $this->createUUIDFromID(1),
+                    matterId: $this->createUUIDFromID(1)
+                ),
+                $this->createAnnotation(
+                    id      : $this->createUUIDFromID(2),
+                    matterId: $this->createUUIDFromID(2)
+                ),
+                $this->createAnnotation(
+                    id      : $this->createUUIDFromID(3),
+                    matterId: $this->createUUIDFromID(1)
+                ),
             ])
         );
     }
 
-    protected function createAnnotation(string $matterId): AnnotationStruct
+    protected function createAnnotation(string $id, string $matterId): AnnotationStruct
     {
         return new AnnotationStruct(
-            tempId    : $this->createUUIDFromID(1),
+            tempId    : $id,
             matter    : Matter::find($matterId),
             text      : 'Test text',
             definition: 'Test definition',
             comment   : 'Test comment',
-            article   : Article::factory()->create(),
+            article   : Article::factory()->create([
+                'title' => 'Test article',
+            ]),
         );
     }
 }

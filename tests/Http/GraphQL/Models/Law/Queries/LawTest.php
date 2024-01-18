@@ -17,7 +17,8 @@ class LawTest extends AbstractHttpGraphQLTestCase
         parent::setUp();
 
         Law::factory()->create([
-            'id' => $this->createUUIDFromID(1),
+            'id'       => $this->createUUIDFromID(1),
+            'revision' => 0,
         ]);
 
         Article::factory()->create([
@@ -42,12 +43,12 @@ class LawTest extends AbstractHttpGraphQLTestCase
     public function it_returns_a_law_by_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
-            query($id: UUID!) {
-                law(id: $id) {
+            query($id: UUID!, $revision: Int!) {
+                law(id: $id, revision: $revision) {
                     id
                     articles {
                         id
-                        latestRevision {
+                        revision {
                             id
                             annotations {
                                 id
@@ -57,15 +58,16 @@ class LawTest extends AbstractHttpGraphQLTestCase
                 }
             }
         ', [
-            'id' => $this->createUUIDFromID(1),
+            'id'       => $this->createUUIDFromID(1),
+            'revision' => 1,
         ])->assertJson([
             'data' => [
                 'law' => [
                     'id'       => $this->createUUIDFromID(1),
                     'articles' => [
                         [
-                            'id'             => $this->createUUIDFromID(1),
-                            'latestRevision' => [
+                            'id'       => $this->createUUIDFromID(1),
+                            'revision' => [
                                 'id'          => $this->createUUIDFromID(1),
                                 'annotations' => [
                                     [
@@ -87,7 +89,7 @@ class LawTest extends AbstractHttpGraphQLTestCase
     {
         $this->graphQL(/** @lang GraphQL */ '
             query($id: UUID!) {
-                law(id: $id) {
+                law(id: $id, revision: 1) {
                     id
                 }
             }

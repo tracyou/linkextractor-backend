@@ -23,7 +23,7 @@ class ArticleRevisionRepository extends AbstractModelRepository implements Artic
     public function getArticleRevision(Article $article, int $revision): ArticleRevision | null
     {
         return $this->model
-            ->where('article_id', $article->id)
+            ->where('article_id', $article->getKey())
             ->where('revision', $revision)
             ->first();
     }

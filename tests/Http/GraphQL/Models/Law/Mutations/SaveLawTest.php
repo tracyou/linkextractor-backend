@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Http\GraphQL\Models\Law\Mutations;
 
 use App\Models\Article;
-use App\Models\ArticleRevision;
 use App\Models\Law;
 use App\Models\Matter;
 use App\Models\RelationSchema;
@@ -34,10 +33,14 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
         Article::factory()->createMany([
             [
                 'id'     => $this->createUUIDFromID(1),
+                'title'  => 'Article 1',
+                'text'   => 'This is the first article',
                 'law_id' => $this->createUUIDFromID(1),
             ],
             [
                 'id'     => $this->createUUIDFromID(2),
+                'title'  => 'Article 2',
+                'text'   => 'This is the second article',
                 'law_id' => $this->createUUIDFromID(1),
             ],
         ]);
@@ -59,7 +62,9 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                   isPublished
                   articles {
                       id
-                      latestRevision {
+                      title
+                      text
+                      revision {
                         jsonText
                         annotations {
                             text
@@ -111,8 +116,10 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                     'isPublished' => false,
                     'articles'    => [
                         [
-                            'id'             => $this->createUUIDFromID(1),
-                            'latestRevision' => [
+                            'id'       => $this->createUUIDFromID(1),
+                            'title'    => 'Article 1',
+                            'text'     => null,
+                            'revision' => [
                                 'jsonText'    => '{"text": "this is the json text"}',
                                 'annotations' => [
                                     [
@@ -135,8 +142,10 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                             ],
                         ],
                         [
-                            'id'             => $this->createUUIDFromID(2),
-                            'latestRevision' => null,
+                            'id'       => $this->createUUIDFromID(2),
+                            'title'    => 'Article 2',
+                            'text'     => 'This is the second article',
+                            'revision' => null,
                         ],
                     ],
                 ],

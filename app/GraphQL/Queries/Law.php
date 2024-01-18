@@ -23,7 +23,7 @@ class Law
     public function __invoke(null $_, array $args): \App\Models\Law | null
     {
         $lawId = $args['id'];
-        $revision = $args['revision'] ?? 0;
+        $revision = $args['revision'];
 
         /** @var \App\Models\Law $law */
         $law = $this->lawRepository->findOrFail($lawId);
