@@ -2,7 +2,7 @@ extend type Query {
     laws: [Law!]! @all
     law(
         id: UUID! @eq @rules(apply: ["exists:laws,id"])
-        revision: Int
+        revision: Int!
     ): Law!
     lawRevisions(id: UUID! @eq @rules(apply: ["exists:laws,id"])): [LawRevision!]!
 }
