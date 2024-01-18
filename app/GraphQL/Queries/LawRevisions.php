@@ -40,6 +40,11 @@ class LawRevisions
             });
         }
 
-        return array_unique($revisions, SORT_REGULAR);
+        $revisions = array_unique($revisions, SORT_REGULAR);
+
+        return [
+            'law' => $law,
+            'revisions' => $revisions,
+        ];
     }
 }

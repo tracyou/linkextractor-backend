@@ -4,7 +4,7 @@ extend type Query {
         id: UUID! @eq @rules(apply: ["exists:laws,id"])
         revision: Int!
     ): Law!
-    lawRevisions(id: UUID! @eq @rules(apply: ["exists:laws,id"])): [LawRevision!]!
+    lawRevisions(id: UUID! @eq @rules(apply: ["exists:laws,id"])): LawRevisions!
 }
 
 extend type Mutation {
@@ -24,6 +24,11 @@ type Law {
     updatedAt: DateTime! @rename(attribute: "updated_at")
 
     articles: [Article!]! @field(resolver: "App\\GraphQL\\Resolvers\\Law\\ArticlesResolver")
+}
+
+type LawRevisions {
+    law: Law!
+    revisions: [LawRevision!]!
 }
 
 type LawRevision {
