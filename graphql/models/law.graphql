@@ -1,6 +1,10 @@
 extend type Query {
     laws: [Law!]! @all
-    law(id: UUID! @eq @rules(apply: ["exists:laws,id"])): Law! @find
+    law(
+        id: UUID! @eq @rules(apply: ["exists:laws,id"])
+        revision: Int
+    ): Law!
+    lawRevisions(id: UUID! @eq @rules(apply: ["exists:laws,id"])): [LawRevision!]!
 }
 
 extend type Mutation {
@@ -19,7 +23,12 @@ type Law {
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
 
-    articles: [Article!]! @hasMany
+    articles: [Article!]! @field(resolver: "App\\GraphQL\\Resolvers\\Law\\ArticlesResolver")
+}
+
+type LawRevision {
+    revision: Int!
+    createdAt: DateTime!
 }
 
 input DeleteLawInput {

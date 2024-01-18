@@ -18,5 +18,5 @@ interface MatterRelationSchemaRepositoryInterface extends ModelRepositoryInterfa
     /**
      * @return Collection<MatterRelationSchema>
      */
-    public function getMatterRelationSchemasForRelationSchema(string $relationSchemaId): Collection;
+    public function getForRelationSchema(string $relationSchemaId): Collection;
 }

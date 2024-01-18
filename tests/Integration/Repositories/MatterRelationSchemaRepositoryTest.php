@@ -44,7 +44,7 @@ class MatterRelationSchemaRepositoryTest extends AbstractHttpGraphQLTestCase
 
         // Act
         /** @var Collection<int, MatterRelationSchema> $result */
-        $result = $this->repository->getMatterRelationSchemasForRelationSchema($relationSchema->id);
+        $result = $this->repository->getForRelationSchema($relationSchema->id);
 
         // Assert
         $this->assertCount(2, $result);

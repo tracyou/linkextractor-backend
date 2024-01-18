@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string                                $id
  * @property string                                $matter_id
  * @property string                                $text
+ * @property string                                $comment
  * @property string                                $definition
  * @property \Illuminate\Support\Carbon|null       $created_at
  * @property \Illuminate\Support\Carbon|null       $updated_at

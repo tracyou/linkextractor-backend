@@ -15,16 +15,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * App\Models\MatterRelation.
  *
- * @property string                          $id
- * @property string                          $related_matter_id
- * @property \BenSampo\Enum\Enum|null        $relation
- * @property string|null                     $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null                     $deleted_at
- * @property string                          $matter_relation_schema_id
+ * @property string                                $id
+ * @property string                                $related_matter_id
+ * @property MatterRelationEnum                    $relation
+ * @property string|null                           $description
+ * @property \Illuminate\Support\Carbon|null       $created_at
+ * @property \Illuminate\Support\Carbon|null       $updated_at
+ * @property string|null                           $deleted_at
+ * @property string                                $matter_relation_schema_id
  * @property-read \App\Models\MatterRelationSchema $matterRelationSchema
- * @property-read \App\Models\Matter $relatedMatter
+ * @property-read \App\Models\Matter               $relatedMatter
  *
  * @method static \Database\Factories\MatterRelationFactory factory($count = null, $state = [])
  * @method static Builder|MatterRelation                    newModelQuery()

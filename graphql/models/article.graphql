@@ -1,8 +1,7 @@
 type Article{
     id:UUID!
     title: String!
-    text: String @method(name:"getText")
+    text: String @field(resolver: "App\\GraphQL\\Resolvers\\Article\\TextResolver")
     law: Law! @belongsTo
-    revisions: [ArticleRevision!]! @hasMany
-    latestRevision: ArticleRevision @method(name:"getLatestRevision")
+    revision: ArticleRevision
 }
