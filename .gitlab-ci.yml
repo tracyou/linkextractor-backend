@@ -35,7 +35,7 @@ build-and-deploy:
   before_script:
     - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
   script:
-    - docker build --provenance=false -t $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG -f ./docker/app/production/Dockerfile .
+    - docker build --provenance=false -t $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG -f ./docker/app/development/Dockerfile .
     - docker push $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG
     - >
       if [ "$DOCKER_IMAGE_LATEST" == "true" ]; then
