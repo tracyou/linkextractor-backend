@@ -22,6 +22,9 @@ use App\Repositories\MatterRepository;
 use App\Repositories\RelationSchemaRepository;
 use Wimski\ModelRepositories\Providers\ModelRepositoryServiceProvider;
 
+/**
+ * @codeCoverageIgnore
+ */
 class RepositoryServiceProvider extends ModelRepositoryServiceProvider
 {
     protected array $repositories = [

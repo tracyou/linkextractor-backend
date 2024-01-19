@@ -12,6 +12,7 @@ use App\Models\MatterRelation;
 use App\Models\MatterRelationSchema;
 use App\Models\RelationSchema;
 use App\Structs\AnnotationStruct;
+use GraphQL\Error\Error;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
 class SchemaValidatorTest extends AbstractHttpGraphQLTestCase
@@ -108,6 +109,7 @@ class SchemaValidatorTest extends AbstractHttpGraphQLTestCase
      */
     public function it_should_not_pass_the_validation(): void
     {
+        $this->expectException(Error::class);
         $this->expectExceptionMessage('Voorwaarde in het relatieschema: "Rechtsobject requires one Rechtsfeit" wordt niet vervuld in artikel: "Test article"');
 
         MatterRelation::factory()->create([

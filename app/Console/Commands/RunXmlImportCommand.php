@@ -7,6 +7,9 @@ namespace App\Console\Commands;
 use App\Helpers\Import\LawXmlImport;
 use Illuminate\Console\Command;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class RunXmlImportCommand extends Command
 {
     /** @var string */

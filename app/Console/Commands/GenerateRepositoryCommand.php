@@ -6,6 +6,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class GenerateRepositoryCommand extends Command
 {
     /**

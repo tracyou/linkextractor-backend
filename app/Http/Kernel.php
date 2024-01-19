@@ -12,6 +12,9 @@ use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Http\Middleware\HandleCors;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Kernel extends HttpKernel
 {
     /** @inheritdoc */

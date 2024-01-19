@@ -7,6 +7,9 @@ namespace App\Exceptions;
 use Symfony\Component\HttpKernel\Exception\HttpException as BaseHttpException;
 use Throwable;
 
+/**
+ * @codeCoverageIgnore
+ */
 class HttpException extends BaseHttpException
 {
     /** @param array<mixed, mixed> $headers */

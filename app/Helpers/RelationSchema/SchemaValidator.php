@@ -6,7 +6,6 @@ namespace App\Helpers\RelationSchema;
 
 use App\Contracts\Repositories\MatterRelationSchemaRepositoryInterface;
 use App\Enums\MatterRelationEnum;
-use App\Exceptions\SchemaValidationException;
 use App\Models\Matter;
 use App\Models\MatterRelation;
 use App\Models\MatterRelationSchema;
@@ -27,7 +26,6 @@ class SchemaValidator implements SchemaValidatorInterface
      * @param Collection<int, AnnotationStruct> $annotations
      *
      * @throws Error
-     * @throws SchemaValidationException
      */
     public function validate(RelationSchema $schema, Collection $annotations): void
     {
@@ -65,7 +63,6 @@ class SchemaValidator implements SchemaValidatorInterface
      * @param MatterRelationEnum                $relation
      *
      * @return bool
-     * @throws SchemaValidationException
      */
     protected function meetsRelation(
         Collection $annotations,
@@ -76,7 +73,6 @@ class SchemaValidator implements SchemaValidatorInterface
         return match ($relation->value) {
             MatterRelationEnum::REQUIRES_ONE, MatterRelationEnum::REQUIRES_ONE_OR_MORE          => $this->isMatterPresent($annotations, $annotationId, $relatedMatter),
             MatterRelationEnum::REQUIRES_ZERO_OR_MORE, MatterRelationEnum::REQUIRES_ZERO_OR_ONE => true,
-            default                                                                             => throw new SchemaValidationException("Relation {$relation->key} is not implemented"),
         };
     }
 
