@@ -1,29 +1,61 @@
 extend type Query {
     laws: [Law!]! @all
-    law(id: UUID! @eq @rules(apply: ["exists:laws,id"])): Law! @find
+    law(
+        id: UUID! @eq @rules(apply: ["exists:laws,id"])
+        revision: Int!
+    ): Law!
+    lawRevisions(id: UUID! @eq @rules(apply: ["exists:laws,id"])): LawRevisions!
 }
 
 extend type Mutation {
-    importXml(file: Upload!): Law!
-}
-
-extend type Mutation {
+    saveAnnotatedLaw(input: AnnotatedLawInput! @spread): Law!
     deleteLaw(
         input: DeleteLawInput! @spread
     ):Boolean!
+    importXml(file: Upload!): Law!
 }
 
 type Law {
     id: UUID!
     title: String!
-    text: String!
+    revision: Int!
     isPublished: Boolean! @rename(attribute: "is_published")
     createdAt: DateTime! @rename(attribute: "created_at")
     updatedAt: DateTime! @rename(attribute: "updated_at")
 
-    articles: [Article!]! @hasMany
+    articles: [Article!]! @field(resolver: "App\\GraphQL\\Resolvers\\Law\\ArticlesResolver")
+}
+
+type LawRevisions {
+    law: Law!
+    revisions: [LawRevision!]!
+}
+
+type LawRevision {
+    revision: Int!
+    createdAt: DateTime!
 }
 
 input DeleteLawInput {
     id: UUID!
+}
+
+input AnnotatedLawInput{
+    lawId: UUID! @rules(apply: ["exists:laws,id"]) @rename(attribute: "law_id")
+    isPublished: Boolean @rename(attribute: "is_published")
+    articles: [ArticleInput!]!@spread
+}
+
+input ArticleInput{
+    articleId:UUID! @rules(apply: ["exists:articles,id"]) @rename(attribute: "article_id")
+    jsonText: String @rename(attribute: "json_text")
+    annotations: [AnnotationInput!]!
+}
+
+input AnnotationInput {
+    tempId: UUID! @rename(attribute: "temp_id")
+    text: String!
+    definition: String
+    comment: String
+    matterId: UUID! @rules(apply: ["exists:matters,id"]) @rename(attribute: "matter_id")
 }

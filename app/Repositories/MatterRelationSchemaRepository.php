@@ -27,7 +27,7 @@ class MatterRelationSchemaRepository extends AbstractModelRepository implements 
             ->first();
     }
 
-    public function getMatterRelationSchemasForRelationSchema(string $relationSchemaId): Collection
+    public function getForRelationSchema(string $relationSchemaId): Collection
     {
         return $this->model
             ->where('relation_schema_id', $relationSchemaId)

@@ -6,21 +6,30 @@ namespace App\Factories;
 
 use App\Contracts\Factories\AnnotationFactoryInterface;
 use App\Models\Annotation;
-use App\Models\Article;
+use App\Models\ArticleRevision;
 use App\Models\Matter;
 use App\Models\RelationSchema;
 
 final class AnnotationFactory implements AnnotationFactoryInterface
 {
-    public function create(RelationSchema $schema, Article $article, Matter $matter, string $text): Annotation
-    {
+    public function create(
+        Matter $matter,
+        string $text,
+        ?string $definition,
+        ?string $comment,
+        ArticleRevision $articleRevision,
+        RelationSchema $schema
+    ): Annotation {
         $annotation = new Annotation([
-            'text' => $text,
+            'text'       => $text,
+            'definition' => $definition,
+            'comment'    => $comment,
         ]);
 
         $annotation->relationSchema()->associate($schema);
         $annotation->matter()->associate($matter);
-        $annotation->article()->associate($article);
+        $annotation->articleRevision()->associate($articleRevision);
+
         $annotation->save();
 
         return $annotation;

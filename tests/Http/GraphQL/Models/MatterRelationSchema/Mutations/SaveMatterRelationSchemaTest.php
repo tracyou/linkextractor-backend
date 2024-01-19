@@ -357,27 +357,6 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
         ])->assertGraphQLValidationError('input.matterId', 'The selected input.matter id is invalid.');
     }
 
-    /** @test */
-    public function it_throws_an_exception_for_equal_matter_ids(): void
-    {
-        $this->markTestSkipped();
-        $this->makeRequest([
-            'input' => [
-                'matterId'               => $this->createUUIDFromID(2),
-                'relationSchemaId'       => $this->createUUIDFromID(1),
-                'matterRelationSchemaId' => $this->createUUIDFromID(1),
-                'relations'              => [
-                    [
-                        'relatedMatterId' => $this->createUUIDFromID(2),
-                        'relation'        => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
-                        'description'     => 'Requires one or more',
-                    ],
-                ],
-                'schemaLayout' => '{"test":"test"}',
-            ],
-        ])->assertGraphQLValidationError('input.relations.0.relatedMatterId', 'The related matter id cannot be the same as the matter id.');
-    }
-
     /** @param array<string, mixed> $data */
     protected function makeRequest(array $data): TestResponse
     {

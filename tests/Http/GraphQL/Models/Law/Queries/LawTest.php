@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Http\GraphQL\Models\Law\Queries;
+namespace Tests\Http\GraphQL\Models\Law\Queries;
 
+use App\Models\Annotation;
 use App\Models\Article;
+use App\Models\ArticleRevision;
 use App\Models\Law;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
@@ -14,58 +16,80 @@ class LawTest extends AbstractHttpGraphQLTestCase
     {
         parent::setUp();
 
-        $law = Law::factory()->create([
-            'id' => $this->createUUIDFromID(1),
+        Law::factory()->create([
+            'id'       => $this->createUUIDFromID(1),
+            'revision' => 0,
         ]);
 
-        Article::factory(10)->create([
-            'law_id' => $law->id,
-            'text'   => 'This is a test comment!',
+        Article::factory()->create([
+            'id'     => $this->createUUIDFromID(1),
+            'law_id' => $this->createUUIDFromID(1),
         ]);
 
+        ArticleRevision::factory()->create([
+            'id'         => $this->createUUIDFromID(1),
+            'article_id' => $this->createUUIDFromID(1),
+        ]);
+
+        Annotation::factory()->create([
+            'id'                  => $this->createUUIDFromID(1),
+            'article_revision_id' => $this->createUUIDFromID(1),
+        ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_returns_a_law_by_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
-            query($id: UUID!) {
-                law(id: $id) {
+            query($id: UUID!, $revision: Int!) {
+                law(id: $id, revision: $revision) {
                     id
                     articles {
-                        text
+                        id
+                        revision {
+                            id
+                            annotations {
+                                id
+                            }
+                        }
                     }
                 }
             }
         ', [
-            'id' => $this->createUUIDFromID(1),
+            'id'       => $this->createUUIDFromID(1),
+            'revision' => 1,
         ])->assertJson([
             'data' => [
                 'law' => [
                     'id'       => $this->createUUIDFromID(1),
                     'articles' => [
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
-                        ['text' => 'This is a test comment!'],
+                        [
+                            'id'       => $this->createUUIDFromID(1),
+                            'revision' => [
+                                'id'          => $this->createUUIDFromID(1),
+                                'annotations' => [
+                                    [
+                                        'id' => $this->createUUIDFromID(1),
+                                    ],
+                                ],
+                            ],
+                        ],
                     ],
                 ],
             ],
         ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_throws_a_validation_error_for_unknown_law_id(): void
     {
         $this->graphQL(/** @lang GraphQL */ '
             query($id: UUID!) {
-                law(id: $id) {
+                law(id: $id, revision: 1) {
                     id
                 }
             }

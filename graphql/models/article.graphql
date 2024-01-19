@@ -1,13 +1,7 @@
-extend type Query {
-    articlesByLaw(
-        lawId: UUID! @rules(apply: ["exists:laws,id"]) @rename(attribute: "law_id")
-    ): [Article!]!
-}
-type Article {
-    id: UUID! @orderBy
+type Article{
+    id:UUID!
     title: String!
-    text: String!
-
+    text: String @field(resolver: "App\\GraphQL\\Resolvers\\Article\\TextResolver")
     law: Law! @belongsTo
-    annotations: [Annotation!]! @hasMany
+    revision: ArticleRevision
 }

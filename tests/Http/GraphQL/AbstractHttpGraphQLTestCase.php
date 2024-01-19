@@ -15,7 +15,6 @@ abstract class AbstractHttpGraphQLTestCase extends TestCase
     use MakesGraphQLRequests;
     use UsesDatabase;
 
-
     protected function graphQlJsonData(string $operation, array $data): array
     {
         return [

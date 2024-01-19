@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Helpers\RelationSchema\SchemaValidator;
+use App\Helpers\RelationSchema\SchemaValidatorInterface;
 use App\Models\Annotation;
 use App\Models\Law;
 use App\Models\Matter;
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->singleton(SchemaValidatorInterface::class, SchemaValidator::class);
     }
 
     public function boot(): void

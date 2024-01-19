@@ -70,7 +70,6 @@ class MatterSeeder extends Seeder
         ],
     ];
 
-    /** Run the database seeds. */
     public function run(): void
     {
         Matter::factory()->createMany(self::MATTERS);

@@ -178,6 +178,7 @@ return [
         App\Providers\FactoryServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\GraphQLServiceProvider::class,
+        App\Providers\ObserverServiceProvider::class,
     ],
 
     /*

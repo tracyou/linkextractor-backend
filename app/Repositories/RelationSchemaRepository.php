@@ -28,4 +28,13 @@ class RelationSchemaRepository extends AbstractModelRepository implements Relati
                 'expired_at' => Carbon::now(),
             ]);
     }
+
+    public function getMostRecent(): RelationSchema | null
+    {
+        /** @var RelationSchema | null */
+        return $this->model->newQuery()
+            ->where('is_published', '=', true)
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
 }

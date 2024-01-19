@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Contracts\Repositories\AnnotationRepositoryInterface;
 use App\Models\Annotation;
+use App\Models\Law;
 use Wimski\ModelRepositories\Repositories\AbstractModelRepository;
 
 /**
