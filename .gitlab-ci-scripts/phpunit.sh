@@ -9,6 +9,7 @@ ${DOCKER_COMPOSE_CMD} down --volumes --remove-orphans
 ${DOCKER_COMPOSE_CMD} up -d
 
 ${DOCKER_COMPOSE_CMD} exec -T -e APP_ENV=testing api-test ./scripts/wait-for.sh database-test:5432 -t 60 -- echo "Database connection established"
+${DOCKER_COMPOSE_CMD} exec -T -e APP_ENV=testing api-test composer install
 ${DOCKER_COMPOSE_CMD} exec -T -e APP_ENV=testing api-test php artisan passport:keys
 ${DOCKER_COMPOSE_CMD} exec -T -e APP_ENV=testing -e APP_KEY=${APP_KEY} api-test sh -c "vendor/bin/phpunit ./tests $PARAMETERS --coverage-text --coverage-clover coverage/coverage.xml --colors=never --stderr"
 

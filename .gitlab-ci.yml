@@ -1,6 +1,5 @@
 stages:
   - install
-  - compile
   - test
   - validate
 #  - build
@@ -16,19 +15,20 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 
-composer:
-  stage: install
-  image: docker/compose
-  before_script:
-    - apk add curl
-  script:
-    - ./.gitlab-ci-scripts/composer.sh
-  artifacts:
-    paths:
-      - vendor/
-  only:
-    - tags
-    - merge_requests
+#composer:
+#  stage: install
+#  image: docker/compose
+#  before_script:
+#    - apk add curl
+#    - cp .env.pipeline .env
+#  script:
+#    - ./.gitlab-ci-scripts/composer.sh
+#  artifacts:
+#    paths:
+#      - vendor/
+#  only:
+#    - tags
+#    - merge_requests
 
 #composer-install:
 #  stage: install
@@ -40,7 +40,7 @@ composer:
 #    - echo $CONTAINER_REGISTRY_PASSWORD | docker login -u $CONTAINER_REGISTRY_USERNAME $CONTAINER_REGISTRY_UR
 
 build_assets:
-  stage: compile
+  stage: install
   image: node:16.13-alpine
   script:
     - npm install
@@ -59,6 +59,7 @@ phpunit:
   image: docker/compose
   before_script:
     - apk add curl
+    - cp .env.pipeline .env
   script:
     - ./.gitlab-ci-scripts/phpunit.sh
   artifacts:
