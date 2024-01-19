@@ -14,9 +14,7 @@ class DeleteLawsTest extends AbstractHttpGraphQLTestCase
 
         $this->graphQL(/** @lang GraphQL */ '
             mutation($id: UUID!) {
-                deleteLaw(input: {
-                    id: $id
-                })
+                deleteLaw(input: $id)
             }
         ', [
             'id' => $law->id,
@@ -34,9 +32,7 @@ class DeleteLawsTest extends AbstractHttpGraphQLTestCase
     {
         $this->graphQL(/** @lang GraphQL */ '
             mutation($id: UUID!) {
-                deleteLaw(input: {
-                    id: $id
-                })
+                deleteLaw(input: $id)
             }
         ', [
             'id' => $this->createUUIDFromID(1),

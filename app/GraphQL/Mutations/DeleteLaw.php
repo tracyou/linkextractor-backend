@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\GraphQL\Mutations;
 
 use App\Contracts\Repositories\LawRepositoryInterface;
@@ -20,7 +22,7 @@ final class DeleteLaw
      */
     public function __invoke(null $_, array $args): bool
     {
-        $id = $args['id'];
+        $id = $args['input'];
 
         $law = $this->lawRepository->find($id);
 
@@ -31,14 +33,12 @@ final class DeleteLaw
     private function deleteLaw(?Model $law): bool
     {
         if ($law) {
-
             $law->delete();
+            $law->update(array('is_published' => false));
 
             return true;
         } else {
             throw new Error('This id is incorrect');
         }
     }
-
-
 }
