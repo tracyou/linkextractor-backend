@@ -1,10 +1,6 @@
 stages:
-#  - install
   - test
-  - validate
-#  - build
-#  - deploy
-
+  - deploy
 
 image: docker:latest
 services:
@@ -13,46 +9,6 @@ services:
 variables:
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
-
-
-#composer:
-#  stage: install
-#  image: docker/compose
-#  before_script:
-#    - apk add curl
-#    - cp .env.pipeline .env
-#  script:
-#    - ./.gitlab-ci-scripts/composer.sh
-#  artifacts:
-#    paths:
-#      - vendor/
-#  only:
-#    - tags
-#    - merge_requests
-
-#composer-install:
-#  stage: install
-#  variables:
-#    COMPOSER_TAG: "2"
-#    COMPOSER_SSH_DEPLOY_KEY: $GITLAB_RUNNER_RSA
-#    COMPOSER_ARGS: "--ignore-platform-reqs --no-suggest --no-ansi --no-interaction --no-progress --optimize-autoloader --prefer-dist --no-scripts"
-#  before_script:
-#    - echo $CONTAINER_REGISTRY_PASSWORD | docker login -u $CONTAINER_REGISTRY_USERNAME $CONTAINER_REGISTRY_UR
-
-#build_assets:
-#  stage: install
-#  image: node:16.13-alpine
-#  script:
-#    - npm install
-#    - npm run prod
-#  artifacts:
-#    name: "$CI_JOB_ID-$CI_BUILD_REF_NAME"
-#    expire_in: 1 hour
-#    paths:
-#      - public/
-#  only:
-#    - tags
-#    - merge_requests
 
 phpunit:
   stage: test
@@ -70,44 +26,25 @@ phpunit:
     - tags
     - merge_requests
 
-sonarqube-check:
-  stage: validate
-  image:
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [""]
+build-and-deploy:
+  stage: deploy
   variables:
-    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
-    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
-      - .scannerwork
+    DOCKER_IMAGE_NAME: "annotation-tool"
+    DOCKER_IMAGE_TAG: $CI_COMMIT_TAG
+    DOCKER_IMAGE_LATEST: "true"
+  before_script:
+    - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
   script:
-    - sonar-scanner
+    - DOCKER_IMAGE_URL=$CONTAINER_REGISTRY_URL/$CI_PROJECT_PATH/$DOCKER_IMAGE_NAME
+    - echo $DOCKER_IMAGE_URL
+    - docker build --provenance=false -t $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG -f ./docker/app/production/Dockerfile .
+    - docker push $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG
+    - >
+      if [ "$DOCKER_IMAGE_LATEST" == "true" ]; then
+        docker tag $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG $DOCKER_IMAGE_URL:latest
+        docker push $DOCKER_IMAGE_URL:latest
+        docker image rm $DOCKER_IMAGE_URL:latest
+      fi
+    - docker image rm $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG
   only:
     - tags
-    - merge_requests
-
-#docker-build-production:
-#  stage: build
-#  variables:
-#    DOCKER_IMAGE_NAME: "production"
-#    DOCKER_IMAGE_TAG: $CI_COMMIT_TAG
-#    DOCKER_IMAGE_LATEST: "true"
-#  before_script:
-#    - echo $CONTAINER_REGISTRY_PASSWORD | docker login -u $CONTAINER_REGISTRY_USERNAME $CONTAINER_REGISTRY_URL --password-stdin
-#  script:
-#    - DOCKER_IMAGE_URL=$CONTAINER_REGISTRY_URL/$CI_PROJECT_PATH/$DOCKER_IMAGE_NAME
-#    - echo $DOCKER_IMAGE_URL
-#    - docker build --provenance=false -t $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG -f ./docker/app/production/Dockerfile .
-#    - docker push $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG
-#    - >
-#      if [ "$DOCKER_IMAGE_LATEST" == "true" ]; then
-#        docker tag $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG $DOCKER_IMAGE_URL:latest
-#        docker push $DOCKER_IMAGE_URL:latest
-#        docker image rm $DOCKER_IMAGE_URL:latest
-#      fi
-#    - docker image rm $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG
-#  only:
-#    - tags
