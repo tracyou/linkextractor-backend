@@ -35,8 +35,6 @@ build-and-deploy:
   before_script:
     - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
   script:
-    - DOCKER_IMAGE_URL=$CONTAINER_REGISTRY_URL/$CI_PROJECT_PATH/$DOCKER_IMAGE_NAME
-    - echo $DOCKER_IMAGE_URL
     - docker build --provenance=false -t $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG -f ./docker/app/production/Dockerfile .
     - docker push $DOCKER_IMAGE_URL:$DOCKER_IMAGE_TAG
     - >
