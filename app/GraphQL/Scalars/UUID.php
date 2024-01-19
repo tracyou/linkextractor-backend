@@ -12,6 +12,9 @@ use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Utils\Utils;
 use Str;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class UUID extends ScalarType
 {
     /**

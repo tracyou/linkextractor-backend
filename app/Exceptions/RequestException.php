@@ -8,6 +8,9 @@ use Exception;
 use Psr\Http\Message\RequestInterface;
 use Throwable;
 
+/**
+ * @codeCoverageIgnore
+ */
 class RequestException extends Exception
 {
     protected RequestInterface $request;

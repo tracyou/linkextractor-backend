@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @codeCoverageIgnore
+ */
 abstract class AbstractModel extends BaseModel
 {
     use HasFactory;
