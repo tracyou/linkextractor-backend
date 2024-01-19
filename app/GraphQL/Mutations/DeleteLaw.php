@@ -35,6 +35,7 @@ final class DeleteLaw
         if ($law) {
 
             $law->delete();
+            $law->update(array('is_published' => false));
 
             return true;
         } else {
