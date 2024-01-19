@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\GraphQL\Mutations;
 
 use App\Contracts\Repositories\LawRepositoryInterface;
@@ -22,8 +24,20 @@ final class DeleteLaw
     {
         $id = $args['input'];
 
-        $law = $this->lawRepository->findOrFail($id);
+        $law = $this->lawRepository->find($id);
 
-        return $law->delete();
+        return $this->deleteLaw($law);
+    }
+
+    /** @throws Error */
+    private function deleteLaw(?Model $law): bool
+    {
+        if ($law) {
+            $law->delete();
+
+            return true;
+        } else {
+            throw new Error('This id is incorrect');
+        }
     }
 }
