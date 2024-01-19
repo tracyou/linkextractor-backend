@@ -56,18 +56,4 @@ final class Law extends AbstractModel
     {
         return $this->hasMany(Article::class);
     }
-
-    public function annotations(): HasManyThrough
-    {
-        return $this->hasManyThrough(Annotation::class, Article::class);
-    }
-
-    // ------------------------------------------------------
-    //      Helper methods
-    // ------------------------------------------------------
-
-    public function revisions(): int
-    {
-        return $this->articles()->first()->revisions()->count();
-    }
 }
