@@ -13,32 +13,16 @@ final class DeleteLaw
     ) {
     }
 
-    /**
-     * @param mixed[] $args
-     *
-     * @throws Error
-     */
     public function __invoke(null $_, array $args): bool
     {
         $id = $args['id'];
 
         $law = $this->lawRepository->find($id);
 
-        return $this->deleteLaw($law);
+        // Add comment  1
+        // Add comment 2
+        // Add comment 3
+
+        return $law->delete();
     }
-
-    /** @throws Error */
-    private function deleteLaw(?Model $law): bool
-    {
-        if ($law) {
-
-            $law->delete();
-
-            return true;
-        } else {
-            throw new Error('This id is incorrect');
-        }
-    }
-
-
 }
