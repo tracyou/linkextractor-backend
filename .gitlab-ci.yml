@@ -1,5 +1,5 @@
 stages:
-  - install
+#  - install
   - test
   - validate
 #  - build
@@ -39,20 +39,20 @@ variables:
 #  before_script:
 #    - echo $CONTAINER_REGISTRY_PASSWORD | docker login -u $CONTAINER_REGISTRY_USERNAME $CONTAINER_REGISTRY_UR
 
-build_assets:
-  stage: install
-  image: node:16.13-alpine
-  script:
-    - npm install
-    - npm run prod
-  artifacts:
-    name: "$CI_JOB_ID-$CI_BUILD_REF_NAME"
-    expire_in: 1 hour
-    paths:
-      - public/
-  only:
-    - tags
-    - merge_requests
+#build_assets:
+#  stage: install
+#  image: node:16.13-alpine
+#  script:
+#    - npm install
+#    - npm run prod
+#  artifacts:
+#    name: "$CI_JOB_ID-$CI_BUILD_REF_NAME"
+#    expire_in: 1 hour
+#    paths:
+#      - public/
+#  only:
+#    - tags
+#    - merge_requests
 
 phpunit:
   stage: test
