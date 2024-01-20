@@ -8,6 +8,7 @@ use App\Contracts\Factories\MatterRelationFactoryInterface;
 use App\Enums\MatterRelationEnum;
 use App\Models\Matter;
 use App\Models\MatterRelationSchema;
+use Illuminate\Support\Collection;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
 class MatterRelationFactoryTest extends AbstractHttpGraphQLTestCase
@@ -25,6 +26,7 @@ class MatterRelationFactoryTest extends AbstractHttpGraphQLTestCase
     public function testRelationBelongsToMatters()
     {
         // Arrange
+        /** @var Collection<int, Matter> $matters */
         $matters = Matter::factory()->createMany([
             [
                 'id' => $this->createUUIDFromID(1),
@@ -53,5 +55,7 @@ class MatterRelationFactoryTest extends AbstractHttpGraphQLTestCase
             'relation'                  => MatterRelationEnum::REQUIRES_ONE(),
             'description'               => "description",
         ]);
+
+        $this->assertEquals(1, $matters[0]->matterRelations()->count());
     }
 }

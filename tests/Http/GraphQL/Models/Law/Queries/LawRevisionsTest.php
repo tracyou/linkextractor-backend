@@ -75,6 +75,26 @@ class LawRevisionsTest extends AbstractHttpGraphQLTestCase
         ]);
     }
 
+    /** @test */
+    public function it_throws_exception_when_law_does_not_exist(): void
+    {
+        $this->graphQL(/** @lang GraphQL */ '
+            query($id: UUID!) {
+                lawRevisions(id: $id) {
+                    law {
+                        id
+                    }
+                    revisions {
+                        revision
+                        createdAt
+                    }
+                }
+            }
+        ', [
+            'id' => $this->createUUIDFromID(2),
+        ])->assertGraphQLValidationError('id', 'The selected id is invalid.');
+    }
+
     protected function createRevision(Law $law, int $revision, string $createdAt): void
     {
         Carbon::setTestNow($createdAt);

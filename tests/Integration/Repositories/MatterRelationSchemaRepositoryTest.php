@@ -32,14 +32,28 @@ class MatterRelationSchemaRepositoryTest extends AbstractHttpGraphQLTestCase
             'id' => $this->createUUIDFromID(1),
         ]);
 
-        MatterRelationSchema::factory()->create([
-            'id'                 => $this->createUUIDFromID(1),
-            'relation_schema_id' => $this->createUUIDFromID(1),
+        Matter::factory()->createMany([
+            [
+                'id'   => $this->createUUIDFromID(1),
+                'name' => 'matter1',
+            ],
+            [
+                'id'   => $this->createUUIDFromID(2),
+                'name' => 'matter2',
+            ],
         ]);
 
-        MatterRelationSchema::factory()->create([
-            'id'                 => $this->createUUIDFromID(2),
-            'relation_schema_id' => $this->createUUIDFromID(1),
+        MatterRelationSchema::factory()->createMany([
+            [
+                'id'                 => $this->createUUIDFromID(1),
+                'relation_schema_id' => $this->createUUIDFromID(1),
+                'matter_id'          => $this->createUUIDFromID(1),
+            ],
+            [
+                'id'                 => $this->createUUIDFromID(2),
+                'relation_schema_id' => $this->createUUIDFromID(1),
+                'matter_id'          => $this->createUUIDFromID(2),
+            ],
         ]);
 
         // Act
@@ -50,6 +64,12 @@ class MatterRelationSchemaRepositoryTest extends AbstractHttpGraphQLTestCase
         $this->assertCount(2, $result);
         $this->assertEquals($this->createUUIDFromID(1), $result[0]->getKey());
         $this->assertEquals($this->createUUIDFromID(2), $result[1]->getKey());
+
+        $matter1 = Matter::find($this->createUUIDFromID(1));
+        $matter2 = Matter::find($this->createUUIDFromID(2));
+
+        $this->assertCount(1, $matter1->matterRelationSchemas);
+        $this->assertCount(1, $matter2->matterRelationSchemas);
     }
 
     /**

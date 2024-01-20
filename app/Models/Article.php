@@ -48,23 +48,4 @@ class Article extends AbstractModel
     {
         return $query->where('title', $title)->where('law_id', $lawId);
     }
-
-    // -----------------------------------------------------------
-    //      Methods
-    // -----------------------------------------------------------
-
-    public function getLatestRevision(): ArticleRevision | null
-    {
-        /** @var ArticleRevision | null */
-        return $this->revisions()->latest()->first();
-    }
-
-    public function getText(): string | null
-    {
-        $latestRevision = $this->getLatestRevision();
-        if ($latestRevision === null) {
-            return $this->text;
-        }
-        return null;
-    }
 }

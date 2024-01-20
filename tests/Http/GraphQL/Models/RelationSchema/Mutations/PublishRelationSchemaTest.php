@@ -74,4 +74,20 @@ class PublishRelationSchemaTest extends AbstractHttpGraphQLTestCase
             'id' => $this->createUUIDFromID(1),
         ])->assertGraphQLErrorMessage('The schema is already published.');
     }
+
+    /** @test */
+    public function it_throws_an_exception_when_schema_id_does_not_exist(): void
+    {
+        $this->graphQL(/** @lang GraphQL */ '
+            mutation ($id: UUID!) {
+                publishRelationSchema(id: $id) {
+                    id
+                    isPublished
+                    expiredAt
+                }
+            }
+        ', [
+            'id' => $this->createUUIDFromID(999),
+        ])->assertGraphQLValidationError('id', 'The selected id is invalid.');
+    }
 }

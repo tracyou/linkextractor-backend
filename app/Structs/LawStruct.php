@@ -24,11 +24,6 @@ final class LawStruct
         $this->articles[] = $article;
     }
 
-    public function remove(int $key): void
-    {
-        Arr::pull($this->articles, $key);
-    }
-
     public function save(): Law
     {
         $law = Law::firstOrCreate(['title' => $this->title]);

@@ -33,6 +33,11 @@ test:
 	@docker-compose -f docker-compose-test.yml exec api-test php artisan key:generate --force
 	@docker-compose -f docker-compose-test.yml exec -T -e APP_ENV=testing api-test sh -c "vendor/bin/phpunit ./tests $PARAMETERS --colors=never --stderr"
 
+test-coverage:
+	@docker-compose -f docker-compose-test.yml up -d
+	@docker-compose -f docker-compose-test.yml exec api-test php artisan key:generate --force
+	@docker-compose -f docker-compose-test.yml exec -T -e APP_ENV=testing api-test sh -c "vendor/bin/phpunit ./tests $PARAMETERS --coverage-text --coverage-clover coverage/coverage.xml --colors=never --stderr"
+
 ide-helper:
 	@docker-compose exec api php artisan ide-helper:model --reset --write
 	@docker-compose exec api php artisan enum:annotate
