@@ -81,7 +81,68 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
     }
 
     /** @test */
-    public function it_saves_a_matter_relation_schema_with_relations_for_an_unpublished_schema(): void
+    public function it_saves_a_new_matter_relation_schema_with_relations(): void
+    {
+        $response = $this->makeRequest([
+            'input' => [
+                'matterId'     => $this->createUUIDFromID(2),
+                'relations'    => [
+                    [
+                        'relatedMatterId' => $this->createUUIDFromID(1),
+                        'relation'        => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                        'description'     => 'Requires one or more',
+                    ],
+                    [
+                        'relatedMatterId' => $this->createUUIDFromID(3),
+                        'relation'        => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                        'description'     => 'Requires zero or more',
+                    ],
+                ],
+                'schemaLayout' => '{"test":"test"}',
+            ],
+        ]);
+
+        $id = $response->json('data.saveMatterRelationSchema.id');
+        $relationSchemaId = $response->json('data.saveMatterRelationSchema.relationSchema.id');
+
+        $response->assertJson([
+            'data' => [
+                'saveMatterRelationSchema' => [
+                    'id'             => $id,
+                    'schemaLayout'   => '{"test":"test"}',
+                    'matter'         => [
+                        'id' => $this->createUUIDFromID(2),
+                    ],
+                    'relations'      => [
+                        [
+                            'relatedMatter' => [
+                                'id' => $this->createUUIDFromID(1),
+                            ],
+                            'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                            'description'   => 'Requires one or more',
+                        ],
+                        [
+                            'relatedMatter' => [
+                                'id' => $this->createUUIDFromID(3),
+                            ],
+                            'relation'      => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                            'description'   => 'Requires zero or more',
+                        ],
+                    ],
+                    'relationSchema' => [
+                        'id'          => $relationSchemaId,
+                        'isPublished' => false,
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertDatabaseCount('relation_schemas', 3);
+        $this->assertDatabaseCount('matter_relation_schemas', 3);
+    }
+
+    /** @test */
+    public function it_saves_an_existing_matter_relation_schema_with_relations_for_an_unpublished_schema(): void
     {
         $this->makeRequest([
             'input' => [
@@ -100,30 +161,30 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
                         'description'     => 'Requires zero or more',
                     ],
                 ],
-                'schemaLayout' => '{"test":"test"}',
+                'schemaLayout'           => '{"test":"test"}',
             ],
         ])->assertJson([
             'data' => [
                 'saveMatterRelationSchema' => [
-                    'id'           => $this->createUUIDFromID(2),
-                    'schemaLayout' => '{"test":"test"}',
-                    'matter'       => [
+                    'id'             => $this->createUUIDFromID(2),
+                    'schemaLayout'   => '{"test":"test"}',
+                    'matter'         => [
                         'id' => $this->createUUIDFromID(2),
                     ],
-                    'relations' => [
+                    'relations'      => [
                         [
                             'relatedMatter' => [
                                 'id' => $this->createUUIDFromID(1),
                             ],
-                            'relation'    => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
-                            'description' => 'Requires one or more',
+                            'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                            'description'   => 'Requires one or more',
                         ],
                         [
                             'relatedMatter' => [
                                 'id' => $this->createUUIDFromID(3),
                             ],
-                            'relation'    => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
-                            'description' => 'Requires zero or more',
+                            'relation'      => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                            'description'   => 'Requires zero or more',
                         ],
                     ],
                     'relationSchema' => [
@@ -184,29 +245,29 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
                         'description'     => 'Requires zero or more',
                     ],
                 ],
-                'schemaLayout' => '{"test":"test"}',
+                'schemaLayout'           => '{"test":"test"}',
             ],
         ])->assertJson([
             'data' => [
                 'saveMatterRelationSchema' => [
-                    'schemaLayout' => json_encode(['test' => 'test']),
-                    'matter'       => [
+                    'schemaLayout'   => json_encode(['test' => 'test']),
+                    'matter'         => [
                         'id' => $this->createUUIDFromID(1),
                     ],
-                    'relations' => [
+                    'relations'      => [
                         [
                             'relatedMatter' => [
                                 'id' => $this->createUUIDFromID(2),
                             ],
-                            'relation'    => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
-                            'description' => 'Requires one or more',
+                            'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                            'description'   => 'Requires one or more',
                         ],
                         [
                             'relatedMatter' => [
                                 'id' => $this->createUUIDFromID(3),
                             ],
-                            'relation'    => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
-                            'description' => 'Requires zero or more',
+                            'relation'      => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                            'description'   => 'Requires zero or more',
                         ],
                     ],
                     'relationSchema' => [
@@ -252,7 +313,7 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
                         'description'     => 'Requires zero or more',
                     ],
                 ],
-                'schemaLayout' => '{"test":"test"}',
+                'schemaLayout'     => '{"test":"test"}',
             ],
         ]);
 
@@ -260,24 +321,24 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
             'data' => [
                 'saveMatterRelationSchema' => [
                     // 'id'             => $this->createUUIDFromID(2), // <-- This is a new id, because the schema is published and a new schema is created
-                    'schemaLayout' => json_encode(['test' => 'test']),
-                    'matter'       => [
+                    'schemaLayout'   => json_encode(['test' => 'test']),
+                    'matter'         => [
                         'id' => $this->createUUIDFromID(2),
                     ],
-                    'relations' => [
+                    'relations'      => [
                         [
                             'relatedMatter' => [
                                 'id' => $this->createUUIDFromID(1),
                             ],
-                            'relation'    => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
-                            'description' => 'Requires one or more',
+                            'relation'      => MatterRelationEnum::REQUIRES_ONE_OR_MORE()->key,
+                            'description'   => 'Requires one or more',
                         ],
                         [
                             'relatedMatter' => [
                                 'id' => $this->createUUIDFromID(3),
                             ],
-                            'relation'    => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
-                            'description' => 'Requires zero or more',
+                            'relation'      => MatterRelationEnum::REQUIRES_ZERO_OR_MORE()->key,
+                            'description'   => 'Requires zero or more',
                         ],
                     ],
                     'relationSchema' => [
@@ -336,7 +397,7 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
                         'description'     => 'Requires one or more',
                     ],
                 ],
-                'schemaLayout' => '{"test":"test"}',
+                'schemaLayout'           => '{"test":"test"}',
             ],
         ])->assertGraphQLValidationError('input.relations.0.relatedMatterId', 'The selected input.relations.0.relatedMatterId is invalid.');
 
@@ -352,7 +413,7 @@ class SaveMatterRelationSchemaTest extends AbstractHttpGraphQLTestCase
                         'description'     => 'Requires one or more',
                     ],
                 ],
-                'schemaLayout' => '{"test":"test"}',
+                'schemaLayout'           => '{"test":"test"}',
             ],
         ])->assertGraphQLValidationError('input.matterId', 'The selected input.matter id is invalid.');
     }

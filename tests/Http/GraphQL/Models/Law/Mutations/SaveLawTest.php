@@ -103,6 +103,11 @@ class SaveLawTest extends AbstractHttpGraphQLTestCase
                             ],
                         ],
                     ],
+                    [
+                        'articleId'   => $this->createUUIDFromID(2),
+                        'jsonText'    => '{"text": "this is the json text"}',
+                        'annotations' => [],
+                    ],
                 ],
             ],
         ]);

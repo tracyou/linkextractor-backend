@@ -13,6 +13,9 @@ use SimpleXMLElement;
 
 final class LawXmlImport
 {
+    /**
+     * @throws Error
+     */
     public function import(string $xmlFilePath): Law
     {
         ini_set('memory_limit', '-1');
@@ -21,9 +24,7 @@ final class LawXmlImport
             throw new Error("invalid xml data");
         }
 
-        if (!$data = simplexml_load_file($xmlFilePath)) {
-            throw new Error("invalid xml data");
-        }
+        $data = simplexml_load_file($xmlFilePath);
 
         $lawStruct = $this->parseDataToStruct($data);
 
@@ -37,10 +38,6 @@ final class LawXmlImport
 
         if (!file_exists($xmlFilePath)) {
             throw new Error('XML file not found');
-        }
-
-        if (!file_exists($xsdFilePath)) {
-            throw new Error('XSD file not found');
         }
 
         $tempDom = new DOMDocument();

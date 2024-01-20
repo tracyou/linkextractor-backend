@@ -4,11 +4,29 @@ declare(strict_types=1);
 
 namespace Http\GraphQL\Models\Law\Mutations;
 
+use App\Models\Article;
+use App\Models\Law;
 use Illuminate\Http\UploadedFile;
 use Tests\Http\GraphQL\AbstractHttpGraphQLTestCase;
 
 class ImportXmlTest extends AbstractHttpGraphQLTestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Law::factory()->create([
+            'id'    => $this->createUUIDFromID(1),
+            'title' => 'Aanbestedingswet 2012',
+        ]);
+
+        Article::factory()->create([
+            'id'     => $this->createUUIDFromID(1),
+            'law_id' => $this->createUUIDFromID(1),
+            'title'  => 'Artikel 1.1 ',
+        ]);
+    }
+
     /** @test */
     public function it_imports_an_xml_file(): void
     {
@@ -36,6 +54,7 @@ class ImportXmlTest extends AbstractHttpGraphQLTestCase
         ]);
 
         $this->assertDatabaseCount('laws', 1);
+        $this->assertGreaterThan(1, Article::count());
         $this->assertDatabaseHas('laws', [
             'title' => 'Aanbestedingswet 2012',
         ]);

@@ -22,6 +22,7 @@ final class PublishRelationSchema
      * @param array<string, mixed> $args
      *
      * @throws Error
+     * @throws Throwable
      */
     public function __invoke(null $_, array $args): RelationSchema
     {
@@ -37,16 +38,13 @@ final class PublishRelationSchema
          * Use a transaction to ensure that only one schema is published at a time and in case of failure, there are
          * never none or multiple active schemas.
          */
-        try {
-            $this->database->transaction(function () use ($schema) {
-                $schema->is_published = true;
-                $schema->save();
 
-                $this->relationSchemaRepository->expireAllExcept($schema->getKey());
-            });
-        } catch (Throwable $e) {
-            throw new Error($e->getMessage(), previous: $e);
-        }
+        $this->database->transaction(function () use ($schema) {
+            $schema->is_published = true;
+            $schema->save();
+
+            $this->relationSchemaRepository->expireAllExcept($schema->getKey());
+        });
 
         return $schema;
     }

@@ -29,9 +29,6 @@ final class LawStruct
         $law = Law::firstOrCreate(['title' => $this->title]);
         foreach ($this->articles as $article) {
             $model = $article->toModel();
-            if (!$model) {
-                continue;
-            }
 
             if (Article::findDuplicated($model->title, $law->id)->exists()) {
                 continue;

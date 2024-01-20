@@ -23,9 +23,15 @@ class LawRevisionsTest extends AbstractHttpGraphQLTestCase
             'revision' => 0,
         ]);
 
-        Article::factory()->create([
-            'id'     => $this->createUUIDFromID(1),
-            'law_id' => $this->createUUIDFromID(1),
+        Article::factory()->createMany([
+            [
+                'id'     => $this->createUUIDFromID(1),
+                'law_id' => $this->createUUIDFromID(1),
+            ],
+            [
+                'id'     => $this->createUUIDFromID(2),
+                'law_id' => $this->createUUIDFromID(1),
+            ],
         ]);
 
         $this->createRevision($law, 1, '2021-01-02 00:00:00');
